@@ -164,6 +164,14 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Composer installed Service Providers
+         */
+        Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+
+        /*
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
@@ -225,6 +233,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Composer installed Facades..
+         */
+
+        'Debugbar' => Barryvdh\Debugbar\Facade::class
 
     ],
 
