@@ -15,7 +15,13 @@ class CreatePostTagsTable extends Migration
     {
         Schema::create('post_tags', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->text('description');
             $table->timestamps();
+
+            //FK
+            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

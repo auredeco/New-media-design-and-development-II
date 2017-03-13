@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReferendumsTable extends Migration
+class CreateReferendaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateReferendumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('referendums', function (Blueprint $table) {
+        Schema::create('referenda', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->text('description');
+            $table->dateTime('startDate');
+            $table->dateTime('endDate');
+            $table->boolean('isClosed');
             $table->timestamps();
         });
     }

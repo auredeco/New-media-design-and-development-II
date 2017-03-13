@@ -15,6 +15,10 @@ class CreateElectionsTable extends Migration
     {
         Schema::create('elections', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->dateTime('startDate');
+            $table->dateTime('endDate');
+            $table->boolean('isClosed');
             $table->timestamps();
         });
     }

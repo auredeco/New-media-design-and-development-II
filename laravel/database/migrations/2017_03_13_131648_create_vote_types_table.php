@@ -15,6 +15,7 @@ class CreateVoteTypesTable extends Migration
     {
         Schema::create('vote_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type');
             $table->timestamps();
         });
     }

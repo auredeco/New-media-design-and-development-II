@@ -16,6 +16,10 @@ class CreateGroupElectionsTable extends Migration
         Schema::create('group_elections', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            //FK
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('election_id')->references('id')->on('elections');
         });
     }
 

@@ -24,6 +24,9 @@ class CreateProfilesTable extends Migration
             ]);
             $table->dateTime('DOB'); //Day of birth
             $table->timestamps();
+
+            //FK
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
