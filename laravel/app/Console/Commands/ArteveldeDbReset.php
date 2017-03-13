@@ -4,6 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class ArteveldeDbReset
+ *
+ * Use:
+ * $ php artisan artevelde:db:reset
+ *
+ * @package App\Console\Commands
+ * @author Olivier Parent <olivier.parent@arteveldehs.be>
+ * @copyright Copyright © 2017, Artevelde University College Ghent
+ */
 class ArteveldeDbReset extends Command
 {
     /**
@@ -11,14 +21,14 @@ class ArteveldeDbReset extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'artevelde:db:reset';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Drops database and runs artevelde:db:init';
 
     /**
      * Create a new command instance.
@@ -37,6 +47,13 @@ class ArteveldeDbReset extends Command
      */
     public function handle()
     {
-        //
+        // Get variables from `.env`.
+        $dbName = getenv('DB_DATABASE');
+
+        // Drop database and initialize.
+        $this->callSilent('artevelde:db:drop');
+        $this->callSilent('artevelde:db:init');
+
+        $this->comment("Database `${dbName}` reset!");
     }
 }

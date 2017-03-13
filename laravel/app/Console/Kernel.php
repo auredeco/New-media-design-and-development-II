@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\ArteveldeDbBackup::class,
+        Commands\ArteveldeDbDrop::class,
+        Commands\ArteveldeDbInit::class,
+        Commands\ArteveldeDbReset::class,
+        Commands\ArteveldeDbRestore::class,
         Commands\ArteveldeDbUser::class,
     ];
 

@@ -4,6 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class ArteveldeDbInit
+ *
+ * Use:
+ * $ php artisan artevelde:db:init
+ *
+ * @package App\Console\Commands
+ * @author Olivier Parent <olivier.parent@arteveldehs.be>
+ * @copyright Copyright © 2017, Artevelde University College Ghent
+ */
 class ArteveldeDbInit extends Command
 {
     /**
@@ -11,14 +21,14 @@ class ArteveldeDbInit extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'artevelde:db:init {--seed : Run migrations and seed}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Creates database user and database, and executes migrations';
 
     /**
      * Create a new command instance.
@@ -37,16 +47,27 @@ class ArteveldeDbInit extends Command
      */
     public function handle()
     {
-        //read variables from .env
+        // Get variables from `.env`.
         $dbName = getenv('DB_DATABASE');
         $dbUsername = getenv('DB_USERNAME');
         $dbPassword = getenv('DB_PASSWORD');
 
-        //add database user with all privileges on database
-        $sql = "CREATE DATABASE IF NOT EXISTS ${dbName} CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-        $command = sprintf('MYSQL_PWD="%s" mysql --user="%s" --execute="%s"',$dbUsername, $dbPassword, $sql);
+        // Create database user and drop database if it already exists.
+        $this->callSilent('artevelde:db:user');
+        $this->callSilent('artevelde:db:drop');
+
+        // Create database.
+        $sql = "CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+        $command = sprintf('mysql --user=%s --password=%s --execute="%s"', $dbUsername, $dbPassword, $sql);
         exec($command);
 
-        $this->comment("Database `${dbName}` Initialized");
+        // Run migrations.
+        if ($this->option('seed')) {
+            $this->call('migrate', [
+                '--seed' => true,
+            ]);
+        }
+
+        $this->comment("Database `${dbName}` initialized!");
     }
 }

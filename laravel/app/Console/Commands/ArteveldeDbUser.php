@@ -4,6 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class ArteveldeDbUser
+ *
+ * Use:
+ * $ php artisan artevelde:db:user
+ *
+ * @package App\Console\Commands
+ * @author Olivier Parent <olivier.parent@arteveldehs.be>
+ * @copyright Copyright © 2017, Artevelde University College Ghent
+ */
 class ArteveldeDbUser extends Command
 {
     /**
@@ -37,18 +47,18 @@ class ArteveldeDbUser extends Command
      */
     public function handle()
     {
-        //read variables from .env
+        // Get variables from `.env`.
         $dbName = getenv('DB_DATABASE');
         $dbUsername = getenv('DB_USERNAME');
         $dbPassword = getenv('DB_PASSWORD');
         $dbAdminName = getenv('DB_ADMIN_USERNAME');
         $dbAdminPassword = getenv('DB_ADMIN_PASSWORD');
 
-        //add database user with all privileges on database
-        $sql = "GRANT ALL PRIVILEGES ON ${dbName}.* TO '${dbUsername}' IDENTIFIED BY '${dbPassword}'";
-        $command = sprintf('MYSQL_PWD="%s" mysql --user="%s" --execute="%s"',$dbAdminPassword, $dbAdminName, $sql);
+        // Add database user with all privileges on (nonexistent) database.
+        $sql = "GRANT ALL PRIVILEGES ON \`${dbName}\`.* TO '${dbUsername}' IDENTIFIED BY '${dbPassword}'";
+        $command = sprintf('mysql --user=%s --password=%s --execute="%s"', $dbAdminName, $dbAdminPassword, $sql);
         exec($command);
 
-        $this->comment("Database user `${dbUsername}` created");
+        $this->comment("Database user `${dbUsername}` created!");
     }
 }
