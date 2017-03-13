@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->dateTime('lastLogin');
             $table->rememberToken();
             $table->timestamps();
-            $table->dateTime('deleted_at');
         });
     }
 
