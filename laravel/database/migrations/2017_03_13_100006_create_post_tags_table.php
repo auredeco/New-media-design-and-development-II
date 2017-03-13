@@ -20,6 +20,10 @@ class CreatePostTagsTable extends Migration
             $table->timestamps();
 
             //FK
+            $table->integer('profile_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+
+            //Relations
             $table->foreign('profile_id')->references('id')->on('profiles');
             $table->foreign('category_id')->references('id')->on('categories');
         });

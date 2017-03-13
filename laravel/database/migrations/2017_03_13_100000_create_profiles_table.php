@@ -26,6 +26,9 @@ class CreateProfilesTable extends Migration
             $table->timestamps();
 
             //FK
+            $table->integer('user_id')->unsigned();
+
+            //Relation to users
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVotesTable extends Migration
+class CreateGroupElectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,17 @@ class CreateVotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('votes', function (Blueprint $table) {
+        Schema::create('group_elections', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
             //FK
-            $table->foreign('vote_type_id')->references('id')->on('vote_types');
+            $table->integer('group_id')->unsigned();
+            $table->integer('election_id')->unsigned();
+
+            //Relations
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->foreign('election_id')->references('id')->on('elections');
-            $table->foreign('referendum_id')->references('id')->on('referenda');
         });
     }
 
@@ -31,6 +34,6 @@ class CreateVotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('votes');
+        Schema::dropIfExists('group_elections');
     }
 }
