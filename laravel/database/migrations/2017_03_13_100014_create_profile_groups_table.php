@@ -16,6 +16,14 @@ class CreateProfileGroupsTable extends Migration
         Schema::create('profile_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            //FK
+            $table->integer('profile_id')->unsigned();
+            $table->integer('group_id')->unsigned();
+
+            //Relation
+            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 

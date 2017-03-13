@@ -16,6 +16,14 @@ class CreateProfileVotesTable extends Migration
         Schema::create('profile_votes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            //FK
+            $table->integer('vote_id')->unsigned();
+            $table->integer('profile_id')->unsigned();
+
+            //Relations
+            $table->foreign('vote_id')->references('id')->on('votes');
+            $table->foreign('profile_id')->references('id')->on('profiles');
         });
     }
 

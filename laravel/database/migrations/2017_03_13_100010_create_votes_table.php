@@ -16,6 +16,16 @@ class CreateVotesTable extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            //FK
+            $table->integer('vote_type_id')->unsigned();
+            $table->integer('election_id')->unsigned();
+            $table->integer('referendum_id')->unsigned();
+
+            //Relations
+            $table->foreign('vote_type_id')->references('id')->on('vote_types');
+            $table->foreign('election_id')->references('id')->on('elections');
+            $table->foreign('referendum_id')->references('id')->on('referenda');
         });
     }
 

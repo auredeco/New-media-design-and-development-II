@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVoteTypesTable extends Migration
+class CreateReferendaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class CreateVoteTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vote_types', function (Blueprint $table) {
+        Schema::create('referenda', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->text('description');
+            $table->dateTime('startDate');
+            $table->dateTime('endDate');
+            $table->boolean('isClosed');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateVoteTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vote_types');
+        Schema::dropIfExists('referendums');
     }
 }

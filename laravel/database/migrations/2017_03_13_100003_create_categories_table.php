@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupElectionsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateGroupElectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_elections', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateGroupElectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_elections');
+        Schema::dropIfExists('categories');
     }
 }
