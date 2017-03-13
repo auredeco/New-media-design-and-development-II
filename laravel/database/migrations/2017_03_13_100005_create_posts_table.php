@@ -18,6 +18,14 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->timestamps();
+
+            //FK
+            $table->integer('category_id')->unsigned();
+            $table->integer('profile_id')->unsigned();
+
+            //Relations
+            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
