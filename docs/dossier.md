@@ -187,14 +187,142 @@ Voor de clientside worden vooral de gebruikelijke technologieën gebruikt. HTML5
 ## Inspiration
 ### Ideaboards
 #### Aurelio
-![Ideaboard Aurelio](/content/ideaboards/ideebord-aurelio.jpg)
+![Ideaboard Aurelio](content/ideaboards/ideebord-aurelio.jpg)
 #### Basiel
-![Ideaboard Basiel](/content/ideaboards/ideaboard_Basiel.png)
+![Ideaboard Basiel](content/ideaboards/ideaboard_Basiel.png)
 ### Moodboard
-
+![Moodboard](content/moodboard/moodboard-aurelio.jpg)
 # Design
 ## Sitemap
+### App
+![App](content/sitemap/sitemap-APP.png)
+### Backoffice
+![Backoffice](content/sitemap/sitemapBACK.png)
 ## Wireframes
-## Style Tiles
+### 0.0 Home
+![wireframe](content/wireframes/0.0.0.png)
+### 0.0 Home ingelogd
+![wireframe](content/wireframes/0.0.png)
+### 0.1 Navigatie
+![wireframe](content/wireframes/0.1.png)
+
+### 1.0.0 Verkiezingen
+![wireframe](content/wireframes/1.0.0.png)
+
+### 1.0.0.0 Verkiezing Detail
+![wireframe](content/wireframes/1.0.0.0.png)
+
+### 1.0.0.0.0 Stem
+![wireframe](content/wireframes/1.0.0.0.0.png)
+
+### 1.0.0.0.1 Resultaat
+![wireframe](content/wireframes/1.0.0.0.1.png)
+
+### 1.0.1 
+![wireframe](content/wireframes/1.0.1.png)
+
+### 1.0.1.0 Partij detail
+![wireframe](content/wireframes/1.0.1.0.png)
+
+### 1.0.2 Groepen
+![wireframe](content/wireframes/1.0.2.png)
+
+### 1.1.0 Referenda
+![wireframe](content/wireframes/1.1.0.png)
+
+### 1.1.1 Referendum nieuw
+![wireframe](content/wireframes/1.1.1.png)
+
+### 1.1.0.1 Referendum detail
+![wireframe](content/wireframes/1.1.0.1.png)
+
+### 1.1.0.2 Referendum resultaat
+![wireframe](content/wireframes/1.1.0.2.png)
+
+### 1.2 Login 
+![wireframe](content/wireframes/1.2.png)
+
+### 1.2.0 Registreer 
+![wireframe](content/wireframes/1.2.0.png)
+
+### 1.3 Account overzicht
+![wireframe](content/wireframes/1.3.png)
+
+### 1.3.0 Account stemmen
+![wireframe](content/wireframes/1.3.0.png)
+
+## Style Tile
+![style tile](content/styletile/finaal.png)
+
 ## Visual Designs
+
+### 0.0 Home
+![style](content/styles/0.0.0.png)
+![style](content/styles/b.0.0.0.png)
+### 0.0 Home ingelogd
+![style](content/styles/0.0.png)
+![style](content/styles/b.0.0.png)
+### 0.1 Navigatie
+![style](content/styles/0.1.png)
+![style](content/styles/b.0.1.png)
+
+### 1.0.0 Verkiezingen
+![style](content/styles/1.0.0.png)
+![style](content/styles/b.1.0.0.png)
+
+### 1.0.0.0 Verkiezing Detail
+![style](content/styles/1.0.0.0.png)
+![style](content/styles/b.1.0.0.0.png)
+
+### 1.0.0.0.0 Stem
+![style](content/styles/1.0.0.0.0.png)
+![style](content/styles/b.1.0.0.0.0.png)
+
+### 1.0.0.0.1 Resultaat
+![style](content/styles/1.0.0.0.1.png)
+![style](content/styles/b.1.0.0.0.1.png)
+
+### 1.0.1 
+![style](content/styles/1.0.1.png)
+![style](content/styles/b.1.0.1.png)
+
+### 1.0.1.0 Partij detail
+![style](content/styles/1.0.1.0.png)
+![style](content/styles/b.1.0.1.0.png)
+
+### 1.0.2 Groepen
+![style](content/styles/1.0.2.png)
+![style](content/styles/b.1.0.2.png)
+
+### 1.1.0 Referenda
+![style](content/styles/1.1.0.png)
+![style](content/styles/b.1.1.0.png)
+
+### 1.1.1 Referendum nieuw
+![style](content/styles/1.1.1.png)
+![style](content/styles/b.1.1.1.png)
+
+### 1.1.0.1 Referendum detail
+![style](content/styles/1.1.0.1.png)
+![style](content/styles/b.1.1.0.1.png)
+
+### 1.1.0.2 Referendum resultaat
+![style](content/styles/1.1.0.2.png)
+![style](content/styles/b.1.1.0.2.png)
+
+### 1.2 Login 
+![style](content/styles/1.2.png)
+![style](content/styles/b.1.2.png)
+
+### 1.2.0 Registreer 
+![style](content/styles/1.2.0.png)
+![style](content/styles/b.1.2.0.png)
+
+### 1.3 Account overzicht
+![style](content/styles/1.3.png)
+![style](content/styles/b.1.3.png)
+
+### 1.3.0 Account stemmen
+![style](content/styles/1.3.0.png)
+![style](content/styles/b.1.3.0.png)
 
