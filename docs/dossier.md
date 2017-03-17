@@ -1,14 +1,14 @@
 # Inhoudstafel
-* [Discover](#Discover)
-    * [Briefing](#Briefing) 
-*   [Define](#Define)
-    *   [Analyse](#Analyse)
-    *   [Planning](#Planning)
-    *   [Inspiration](#Inspiration)
-*   [Design](#Design)
-*   [Development](#Development)
-*   [Define](#Deliver)
-*   [Deploy](#Deploy)
+* [Discover](#markdown-header-discover)
+    * [Briefing](#markdown-header-briefing) 
+*   [Define](#markdown-header-define)
+    *   [Analyse](#markdown-header-analyse)
+    *   [Planning](#markdown-header-planning)
+    *   [Inspiration](#markdown-header-inspiration)
+*   [Design](#markdown-header-design)
+*   [Development](#markdown-header-development)
+*   [Define](#markdown-header-deliver)
+*   [Deploy](#markdown-header-deploy)
 
 # Discover
 ## Briefing
