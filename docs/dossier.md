@@ -6,7 +6,7 @@
     *   [Planning](#Planning)
     *   [Inspiration](#Inspiration)
 *   [Design](#Design)
-*   [Develop](#Develop)
+*   [Development](#Development)
 *   [Define](#Deliver)
 *   [Deploy](#Deploy)
 
@@ -252,7 +252,7 @@ Voor de clientside worden vooral de gebruikelijke technologieën gebruikt. HTML5
 ![wireframe](content/wireframes/1.3.0.png)
 
 ## Style Tile
-![style tile](content/styletile/finaal.png)
+![style tile](content/styletile/finaal-01.png)
 
 ## Visual Designs
 
@@ -326,3 +326,7 @@ Voor de clientside worden vooral de gebruikelijke technologieën gebruikt. HTML5
 ![style](content/styles/1.3.0.png)
 ![style](content/styles/b.1.3.0.png)
 
+# Development
+## Database 
+### ERD 
+![ERD](content/erd/erd.png)
