@@ -1,5 +1,5 @@
-#Votebox
-
+# Votebox
+[Dossier](docs/dossier.md)
 <table>
   <tr>
     <td>Authors:</td>
