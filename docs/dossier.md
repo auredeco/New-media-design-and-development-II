@@ -1,14 +1,14 @@
 # Inhoudstafel
-* [Discover](#Discover)
-    * [Briefing](#Briefing) 
-*   [Define](#Define)
-    *   [Analyse](#Analyse)
-    *   [Planning](#Planning)
-    *   [Inspiration](#Inspiration)
-*   [Design](#Design)
-*   [Develop](#Develop)
-*   [Define](#Deliver)
-*   [Deploy](#Deploy)
+* [Discover](#markdown-header-discover)
+    * [Briefing](#markdown-header-briefing) 
+*   [Define](#markdown-header-define)
+    *   [Analyse](#markdown-header-analyse)
+    *   [Planning](#markdown-header-planning)
+    *   [Inspiration](#markdown-header-inspiration)
+*   [Design](#markdown-header-design)
+*   [Development](#markdown-header-development)
+*   [Define](#markdown-header-deliver)
+*   [Deploy](#markdown-header-deploy)
 
 # Discover
 ## Briefing
@@ -252,7 +252,7 @@ Voor de clientside worden vooral de gebruikelijke technologieën gebruikt. HTML5
 ![wireframe](content/wireframes/1.3.0.png)
 
 ## Style Tile
-![style tile](content/styletile/finaal.png)
+![style tile](content/styletile/finaal-01.png)
 
 ## Visual Designs
 
@@ -326,3 +326,7 @@ Voor de clientside worden vooral de gebruikelijke technologieën gebruikt. HTML5
 ![style](content/styles/1.3.0.png)
 ![style](content/styles/b.1.3.0.png)
 
+# Development
+## Database 
+### ERD 
+![ERD](content/erd/erd.png)
