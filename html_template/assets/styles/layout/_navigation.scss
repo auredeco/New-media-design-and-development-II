@@ -1,0 +1,44 @@
+#mobile-nav {
+    position: fixed;
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    background: $main;
+    margin-left: -40%;
+
+    h1 {
+        font-size: 1.5rem;
+        font-family: $Roboto;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    i {
+        margin-left: 0;
+    }
+
+    li {
+        padding: 1rem;
+        text-align: center;
+
+        a {
+            width: 100%;
+            margin: -1rem;
+            text-decoration: none;
+        }
+    }
+
+    li:hover {
+        background: white;
+    }
+}
+
+.is-open {
+    margin-left: 40% !important;
+    -webkit-transition: 500ms;
+    -moz-transition: 500ms;
+    -ms-transition: 500ms;
+    -o-transition: 500ms;
+    transition: 500ms;
+}

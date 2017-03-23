@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Roboto");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif; }
+  body a {
+    color: black; }
+
+/**************************************
+               Colors
+**************************************/
+/**************************************
+               Colors
+**************************************/
+.container {
+  width: 80%;
+  margin: auto;
+  display: flex; }
+
+header {
+  background: #D7DD35;
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  align-items: center; }
+  header h1 {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    font-family: "Roboto"; }
+
+#mobile-nav {
+  position: fixed;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  background: #D7DD35;
+  margin-left: -40%; }
+  #mobile-nav h1 {
+    font-size: 1.5rem;
+    font-family: "Roboto";
+    padding: 1rem;
+    text-align: center; }
+  #mobile-nav i {
+    margin-left: 0; }
+  #mobile-nav li {
+    padding: 1rem;
+    text-align: center; }
+    #mobile-nav li a {
+      width: 100%;
+      margin: -1rem;
+      text-decoration: none; }
+  #mobile-nav li:hover {
+    background: white; }
+
+.is-open {
+  margin-left: 40% !important;
+  -webkit-transition: 500ms;
+  -moz-transition: 500ms;
+  -ms-transition: 500ms;
+  -o-transition: 500ms;
+  transition: 500ms; }
+
+/*# sourceMappingURL=main.css.map */
