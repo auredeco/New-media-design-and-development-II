@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GroupElection extends Model
+class Group_user extends Model
 {
     //
 }

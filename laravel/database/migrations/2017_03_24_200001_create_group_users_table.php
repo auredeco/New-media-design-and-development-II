@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateElectionsTable extends Migration
+class CreateGroupUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateElectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('elections', function (Blueprint $table) {
+        Schema::create('group_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->dateTime('startDate');
-            $table->dateTime('endDate');
-            $table->boolean('isClosed');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateElectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('elections');
+        Schema::dropIfExists('group_users');
     }
 }
