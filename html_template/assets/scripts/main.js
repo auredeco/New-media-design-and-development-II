@@ -5,7 +5,16 @@
 
     //When the hamburger icon is clicked, open the navbar.
     hamburger.addEventListener('click', function(){
-        let body = document.querySelector("body");    
-        body.classList.toggle("is-open"); 
+        let nav = document.querySelector("#mobile-nav");
+        nav.classList.remove("is-closed");
+        nav.classList.add("is-open");
+    })
+
+    let cross = document.querySelector('#cross');
+
+    cross.addEventListener('click', function(){
+        let nav = document.querySelector("#mobile-nav");
+        nav.classList.remove("is-open");
+        nav.classList.add("is-closed");
     })
 })();

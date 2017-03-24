@@ -1,0 +1,52 @@
+#cards {
+  margin-top: 2rem;
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+.card-field {
+  header {
+    background: white;
+    display: flex;
+    flex-direction: row;
+
+    padding: 0;
+
+    .tab {
+      padding: 1rem;
+    }
+
+    .active {
+      background: lighten($green, 20%);
+      border-radius: 5px 5px 0 0;
+      border: 2px solid $green;
+      border-bottom: 0px;
+    }
+  }
+
+  .card {
+    padding: 1rem;
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 1.2;
+
+    a {
+      text-decoration: none;
+    }
+
+    .card-element {
+      padding: 0.5rem;
+      text-align: left;
+      margin: 0 2px;
+      font-size: 0.8rem;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -45,6 +45,13 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Open Sans', sans-serif; }
+  body main {
+    padding: 1rem; }
+    body main #logo {
+      width: 50%;
+      margin: auto; }
+      body main #logo img {
+        width: 100%; }
   body a {
     color: black; }
 
@@ -54,6 +61,68 @@ body {
 /**************************************
                Colors
 **************************************/
+.button-field {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-family: "Roboto"; }
+  .button-field .btn {
+    border-radius: 5px;
+    border: none;
+    flex-grow: 1;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin: 0 0.5rem; }
+  .button-field .btn:first-child {
+    margin-left: 0; }
+  .button-field .green {
+    color: white;
+    background: #9BC53D;
+    border-bottom: 2px solid #5e7824; }
+  .button-field .blue {
+    color: white;
+    background: #347C90;
+    border-bottom: 2px solid #193b45; }
+  .button-field .white {
+    color: #347C90;
+    background: white;
+    border: 1px solid #347C90; }
+
+#cards {
+  margin-top: 2rem; }
+  #cards h1 {
+    margin-bottom: 1rem; }
+
+.card-field header {
+  background: white;
+  display: flex;
+  flex-direction: row;
+  padding: 0; }
+  .card-field header .tab {
+    padding: 1rem; }
+  .card-field header .active {
+    background: #c3dc8c;
+    border-radius: 5px 5px 0 0;
+    border: 2px solid #9BC53D;
+    border-bottom: 0px; }
+.card-field .card {
+  padding: 1rem;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 1.2; }
+  .card-field .card a {
+    text-decoration: none; }
+  .card-field .card .card-element {
+    padding: 0.5rem;
+    text-align: left;
+    margin: 0 2px;
+    font-size: 0.8rem; }
+    .card-field .card .card-element img {
+      width: 100%; }
+
 .container {
   width: 80%;
   margin: auto;
@@ -66,6 +135,7 @@ header {
   padding: 1rem;
   align-items: center; }
   header h1 {
+    color: white;
     margin-left: 1rem;
     font-size: 1.5rem;
     font-family: "Roboto"; }
@@ -73,30 +143,42 @@ header {
 #mobile-nav {
   position: fixed;
   height: 100%;
-  width: 40%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background: #D7DD35;
-  margin-left: -40%; }
-  #mobile-nav h1 {
-    font-size: 1.5rem;
-    font-family: "Roboto";
-    padding: 1rem;
-    text-align: center; }
-  #mobile-nav i {
-    margin-left: 0; }
+  margin-left: 0%; }
+  #mobile-nav header {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
+    #mobile-nav header img {
+      width: 200px; }
   #mobile-nav li {
     padding: 1rem;
-    text-align: center; }
+    text-align: left;
+    display: flex; }
+    #mobile-nav li i {
+      margin-right: 0.5rem; }
     #mobile-nav li a {
       width: 100%;
-      margin: -1rem;
-      text-decoration: none; }
+      text-decoration: none;
+      color: white; }
   #mobile-nav li:hover {
-    background: white; }
+    background: white;
+    color: black; }
 
 .is-open {
-  margin-left: 40% !important;
+  margin-left: 0% !important;
+  -webkit-transition: 500ms;
+  -moz-transition: 500ms;
+  -ms-transition: 500ms;
+  -o-transition: 500ms;
+  transition: 500ms; }
+
+.is-closed {
+  margin-left: -100% !important;
   -webkit-transition: 500ms;
   -moz-transition: 500ms;
   -ms-transition: 500ms;

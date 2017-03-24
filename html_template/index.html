@@ -10,19 +10,45 @@
     </head>
     <body>
         <nav id="mobile-nav">
-            <h1>Votebox</h1>
+            <header>
+                <img src="assets/images/logo.svg">
+                <i class="fa fa-times fa-2x" aria-hidden="true" id="cross"></i>
+            </header>
             <ul>
                 <li>
+                    <i class="fa fa-home" aria-hidden="true"></i>
                     <a href="#">
-                        <i class="fa fa-home" aria-hidden="true"></i>Home
+                        Home
                     </a>
                 </li>
                 <li>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <a href="#">Verkiezingen</a>
+                </li>
+                <li>
+                    <i class="fa fa-comments" aria-hidden="true"></i>
                     <a href="#">
-                        <i class="fa fa-comments" aria-hidden="true"></i>Referenda
+                        Referenda
                     </a>
                 </li>
-                <li><a href="#">Home</a></li>
+                <li>
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <a href="#">
+                        Mijn Profiel
+                    </a>
+                </li>
+                <li>
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                    <a href="#">
+                        Instellingen
+                    </a>
+                </li>
+                <li>
+                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                    <a href="#">
+                        Inloggen
+                    </a>
+                </li>
             </ul>
         </nav>
         <header>
@@ -33,6 +59,44 @@
             </figure>
             <h1>Votebox</h1>
         </header>
+        <main>
+            <figure id="logo">
+                <img src="assets/images/logo-square.svg">
+            </figure>
+            <div id="buttons">
+            <h1>Buttons</h1>
+                <div class="button-field">
+                    <button class="btn green">Agree</button>
+                    <button class="btn blue">Agree</button>
+                    <button class="btn white">Agree</button>
+                </div>
+            </div>
+            <div id="cards">
+                <h1>Cards</h1>
+                <div class="card-field">
+                    <div class="card-with-header">
+                        <header>
+                            <div class="tab active">Verkiezingen</div>
+                            <div class="tab">Referenda</div>
+                        </header>
+                        <div class="card">
+                            <a href="">
+                                <div class="card-element">
+                                    <img src="assets/images/logo-square.svg">
+                                    <p>Federale verkiezingen 2018</p>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div class="card-element">
+                                    <img src="assets/images/logo-square.svg">
+                                    <p>Federale verkiezingen 2018</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
         <script src="assets/scripts/main.js"></script>
     </body>
 </html>
