@@ -73,7 +73,8 @@ body {
     padding: 0.5rem 0;
     font-size: 1rem;
     text-transform: uppercase;
-    margin: 0 0.5rem; }
+    margin: 0 0.5rem;
+    font-weight: bold; }
   .button-field .btn:first-child {
     margin-left: 0; }
   .button-field .green {
@@ -94,34 +95,83 @@ body {
   #cards h1 {
     margin-bottom: 1rem; }
 
-.card-field header {
+.card-field .card-with-header header {
   background: white;
   display: flex;
   flex-direction: row;
   padding: 0; }
-  .card-field header .tab {
+  .card-field .card-with-header header .tab {
     padding: 1rem; }
-  .card-field header .active {
+  .card-field .card-with-header header .active {
     background: #c3dc8c;
     border-radius: 5px 5px 0 0;
     border: 2px solid #9BC53D;
     border-bottom: 0px; }
-.card-field .card {
+.card-field .card-with-header .card {
   padding: 1rem;
   border: 1px solid gray;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   line-height: 1.2; }
-  .card-field .card a {
+  .card-field .card-with-header .card a {
     text-decoration: none; }
-  .card-field .card .card-element {
+  .card-field .card-with-header .card .card-element {
     padding: 0.5rem;
     text-align: left;
     margin: 0 2px;
     font-size: 0.8rem; }
-    .card-field .card .card-element img {
+    .card-field .card-with-header .card .card-element img {
       width: 100%; }
+.card-field .standard-card {
+  margin-top: 1rem; }
+  .card-field .standard-card .card-wrapper {
+    box-shadow: 0px 2px 5px #888888;
+    padding: 1rem; }
+    .card-field .standard-card .card-wrapper .card {
+      display: flex;
+      flex-direction: column; }
+      .card-field .standard-card .card-wrapper .card img {
+        background: lightblue;
+        height: 200px; }
+      .card-field .standard-card .card-wrapper .card .card-info {
+        padding: 0.5rem 0;
+        line-height: 1.2; }
+        .card-field .standard-card .card-wrapper .card .card-info h1 {
+          font-weight: bold; }
+        .card-field .standard-card .card-wrapper .card .card-info p {
+          color: gray; }
+        .card-field .standard-card .card-wrapper .card .card-info ul {
+          margin-top: 1rem; }
+          .card-field .standard-card .card-wrapper .card .card-info ul li {
+            list-style: initial;
+            margin-left: 1rem;
+            font-weight: bold; }
+        .card-field .standard-card .card-wrapper .card .card-info .open {
+          color: #9BC53D; }
+        .card-field .standard-card .card-wrapper .card .card-info .closed {
+          color: red; }
+      .card-field .standard-card .card-wrapper .card .button-field {
+        display: block; }
+
+#formfield {
+  margin-top: 1rem; }
+
+.form-field form {
+  padding: 1rem;
+  box-shadow: 0px 2px 5px #888888; }
+  .form-field form .form-item {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0 1rem 0; }
+    .form-field form .form-item label {
+      margin-bottom: 0.5rem;
+      font-weight: bold; }
+    .form-field form .form-item input {
+      padding: 0.5rem;
+      border-radius: 2px;
+      border: 1px solid gray;
+      color: gray; }
 
 .container {
   width: 80%;
