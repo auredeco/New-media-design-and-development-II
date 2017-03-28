@@ -18,6 +18,18 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->timestamps();
+
+            //Relation on users table
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            //Relation on users table
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups');
+
+            //Relation on users table
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

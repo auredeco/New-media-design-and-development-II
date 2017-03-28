@@ -17,8 +17,20 @@ class CreateReferendumsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('description');
-            $table->nullableTimestamps('published');
+            $table->dateTime('published')->nullable();
             $table->timestamps();
+
+            //Relation on candidates table
+            $table->integer('candidate_id')->unsigned();
+            $table->foreign('candidate_id')->references('id')->on('candidates');
+
+            //Relation on groups table
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups');
+
+            //Relation on votamanagers table
+            $table->integer('votemanager_id')->unsigned();
+            $table->foreign('votemanager_id')->references('id')->on('votemanagers');
         });
     }
 

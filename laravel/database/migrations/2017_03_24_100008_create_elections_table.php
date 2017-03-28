@@ -22,7 +22,13 @@ class CreateElectionsTable extends Migration
             $table->boolean('isClosed');
             $table->timestamps();
 
+            //Relation on groups table
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups');
 
+            //Relation on votemanagers table
+            $table->integer('votemanager_id')->unsigned();
+            $table->foreign('votemanager_id')->references('id')->on('votemanagers');
         });
     }
 

@@ -16,6 +16,14 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            //Relation on users table
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            //Relation on parties table
+            $table->integer('party_id')->unsigned();
+            $table->foreign('party_id')->references('id')->on('parties');
         });
     }
 

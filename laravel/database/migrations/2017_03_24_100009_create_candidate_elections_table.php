@@ -17,6 +17,14 @@ class CreateCandidateElectionsTable extends Migration
             $table->increments('id');
             $table->double('score');
             $table->timestamps();
+
+            //Relation on candidates table
+            $table->integer('candidate_id')->unsigned();
+            $table->foreign('candidate_id')->references('id')->on('candidates');
+
+            //Relation on elections table
+            $table->integer('election_id')->unsigned();
+            $table->foreign('election_id')->references('id')->on('elections');
         });
     }
 
