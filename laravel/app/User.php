@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Voter;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -26,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * Relates a user with a voter
+     */
+    public function voter()
+    {
+        return $this->belongsTo(Voter::class, 'id');
+    }
 }
