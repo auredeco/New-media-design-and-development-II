@@ -8,6 +8,6 @@ class Party extends Model
 {
     public function candidates()
     {
-        return $this->hasMany(Candidate::class, 'id');
+        return $this->hasMany(Candidate::class);
     }
 }

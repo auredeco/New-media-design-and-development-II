@@ -21,12 +21,16 @@ class CreateVotesTable extends Migration
             $table->timestamps();
 
             //Relation on candidates_elections table
-            $table->integer('CandidateElection_id')->unsigned();
+            $table->integer('CandidateElection_id')->unsigned()->nullable();
             $table->foreign('CandidateElection_id')->references('id')->on('candidate_elections');
 
             //Relation on users table
             $table->integer('voter_id')->unsigned();
             $table->foreign('voter_id')->references('id')->on('voters');
+
+            //Relation on Referendums table
+            $table->integer('referendum_id')->unsigned()->nullable();
+            $table->foreign('referendum_id')->references('id')->on('referendums');
         });
     }
 
