@@ -83,7 +83,7 @@
                 </div>
 
                 @foreach($candidates as $candidate)
-                    <p>{{ $candidate->candidates }}</p>
+                    <p>{{ $candidate }}</p>
                 @endforeach
 
                 <div class="links">

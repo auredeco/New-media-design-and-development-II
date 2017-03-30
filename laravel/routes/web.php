@@ -15,7 +15,7 @@ use App\Models\Party;
 
 Route::get('/', function () {
 
-    $candidates = Party::find(1)->get();
+    $candidates = Party::find(1)->candidates;
 
     //return $candidates;
     return view('welcome', compact('candidates'));
