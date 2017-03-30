@@ -11,6 +11,12 @@
 |
 */
 
+use App\Models\Party;
+
 Route::get('/', function () {
-    return view('welcome');
+
+    $candidates = Party::find(1)->get();
+
+    //return $candidates;
+    return view('welcome', compact('candidates'));
 });
