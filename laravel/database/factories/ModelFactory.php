@@ -49,9 +49,9 @@ $factory->define(App\Models\Voter::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-//        'user_id' => function () {
-//            return factory(App\User::class)->create()->id;
-//        }
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        }
     ];
 });
 $factory->define(App\Models\Party::class, function (Faker\Generator $faker) {
@@ -66,9 +66,11 @@ $factory->define(App\Models\Candidate::class, function (Faker\Generator $faker) 
     static $password;
 
     return [
-//        'user_id' => function () {
-//            return factory(App\User::class)->create()->id;
-//        },
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        },
+        //todo proper foreign keys
+        'party_id' => "1"
 //        'party_id' => function () {
 //            return factory(App\Models\Party::class)->create()->id;
 //        }
@@ -88,7 +90,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
     $startDate = $faker->dateTimeThisYear;
     $endDate = $faker->dateTimeBetween($startDate, "+1 month");
     $currentState = false;
-    if($endDate > date() && $startDate < date()){
+    if($endDate > date('Y-m-d H:i:s') && $startDate < date('Y-m-d H:i:s')){
         $currentState = true;
     }
 
@@ -98,6 +100,9 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'startDate' => $startDate,
         'endDate' => $endDate,
         'isClosed' => $currentState,
+        //todo proper foreign keys
+        'group_id' => "1",
+        'votemanager_id' => "1",
 
 //        'group_id' => function () {
 //            return factory(App\Models\Group::class)->create()->id;
@@ -114,6 +119,9 @@ $factory->define(App\Models\Candidate_election::class, function (Faker\Generator
     return [
         'score' =>  mt_rand(0.00, 5000.00),
 
+        //todo proper foreign keys
+        'candidate_id' => "1",
+        'election_id' => "1",
 //        'candidate_id' => function () {
 //            return factory(App\Models\Candidate::class)->create()->id;
 //        },
@@ -129,6 +137,11 @@ $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker)
         'title' => $faker->title,
         'description' => $faker->sentence,
         'published' => $faker->dateTimeThisYear,
+
+        //todo proper foreign keys
+        'candidate_id' => "1",
+        'group_id' => "1",
+        'votemanager_id' => "1",
 
 //        'candidate_id' => function () {
 //            return factory(App\Models\Candidate::class)->create()->id;
@@ -147,10 +160,20 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
 });
 $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
     static $password;
+    $voteType = false;
+    if(rand(0,1)===1){
+        $voteType = true;
+    }
+
 
     return [
-        'voteType' => $faker->randomElements(false, true),
+        'voteType' => $faker->$voteType,
+//        'voteType' => $faker->randomElements($array = array (0, 1)),
         'hashCode' => $faker->word,
+
+        //todo proper foreign keys
+        'CandidateElection_id' => "1",
+        'voter_id' => "1",
 
 //        'CandidateElection_id' => function () {
 //            return factory(App\Models\Candidate_election::class)->create()->id;
@@ -174,6 +197,10 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         'title' => $faker->title,
         'description' => $faker->sentence,
 
+        //todo proper foreign keys
+        'user_id' => "1",
+        'group_id' => "1",
+        'category_id' => "1",
 //        'user_id' => function () {
 //            return factory(App\Models\User::class)->create()->id;
 //        },
@@ -189,6 +216,10 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
+
+        //todo proper foreign keys
+        'user_id' => "1",
+        'group_id' => "1",
 //        'user_id' => function () {
 //            return factory(App\Models\User::class)->create()->id;
 //        },
@@ -201,6 +232,9 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
+        //todo proper foreign keys
+        'post_id' => "1",
+        'tag_id' => "1",
 //        'post_id' => function () {
 //            return factory(App\Models\Post::class)->create()->id;
 //        },

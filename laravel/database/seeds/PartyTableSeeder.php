@@ -11,6 +11,7 @@ class PartyTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Models\Party::class, 5)->create();
+
     }
 }

@@ -11,6 +11,7 @@ class ReferendumTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Models\Referendum::class, 20)->create();
+
     }
 }

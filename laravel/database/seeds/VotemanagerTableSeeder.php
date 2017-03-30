@@ -11,6 +11,7 @@ class VotemanagerTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Models\Votemanager::class, 10)->create();
+
     }
 }

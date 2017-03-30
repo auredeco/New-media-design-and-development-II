@@ -11,6 +11,7 @@ class GroupTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Models\Group::class, 10)->create();
+
     }
 }
