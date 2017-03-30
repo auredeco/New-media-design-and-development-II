@@ -15,6 +15,7 @@ class PartyController extends Controller
 
     public function detail(Party $party)
     {
-        return view('details.party', compact('party'));
+        return view('detail.party', compact('party'));
     }
 }
+

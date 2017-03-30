@@ -15,6 +15,6 @@ class ElectionController extends Controller
 
     public function detail(Election $election)
     {
-        return view('details.election', compact('election'));
+        return view('detail.election', compact('election'));
     }
 }

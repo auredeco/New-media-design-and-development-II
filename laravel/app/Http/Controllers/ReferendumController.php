@@ -15,6 +15,6 @@ class ReferendumController extends Controller
 
     public function detail(Referendum $referendum)
     {
-        return view('details.referendum', compact('referendum'));
+        return view('detail.referendum', compact('referendum'));
     }
 }

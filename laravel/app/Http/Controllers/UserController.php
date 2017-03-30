@@ -15,6 +15,6 @@ class UserController extends Controller
 
     public function detail(User $user)
     {
-        return view('details.user', compact('user'));
+        return view('detail.user', compact('user'));
     }
 }
