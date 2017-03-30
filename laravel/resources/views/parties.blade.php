@@ -10,6 +10,10 @@
 </head>
 <body>
 Parties
-
+<ul>
+    @foreach($parties as $item)
+        <li><a href="/parties/{{$item->id}}">{{$item->name}}</a></li>
+    @endforeach
+</ul>
 </body>
 </html>

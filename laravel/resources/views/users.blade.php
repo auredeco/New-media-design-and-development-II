@@ -9,5 +9,12 @@
 </head>
 <body>
 Users
+<ul>
+    @foreach($users as $item)
+        <li><a href="/users/{{$item->id}}">{{$item->username}}</a></li>
+    @endforeach
+</ul>
+
+
 </body>
 </html>

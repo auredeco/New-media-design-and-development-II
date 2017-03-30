@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
+});
+
+Route::get('/users', 'UserController@index');
+Route::get('/users/{user}', 'UserController@detail');
+
+Route::get('/parties', 'PartyController@index');
+Route::get('/party/{party}', 'PartyController@detail');
+
+Route::get('/referenda', 'ReferendumController@index');
+Route::get('/referenda/{referendum}', 'ReferendumController@detail');
+
+Route::get('/elections', 'ElectionController@index');
+Route::get('/elections/{election}', 'ElectionController@detail');
+
+Route::get('/settings', function () {
+    return view('settings');
+});
+
+Route::get('/login', function () {
+    return view('login');
 });

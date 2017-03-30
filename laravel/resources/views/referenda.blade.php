@@ -9,5 +9,10 @@
 </head>
 <body>
 Referenda
+<ul>
+    @foreach($referenda as $item)
+        <li><a href="/referenda/{{$item->id}}">{{$item->title}}</a></li>
+    @endforeach
+</ul>
 </body>
 </html>
