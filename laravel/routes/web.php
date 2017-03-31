@@ -11,9 +11,7 @@ use App\User;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', 'DashboardController@index');
 
 Route::get('/users', 'UserController@index');
 Route::get('/users/{user}', 'UserController@detail');
@@ -26,6 +24,9 @@ Route::get('/referenda/{referendum}', 'ReferendumController@detail');
 
 Route::get('/elections', 'ElectionController@index');
 Route::get('/elections/{election}', 'ElectionController@detail');
+
+Route::get('/groups', 'GroupController@index');
+Route::get('/groups/{group}', 'GroupController@detail');
 
 Route::get('/settings', function () {
     return view('settings');
