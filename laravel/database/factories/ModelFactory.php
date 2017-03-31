@@ -124,12 +124,6 @@ $factory->define(App\Models\Candidate_election::class, function (Faker\Generator
         //todo proper foreign keys
         'candidate_id' => "1",
         'election_id' => "1",
-//        'candidate_id' => function () {
-//            return factory(App\Models\Candidate::class)->create()->id;
-//        },
-//         'election_id' => function () {
-//            return factory(App\Models\Election::class)->create()->id;
-//        },
     ];
 });
 $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker) {
@@ -167,41 +161,27 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
     ];
 });
 $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
-    $voteType = false;
-    if(rand(0,1)===1){
-        $voteType = true;
-    }
-
-
     return [
-        'voteType' => $faker->$voteType,
-//        'voteType' => $faker->randomElements($array = array (0, 1)),
-        'hashCode' => $faker->word,
+        'voteType' => $faker->boolean(50),
+        'hashCode' => bcrypt($faker->word),
 
         //todo proper foreign keys
         'CandidateElection_id' => "1",
-        'voter_id' => "1",
-
-//        'CandidateElection_id' => function () {
-//            return factory(App\Models\Candidate_election::class)->create()->id;
-//        },
-//         'voter_id' => function () {
-//            return factory(App\Models\Voter::class)->create()->id;
-//        },
+        'voter_id' => random_int(
+            \DB::table('voters')
+                ->min('id'),
+            \DB::table('voters')
+                ->max('id')),
     ];
 });
 $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'name' => $faker->word,
     ];
 });
 $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
-        'title' => $faker->title,
+        'title' => $faker->sentence,
         'description' => $faker->sentence,
 
         //todo proper foreign keys
@@ -222,40 +202,5 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
                 ->min('id'),
             \DB::table('categories')
                 ->max('id')),
-
-    ];
-});
-$factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
-    static $password;
-
-    return [
-
-        //todo proper foreign keys
-        'user_id' => random_int(
-            \DB::table('users')
-                ->min('id'),
-            \DB::table('users')
-                ->max('id')),
-
-        'group_id' => random_int(
-            \DB::table('groups')
-                ->min('id'),
-            \DB::table('groups')
-                ->max('id')),
-    ];
-});
-$factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
-    static $password;
-
-    return [
-        //todo proper foreign keys
-        'post_id' => "1",
-        'tag_id' => "1",
-//        'post_id' => function () {
-//            return factory(App\Models\Post::class)->create()->id;
-//        },
-//         'tag_id' => function () {
-//             return factory(App\Models\Tag::class)->create()->id;
-//         }
     ];
 });

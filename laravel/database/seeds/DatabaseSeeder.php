@@ -22,14 +22,11 @@ class DatabaseSeeder extends Seeder
          $this->call(CandidateElectionTableSeeder::class);
          $this->call(ReferendumTableSeeder::class);
          $this->call(CategoryTableSeeder::class);
-
-
-         //todo Unknown formatter
-//       $this->call(VoteTableSeeder::class);
+         $this->call(VoteTableSeeder::class);
+         $this->call(TagTableSeeder::class);
+         $this->call(PostTableSeeder::class);
         //todo blog tables
-//         $this->call(TagTableSeeder::class);
-//         $this->call(PostTableSeeder::class);
+
 //         $this->call(GroupUserTableSeeder::class);
-//         $this->call(PostTagTableSeeder::class);
     }
 }
