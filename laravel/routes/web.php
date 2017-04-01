@@ -11,6 +11,7 @@ use App\User;
 |
 */
 
+
 Route::get('/', 'DashboardController@index');
 Route::resource('users', 'UserController');
 Route::resource('parties', 'PartyController');
