@@ -11,6 +11,6 @@ class CandidateTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Candidate::class, 20)->create();
+        factory(App\Models\Candidate::class, 100)->create();
     }
 }

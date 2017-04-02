@@ -45,6 +45,6 @@ class Candidate extends Model
      */
     public function elections()
     {
-        return $this->belongsToMany(Election::class);
+        return $this->belongsToMany(Election::class, 'candidate_elections');
     }
 }

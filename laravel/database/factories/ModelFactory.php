@@ -46,8 +46,6 @@ $factory->define(App\Models\Votemanager::class, function (Faker\Generator $faker
     ];
 });
 $factory->define(App\Models\Voter::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
@@ -55,16 +53,12 @@ $factory->define(App\Models\Voter::class, function (Faker\Generator $faker) {
     ];
 });
 $factory->define(App\Models\Party::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
     ];
 });
 $factory->define(App\Models\Candidate::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
@@ -79,15 +73,12 @@ $factory->define(App\Models\Candidate::class, function (Faker\Generator $faker) 
 
 });
 $factory->define(App\Models\Group::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
     ];
 });
 $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
-    static $password;
     $startDate = $faker->dateTimeThisYear;
     $endDate = $faker->dateTimeBetween($startDate, "+1 month");
     $currentState = false;
@@ -101,7 +92,6 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'startDate' => $startDate,
         'endDate' => $endDate,
         'isClosed' => $currentState,
-        //todo proper foreign keys
         'group_id' => random_int(
             \DB::table('groups')
                 ->min('id'),
@@ -116,25 +106,31 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
     ];
 });
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
-    static $password;
+
+
 
     return [
         'score' =>  mt_rand(0.00, 5000.00),
 
         //todo proper foreign keys
-        'candidate_id' => "1",
-        'election_id' => "1",
+        'election_id' => random_int(
+            \DB::table('elections')
+                ->min('id'),
+            \DB::table('elections')
+                ->max('id')),
+        'candidate_id' => random_int(
+            \DB::table('candidates')
+                ->min('id'),
+            \DB::table('candidates')
+                ->max('id')),
     ];
 });
 $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker) {
-    static $password;
-
     return [
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'published' => $faker->dateTimeThisYear,
 
-        //todo proper foreign keys
         'candidate_id' => random_int(
             \DB::table('candidates')
                 ->min('id'),
@@ -166,7 +162,11 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
         'hashCode' => bcrypt($faker->word),
 
         //todo proper foreign keys
-        'CandidateElection_id' => "1",
+        'CandidateElection_id' => random_int(
+            \DB::table('candidate_elections')
+                ->min('id'),
+            \DB::table('candidate_elections')
+                ->max('id')),
         'voter_id' => random_int(
             \DB::table('voters')
                 ->min('id'),
@@ -184,7 +184,6 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence,
         'description' => $faker->sentence,
 
-        //todo proper foreign keys
         'user_id' => random_int(
             \DB::table('users')
                 ->min('id'),

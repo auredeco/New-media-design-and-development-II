@@ -11,7 +11,7 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Post::class, 20)->create();
+        factory(App\Models\Post::class, 50)->create();
 
 
         //Seed the post_tags table
