@@ -12,11 +12,36 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id', 'asc')->paginate(10);
+        $keyword = $request->input('keyword');
+
+        if ($keyword != '') {
+            $users = User::SearchByKeyword($keyword)->paginate(10);
+        } else {
+            $users = User::orderBy('id','asc')->paginate(10);
+        }
+
+//        $users = User::orderBy('id', 'asc')->paginate(10);
         return view('users', compact('users'));
+
+
     }
+
+//    public function index(Request $request) {
+//
+//        $keyword = $request->input('keyword');
+//
+//        if ($keyword != '') {
+//            $users = User::SearchByKeyword($keyword)->paginate(15);
+//        } else {
+//            $users = User::orderBy('lastname','asc')->paginate(15);
+//        }
+//
+//
+//        return view('users.index', compact('users'));
+//
+//    }
 
     /**
      * Show the form for creating a new resource.

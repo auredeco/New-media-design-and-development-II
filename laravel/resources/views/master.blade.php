@@ -63,10 +63,11 @@
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
+                    @yield('breadcrumb')
                     <h1 class="page-header">
                         @yield('title')
                     </h1>
-                    @yield('breadcrumb')
+
                 </div>
             </div>
             <!-- /.row -->

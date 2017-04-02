@@ -69,4 +69,19 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Group::class, 'group_users');
     }
+
+    public function scopeSearchByKeyword($query, $keyword)
+    {
+        if ($keyword!='') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("firstname", "LIKE","%$keyword%")
+                    ->orWhere("lastname", "LIKE", "%$keyword%")
+                    ->orWhere("email", "LIKE", "%$keyword%")
+                    ->orWhere("gender", "=", "$keyword")
+                    ->orWhere("username", "LIKE", "%$keyword%")
+                    ->orWhere("birthdate", "LIKE", "%$keyword%");
+            });
+        }
+        return $query;
+    }
 }
