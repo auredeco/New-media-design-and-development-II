@@ -20,6 +20,16 @@
     </ol>
 @endsection
 @section('content')
+    <ul class="list-inline">
+
+        <li>
+            <form action="/elections">
+                <input type="text" name="keyword" id="keyword">
+                <input type="submit" name="submit" value="Search">
+            </form>
+        </li>
+        <li><a href="/elections">reset filters</a> </li>
+    </ul>
     <table class="table">
         <thead>
         <tr>

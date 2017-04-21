@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/groups">
+                <a href="/referenda">
                     <div class="panel-footer">
                         <span class="pull-left">View all Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/groups">
+                <a href="/referenda">
                     <div class="panel-footer">
                         <span class="pull-left">View all Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/groups">
+                <a href="/referenda">
                     <div class="panel-footer">
                         <span class="pull-left">View all referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/users">
+                <a href="/elections">
                     <div class="panel-footer">
                         <span class="pull-left">View All elections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -175,7 +175,6 @@
                 </a>
             </div>
         </div>
-        {{--groups--}}
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
@@ -189,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/groups">
+                <a href="/elections">
                     <div class="panel-footer">
                         <span class="pull-left">View all ellections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

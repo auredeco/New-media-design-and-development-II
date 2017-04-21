@@ -12,9 +12,35 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::orderBy('id', 'asc')->paginate(10);
+
+        $keyword = $request->input('keyword');
+
+        if ($keyword != '') {
+
+
+            switch (strtolower($keyword)){
+                case 'all':{
+                    $groups = Group::orderBy('id','asc')->paginate(10);
+                    $groups->withPath('groups?keyword=all');
+
+                }break;
+
+
+                default : {
+                    $groups = Group::SearchByKeyword($keyword)->paginate(10);
+                    $groups->withPath('groups?keyword=' . strtolower($keyword));
+                }
+            }
+        }
+        else
+        {
+            $groups = Group::orderBy('id','asc')->paginate(10);
+            $groups->withPath('groups?keyword=all');
+
+        }
+
         return view('groups', compact('groups'));
     }
 
