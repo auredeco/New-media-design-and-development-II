@@ -18,7 +18,15 @@ class UserController extends Controller
 
         if ($keyword != '') {
             $users = User::SearchByKeyword($keyword)->paginate(10);
-        } else {
+        }
+//        elseif($keyword == 'male') {
+//            $users = User::where('gender','male')->paginate(10);
+//        }
+//        elseif($keyword == 'female') {
+//            $users = User::where('gender','female')->paginate(10);
+//        }
+        else
+        {
             $users = User::orderBy('id','asc')->paginate(10);
         }
 

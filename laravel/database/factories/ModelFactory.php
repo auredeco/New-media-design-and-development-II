@@ -126,10 +126,17 @@ $factory->define(App\Models\Candidate_election::class, function (Faker\Generator
     ];
 });
 $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker) {
+    $startDate = $faker->dateTimeThisYear;
+    $endDate = $faker->dateTimeBetween($startDate, "+1 month");
+    $currentState = false;
+    if($endDate > date('Y-m-d H:i:s') && $startDate < date('Y-m-d H:i:s')){
+        $currentState = true;
+    }
     return [
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'published' => $faker->dateTimeThisYear,
+        'isClosed' => $currentState,
 
         'candidate_id' => random_int(
             \DB::table('candidates')

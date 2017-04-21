@@ -28,6 +28,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Published</th>
+            <th>status</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
                 <td><a href="/referenda/{{$item->id}}">{{$item->title}}</a></td>
                 <td><a href="/referenda/{{$item->id}}">{{$item->description}}</a></td>
                 <td><a href="/referenda/{{$item->id}}">{{$item->published? "Published": "Unpublished"}}</a></td>
+                <td><a href="/referenda/{{$item->id}}">{{$item->isClosed? "Closed": "Open"}}</a></td>
             </tr>
         @endforeach
         </tbody>

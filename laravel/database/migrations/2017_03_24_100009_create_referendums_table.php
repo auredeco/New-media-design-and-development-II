@@ -17,6 +17,7 @@ class CreateReferendumsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('description');
+            $table->boolean('isClosed');
             $table->dateTime('published')->nullable();
             $table->timestamps();
 

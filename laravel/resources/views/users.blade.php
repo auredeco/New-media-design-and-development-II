@@ -24,10 +24,10 @@
         <ul class="list-inline">
             <li>Gender:
                 <form action="/users">
-                    <select>
-                        <option>all</option>
-                        <option name="keyword" value="Search">male</option>
-                        <option name="keyword" value="Search">female</option>
+                    <select name="keyword" onchange="this.form.submit()">
+                        <option <?php if($_GET){ if ($_GET['keyword'] == '') { ?>selected="true" <?php }}; ?> value="">all</option>
+                        <option <?php if($_GET){ if ($_GET['keyword'] == 'male') { ?>selected="true" <?php }}; ?> value="male">male</option>
+                        <option <?php if($_GET){ if ($_GET['keyword'] == 'female') { ?>selected="true" <?php }}; ?> value="female">female</option>
                     </select>
                 </form>
             <li>
