@@ -12,9 +12,43 @@ class ElectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $elections = Election::orderBy('id', 'asc')->paginate(10);
+        $keyword = $request->input('keyword');
+
+        if ($keyword != '') {
+
+            switch (strtolower($keyword)){
+                case 'open':{
+                    $elections = Election::WhereOpen()->paginate(10);
+                    $elections->withPath('elections?keyword=open');
+
+                }break;
+                case 'all':{
+                    $elections = Election::orderBy('id','asc')->paginate(10);
+                    $elections->withPath('elections?keyword=all');
+
+                }break;
+                case 'closed':{
+                    $elections = Election::WhereClosed()->paginate(10);
+                    $elections->withPath('elections?keyword=closed');
+
+                }break;
+
+                default : {
+                    $elections = Election::SearchByKeyword($keyword)->paginate(10);
+                    $elections->withPath('elections?keyword=' . strtolower($keyword));
+                }
+            }
+        }
+        else
+        {
+            $elections = Election::orderBy('id','asc')->paginate(10);
+            $elections->withPath('elections?keyword=all');
+
+        }
+
+
         return view('elections', compact('elections'));
     }
 

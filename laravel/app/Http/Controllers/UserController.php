@@ -17,40 +17,32 @@ class UserController extends Controller
         $keyword = $request->input('keyword');
 
         if ($keyword != '') {
-            $users = User::SearchByKeyword($keyword)->paginate(10);
+
+            switch (strtolower($keyword)){
+                case 'all':{
+                    $users = User::orderBy('id','asc')->paginate(10);
+                    $users->withPath('users?keyword=all');
+
+                }break;
+
+
+                default : {
+                    $users = User::SearchByKeyword($keyword)->paginate(10);
+                    $users->withPath('users?keyword=' . strtolower($keyword));
+                }
+            }
         }
-//        elseif($keyword == 'male') {
-//            $users = User::where('gender','male')->paginate(10);
-//        }
-//        elseif($keyword == 'female') {
-//            $users = User::where('gender','female')->paginate(10);
-//        }
         else
         {
             $users = User::orderBy('id','asc')->paginate(10);
+            $users->withPath('users?keyword=all');
+
         }
 
-//        $users = User::orderBy('id', 'asc')->paginate(10);
         return view('users', compact('users'));
 
 
     }
-
-//    public function index(Request $request) {
-//
-//        $keyword = $request->input('keyword');
-//
-//        if ($keyword != '') {
-//            $users = User::SearchByKeyword($keyword)->paginate(15);
-//        } else {
-//            $users = User::orderBy('lastname','asc')->paginate(15);
-//        }
-//
-//
-//        return view('users.index', compact('users'));
-//
-//    }
-
     /**
      * Show the form for creating a new resource.
      *

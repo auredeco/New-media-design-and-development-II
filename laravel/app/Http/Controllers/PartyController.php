@@ -12,9 +12,36 @@ class PartyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $parties = Party::orderBy('id', 'asc')->paginate(10);
+
+        $keyword = $request->input('keyword');
+
+        if ($keyword != '') {
+
+
+            switch (strtolower($keyword)){
+                case 'all':{
+                    $parties = Party::orderBy('id','asc')->paginate(10);
+                    $parties->withPath('parties?keyword=all');
+
+                }break;
+
+
+                default : {
+                    $parties = Party::SearchByKeyword($keyword)->paginate(10);
+                    $parties->withPath('parties?keyword=' . strtolower($keyword));
+                }
+            }
+        }
+        else
+        {
+            $parties = Party::orderBy('id','asc')->paginate(10);
+            $parties->withPath('parties?keyword=all');
+
+        }
+
         return view('parties', compact('parties'));
     }
 

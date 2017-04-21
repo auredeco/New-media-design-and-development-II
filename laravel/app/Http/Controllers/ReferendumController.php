@@ -12,9 +12,51 @@ class ReferendumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $referenda = Referendum::orderBy('id', 'asc')->paginate(10);
+        $keyword = $request->input('keyword');
+
+        if ($keyword != '') {
+
+            switch (strtolower($keyword)){
+                case 'open':{
+                    $referenda = Referendum::WhereOpen()->paginate(10);
+                    $referenda->withPath('referenda?keyword=open');
+
+                }break;
+                case 'all':{
+                    $referenda = Referendum::orderBy('id','asc')->paginate(10);
+                    $referenda->withPath('referenda?keyword=all');
+
+                }break;
+                case 'closed':{
+                    $referenda = Referendum::WhereClosed()->paginate(10);
+                    $referenda->withPath('referenda?keyword=closed');
+
+                }break;
+                case 'published':{
+                    $referenda = Referendum::WherePublished()->paginate(10);
+                    $referenda->withPath('referenda?keyword=published');
+
+
+                }break;
+                case 'unpublished':{
+                    $referenda = Referendum::WhereUnpublished()->paginate(10);
+                    $referenda->withPath('referenda?keyword=unpublished');
+
+                }break;
+                default : {
+                    $referenda = Referendum::SearchByKeyword($keyword)->paginate(10);
+                    $referenda->withPath('referenda?keyword=' . strtolower($keyword));
+                }
+            }
+        }
+        else
+        {
+            $referenda = Referendum::orderBy('id','asc')->paginate(10);
+            $referenda->withPath('referenda?keyword=all');
+
+        }
         return view('referenda', compact('referenda'));
     }
 

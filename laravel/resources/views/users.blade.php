@@ -25,17 +25,19 @@
             <li>Gender:
                 <form action="/users">
                     <select name="keyword" onchange="this.form.submit()">
-                        <option <?php if($_GET){ if ($_GET['keyword'] == '') { ?>selected="true" <?php }}; ?> value="">all</option>
+                        <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                         <option <?php if($_GET){ if ($_GET['keyword'] == 'male') { ?>selected="true" <?php }}; ?> value="male">male</option>
                         <option <?php if($_GET){ if ($_GET['keyword'] == 'female') { ?>selected="true" <?php }}; ?> value="female">female</option>
                     </select>
                 </form>
+            </li>
             <li>
                 <form action="/users">
                     <input type="text" name="keyword" id="keyword">
                     <input type="submit" name="submit" value="Search">
                 </form>
             </li>
+            <li><a href="/users">reset filters</a> </li>
         </ul>
 
         <table class="table">

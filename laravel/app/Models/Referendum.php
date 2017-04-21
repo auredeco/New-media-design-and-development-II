@@ -46,4 +46,27 @@ class Referendum extends Model
     {
         return $this->hasMany(Vote::class);
     }
+    public function scopeSearchByKeyword($query, $keyword)
+    {
+        if ($keyword!='') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("title", "LIKE","%$keyword%")
+                    ->orWhere("description", "LIKE", "%$keyword%");
+            });
+        }
+        return $query;
+    }
+
+    public function scopeWhereOpen($query){
+        return $query->where('isClosed', false);
+    }
+    public function scopeWhereClosed($query){
+        return $query->where('isClosed', true);
+    }
+    public function scopeWherePublished($query){
+        return $query->whereNotNull('published');
+    }
+    public function scopeWhereUnpublished($query){
+        return $query->whereNull('published');
+    }
 }
