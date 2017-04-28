@@ -12,7 +12,7 @@ use App\User;
 */
 
 
-Route::get('/', 'DashboardController@index');
+Route::get('/', 'DashboardController@index')->middleware('auth');
 Route::resource('users', 'UserController');
 Route::resource('parties', 'PartyController');
 Route::resource('referenda', 'ReferendumController');
@@ -23,6 +23,6 @@ Route::get('/settings', function () {
     return view('settings');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
