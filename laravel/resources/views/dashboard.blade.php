@@ -134,7 +134,7 @@
                             <i class="fa fa-question fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">{{$all[7]}}</div>
+                            <div class="huge">{{$all[8]}}</div>
                             <div>Referenda requests</div>
                         </div>
                     </div>

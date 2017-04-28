@@ -30,6 +30,7 @@ class DashboardController extends Controller
             Election::where('isClosed','=','0')->count(),
             Election::where('isClosed','=','1')->count(),
             Referendum::count(),
+            Referendum::WhereUnpublished()->count(),
 //            Referendum::where(function($query)
 //            {
 //                $query->where('isClosed', '=', '1')
