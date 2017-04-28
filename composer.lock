@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b0af5ace60b99bf929ca901513477dd",
+    "content-hash": "375f0b2f05b06db5644819d1f791008c",
     "packages": [
         {
             "name": "gdmgent/artestead",
-            "version": "5.1.0",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gdmgent/artestead.git",
-                "reference": "99c595f8193e451f8373113e564bfbec1d263408"
+                "reference": "ec654f3051357f8562fe5070e29ed0c7ce2bb098"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gdmgent/artestead/zipball/99c595f8193e451f8373113e564bfbec1d263408",
-                "reference": "99c595f8193e451f8373113e564bfbec1d263408",
+                "url": "https://api.github.com/repos/gdmgent/artestead/zipball/ec654f3051357f8562fe5070e29ed0c7ce2bb098",
+                "reference": "ec654f3051357f8562fe5070e29ed0c7ce2bb098",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Artestead is a fork of Laravel Homestead for use at Artevelde University College Ghent.",
-            "time": "2017-03-30T11:31:29+00:00"
+            "time": "2017-04-11T06:12:34+00:00"
         },
         {
             "name": "psr/log",
