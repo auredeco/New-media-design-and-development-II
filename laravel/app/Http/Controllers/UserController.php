@@ -73,8 +73,12 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id) ;
-        return view('detail.user', compact('user'));
+        $age = User::getAge($user->birthdate);
+        $groups = User::find($id)->groups;
 
+
+        return view('detail.user', compact('user','age','groups'));
+//        return $groups;
     }
 
     /**

@@ -84,4 +84,26 @@ class User extends Authenticatable
         }
         return $query;
     }
+    public static function getAge($birthDate) {
+        $birthDate = explode("-", $birthDate);
+        $currentDate = explode("-", date('Y-m-d'));
+        $age = 0;
+        if($birthDate[1]<$currentDate[1]){
+
+            $age = $currentDate[0]-$birthDate[0];
+        }
+        elseif ($birthDate[1]==$currentDate[1]){
+            if($birthDate[2]<=$currentDate[2]){
+                $age = $currentDate[0]-$birthDate[0];
+            }
+            else $age =$currentDate[0]-$birthDate[0]-1;
+        }
+        else{
+            if($birthDate[2]<=$currentDate[2]){
+                $age = $currentDate[0]-$birthDate[0];
+            }
+            else $age =$currentDate[0]-$birthDate[0]-1;
+        }
+        return $age;
+    }
 }

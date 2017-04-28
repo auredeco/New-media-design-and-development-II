@@ -24,6 +24,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'lastname' => $faker->lastName,
         'gender' => $faker->randomElement($array = array ('male','female', 'not applicable')) ,
         'birthdate' => $faker->dateTimeThisCentury,
+        'pictureUri' => $faker->imageUrl(640, 840, 'people'),
         'remember_token' => str_random(10),
     ];
 });
