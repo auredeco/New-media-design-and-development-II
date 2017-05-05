@@ -30,22 +30,22 @@
         <h3>info</h3>
         <table class="table">
             <tbody>
-                <tr>
-                    <th>name</th>
-                    <td>{{$user->firstname}} {{$user->lastname}}</td>
-                </tr>
-                <tr>
-                    <th>last login</th>
-                    <td>{{$user->lastLogin}}</td>
-                </tr>
-                <tr>
-                    <th>gender</th>
-                    <td>{{$user->gender}}</td>
-                </tr>
-                <tr>
-                    <th>age</th>
-                    <td>{{$age}}</td>
-                </tr>
+            <tr>
+                <th>name</th>
+                <td>{{$user->firstname}} {{$user->lastname}}</td>
+            </tr>
+            <tr>
+                <th>last login</th>
+                <td>{{$user->lastLogin}}</td>
+            </tr>
+            <tr>
+                <th>gender</th>
+                <td>{{$user->gender}}</td>
+            </tr>
+            <tr>
+                <th>age</th>
+                <td>{{$age}}</td>
+            </tr>
             </tbody>
         </table>
         <h3>groups</h3>

@@ -18,6 +18,7 @@ class CreateVotesTable extends Migration
             $table->boolean('voteType');
             //combinatie van userName + userID + voteID + UniqueCode
             $table->string('hashCode');
+            $table->boolean('agreed')->nullable();
             $table->timestamps();
 
             //Relation on candidates_elections table

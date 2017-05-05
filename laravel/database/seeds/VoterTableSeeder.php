@@ -11,7 +11,7 @@ class VoterTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Voter::class, 100)->create();
+        factory(App\Models\Voter::class, 600)->create();
 
     }
 }

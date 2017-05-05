@@ -16,4 +16,16 @@ class Vote extends Model
     {
         return $this->belongsTo(Referendum::class);
     }
+
+    /**
+     * @var bool
+     * to prevent connection with user
+     */
+    public $timestamps = false;
+
+    /**
+     * @var array
+     * allow everything
+     */
+    protected $guarded = [];
 }
