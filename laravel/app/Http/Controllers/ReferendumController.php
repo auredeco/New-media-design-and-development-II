@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Referendum;
+use App\Models\Group;
+use App\Models\Votemanager;
 use Illuminate\Http\Request;
 
 class ReferendumController extends Controller
@@ -89,8 +91,26 @@ class ReferendumController extends Controller
      */
     public function show($id)
     {
-        $referendum = Referendum::find($id);
-        return view('detail.referendum', compact('referendum'));
+        $referendum = Referendum::with('votes')->find($id);
+        $agree = count(Referendum::with(['votes' => function($query) {
+            $query->where('agreed', true);
+        }])->find($id)->votes);
+        $disagree = count(Referendum::with(['votes' => function($query) {
+            $query->where('agreed', false);
+        }])->find($id)->votes);
+        $total = $agree + $disagree;
+        $group = Group::find($referendum->group_id);
+        $votemanager = Votemanager::find($referendum->votemanager_id);
+
+
+
+
+
+
+
+
+//        return $agree;
+        return view('detail.referendum', compact('referendum', 'agree', 'disagree', 'total', 'group', 'votemanager'));
 
     }
 

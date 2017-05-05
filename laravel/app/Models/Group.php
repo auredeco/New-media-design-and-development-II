@@ -47,5 +47,8 @@ class Group extends Model
         }
         return $query;
     }
+    public function getPaginatedUsers(){
+        return $this->users()->paginate(10);
+    }
 
 }

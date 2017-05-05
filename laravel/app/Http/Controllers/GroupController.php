@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -73,8 +74,13 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        $group = Group::find($id);
-        return view('detail.group', compact('group'));
+        $group = Group::with('users')->find($id);
+//        $users = User::with('groups')->find($id);
+//        $users = $group->getPaginatedUsers();
+        $users = $group->users()->paginate(10);
+
+        return view('detail.group', compact('group', 'users'));
+//        return count($users);
 
     }
 

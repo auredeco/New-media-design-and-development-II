@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->enum('gender',['male','female', 'not applicable']);
             $table->date('birthdate');
+            $table->string('pictureUri');
             $table->rememberToken();
             $table->timestamps();
         });

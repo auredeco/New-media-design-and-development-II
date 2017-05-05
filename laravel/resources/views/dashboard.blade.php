@@ -93,9 +93,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda">
+                <a href="/referenda?keyword=open">
                     <div class="panel-footer">
-                        <span class="pull-left">View all Referenda</span>
+                        <span class="pull-left">View all open Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -116,9 +116,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda">
+                <a href="/referenda?keyword=closed">
                     <div class="panel-footer">
-                        <span class="pull-left">View all Referenda</span>
+                        <span class="pull-left">View all closed Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -139,9 +139,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda">
+                <a href="/referenda?keyword=unpublished">
                     <div class="panel-footer">
-                        <span class="pull-left">View all referenda</span>
+                        <span class="pull-left">View all referenda requests</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -166,9 +166,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/elections">
+                <a href="/elections?keyword=open">
                     <div class="panel-footer">
-                        <span class="pull-left">View All elections</span>
+                        <span class="pull-left">View all open elections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -188,9 +188,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="/elections">
+                <a href="/elections?keyword=closed">
                     <div class="panel-footer">
-                        <span class="pull-left">View all ellections</span>
+                        <span class="pull-left">View all closed ellections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>

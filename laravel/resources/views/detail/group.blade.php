@@ -21,7 +21,31 @@
     </ol>
 @endsection
 @section('content')
-    <ul>
-        <li>{{$group->name}}</li>
-    </ul>
+    <h3>description</h3>
+    <p>{{$group->description}}</p>
+    <h3> {{$users->total()}} users</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>E-mail</th>
+            <th>Birthday</th>
+            <th>Gender</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($users as $item)
+            <tr>
+                <td><a href="/users/{{$item->id}}">{{$item->firstname}}</a></td>
+                <td><a href="/users/{{$item->id}}">{{$item->lastname}}</a></td>
+                <td><a href="/users/{{$item->id}}">{{$item->email}}</a></td>
+                <td><a href="/users/{{$item->id}}">{{$item->birthdate}}</a></td>
+                <td><a href="/users/{{$item->id}}">{{$item->gender}}</a></td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    {{$users->links()}}
+
 @endsection

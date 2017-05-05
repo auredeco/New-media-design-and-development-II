@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidate;
 use App\Models\Party;
 use Illuminate\Http\Request;
 
@@ -75,7 +76,12 @@ class PartyController extends Controller
     public function show($id)
     {
         $party = Party::find($id);
-        return view('detail.party', compact('party'));
+        $candidates = Candidate::with('party')->with('user')->where('party_id', $id)->paginate(10);
+//        $users = $group->users()->paginate(10);
+
+
+        return view('detail.party', compact('party', 'candidates'));
+//        return $candidates;
     }
 
     /**
