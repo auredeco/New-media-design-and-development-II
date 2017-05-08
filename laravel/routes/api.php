@@ -30,4 +30,8 @@ Route::group([
         ]
     ];
     Route::resource('users', 'UserController', $options);
+    Route::resource('elections', 'ElectionController', $options);
+    Route::resource('parties', 'PartyController', $options);
+    Route::resource('referenda', 'ReferendumController', $options);
+    Route::resource('groups', 'GroupController', $options);
 });

@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on users table
             $table->integer('user_id')->unsigned();

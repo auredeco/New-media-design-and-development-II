@@ -22,6 +22,7 @@ class CreateReferendumsTable extends Migration
             $table->dateTime('endDate');
             $table->dateTime('published')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on candidates table
             $table->integer('candidate_id')->unsigned();
