@@ -16,6 +16,7 @@ class CreateVotersTable extends Migration
         Schema::create('voters', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on users table
             $table->integer('user_id')->unsigned();
