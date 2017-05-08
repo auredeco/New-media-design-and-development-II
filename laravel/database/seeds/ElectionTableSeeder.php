@@ -11,7 +11,7 @@ class ElectionTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Election::class, 20)->create();
+        factory(App\Models\Election::class, 250)->create();
 
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Election;
+use App\Models\Group;
+use App\Models\Votemanager;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
@@ -81,8 +83,14 @@ class ElectionController extends Controller
      */
     public function show($id)
     {
-        $election = Election::find($id);
-        return view('detail.election', compact('election'));
+        $election = Election::with('candidates.user')->with('candidates.party')->find($id);
+        $group = Group::find($election->group_id);
+        $votemanager = Votemanager::find($election->votemanager_id);
+
+
+
+        return view('detail.election', compact('election','group','votemanager'));
+//        return $election;
 
     }
 

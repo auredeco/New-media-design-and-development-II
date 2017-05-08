@@ -11,21 +11,37 @@ class GroupTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Group::class, 10)->create();
+        factory(App\Models\Group::class, 50)->create();
 
-        foreach(range(1, 10) as $index) {
-            DB::table('group_users')->insert([
-                'user_id' => random_int(
-                    \DB::table('users')
-                        ->min('id'),
-                    \DB::table('users')
-                        ->max('id')),
-                'group_id' => random_int(
-                    \DB::table('groups')
-                        ->min('id'),
-                    \DB::table('groups')
-                        ->max('id'))
-            ]);
+
+        foreach (DB::table('groups')->get() as $group){
+            foreach(range(1, random_int(10,50)) as $index) {
+                DB::table('group_users')->insert([
+                    'user_id' => random_int(
+                        \DB::table('users')
+                            ->min('id'),
+                        \DB::table('users')
+                            ->max('id')),
+                    'group_id' => $group->id
+                ]);
+            }
         }
+
+//        foreach(range(1, 500) as $index) {
+//            DB::table('group_users')->insert([
+//                'user_id' => random_int(
+//                    \DB::table('users')
+//                        ->min('id'),
+//                    \DB::table('users')
+//                        ->max('id')),
+//                'group_id' => random_int(
+//                    \DB::table('groups')
+//                        ->min('id'),
+//                    \DB::table('groups')
+//                        ->max('id'))
+//            ]);
+//        }
+
+
     }
 }
