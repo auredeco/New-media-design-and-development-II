@@ -60,7 +60,7 @@
             <th>Description</th>
             <th>Published</th>
             <th>status</th>
-            <th colspan="3">actions</th>
+            <th colspan="2">actions</th>
         </tr>
         </thead>
         <tbody>
@@ -72,7 +72,6 @@
                 <td><a href="/referenda/{{$item->id}}">{{$item->published? "Published": "Unpublished"}}</a></td>
                 <td><a href="/referenda/{{$item->id}}">{{$item->isClosed? "Closed": "Open"}}</a></td>
                 <td><a href="/referenda/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                <td><a href="/referenda/{{$item->id}}/destroy"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 <td><a href="/referenda/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
 
             </tr>
