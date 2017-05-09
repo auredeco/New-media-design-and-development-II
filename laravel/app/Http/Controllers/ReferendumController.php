@@ -23,40 +23,40 @@ class ReferendumController extends Controller
 
             switch (strtolower($keyword)){
                 case 'open':{
-                    $referenda = Referendum::WhereOpen()->paginate(10);
+                    $referenda = Referendum::WhereOpen()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=open');
 
                 }break;
                 case 'all':{
-                    $referenda = Referendum::orderBy('id','asc')->paginate(10);
+                    $referenda = Referendum::orderBy('id','asc')->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=all');
 
                 }break;
                 case 'closed':{
-                    $referenda = Referendum::WhereClosed()->paginate(10);
+                    $referenda = Referendum::WhereClosed()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=closed');
 
                 }break;
                 case 'published':{
-                    $referenda = Referendum::WherePublished()->paginate(10);
+                    $referenda = Referendum::WherePublished()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=published');
 
 
                 }break;
                 case 'unpublished':{
-                    $referenda = Referendum::WhereUnpublished()->paginate(10);
+                    $referenda = Referendum::WhereUnpublished()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=unpublished');
 
                 }break;
                 default : {
-                    $referenda = Referendum::SearchByKeyword($keyword)->paginate(10);
+                    $referenda = Referendum::SearchByKeyword($keyword)->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=' . strtolower($keyword));
                 }
             }
         }
         else
         {
-            $referenda = Referendum::orderBy('id','asc')->paginate(10);
+            $referenda = Referendum::latest()->paginate(10);
             $referenda->withPath('referenda?keyword=all');
 
         }
@@ -92,7 +92,7 @@ class ReferendumController extends Controller
         'title' => 'required',
         'description' => 'required',
         'startDate' => 'required|date' ,
-        'startDate' => 'required|date|after_or_equal:now' ,
+        'startDate' => 'required|date|after_or_equal:yesterday' ,
         'startTime' => 'required',
         'endDate' => 'required|date|after_or_equal:startDate',
         'endTime' => 'required',

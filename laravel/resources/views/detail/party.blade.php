@@ -21,6 +21,12 @@
     </ol>
 @endsection
 @section('content')
+    <form action="{{ URL::route('parties.destroy',$party->id) }}" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <a class="btn btn-default" href="/parties/{{$party->id}}/edit">Edit</a>
+        <button onclick="return confirm('Are you sure you want to delete this party')" class="btn btn-danger">Delete</button>
+    </form>
     <h3>description</h3>
     <p>{{$party->description}}</p>
         <h3> {{$candidates->total()}} Candidates</h3>

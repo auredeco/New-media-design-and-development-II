@@ -21,7 +21,14 @@
     </ol>
 @endsection
 @section('content')
+    <form action="{{ URL::route('groups.destroy',$group->id) }}" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <a class="btn btn-default" href="/groups/{{$group->id}}/edit">Edit</a>
+        <button onclick="return confirm('Are you sure you want to delete this group')" class="btn btn-danger">Delete</button>
+    </form>
     <h3>description</h3>
+
     <p>{{$group->description}}</p>
     <h3> {{$users->total()}} users</h3>
     <table class="table">

@@ -39,7 +39,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>status</th>
-            <th colspan="2">actions</th>
+            <th colspan="3">actions</th>
         </tr>
         </thead>
         <tbody>
@@ -49,8 +49,18 @@
                 <td><a href="/elections/{{$item->id}}">{{$item->name}}</a></td>
                 <td><a href="/elections/{{$item->id}}">{{$item->description}}</a></td>
                 <td><a href="/elections/{{$item->id}}">{{$item->isClosed? "Closed": "Open"}}</a></td>
-                <td><a href="/referenda/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                <td><a href="/referenda/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                <td><a href="/elections/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                <td><a href="/elections/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                <td>
+                    <form id="delete_form{{$item->id}}" action="{{ URL::route('elections.destroy',$item->id) }}" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" id="id" name="id" value="{{ $item->id}}">
+                        <a onclick="return (confirm('Are you sure you want to delete referendum with id {{$item->id}}'))?document.getElementById('delete_form{{$item->id}}').submit():null" href="javascript:{}">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

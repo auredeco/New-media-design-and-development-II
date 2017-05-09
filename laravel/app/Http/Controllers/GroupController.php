@@ -23,21 +23,21 @@ class GroupController extends Controller
 
             switch (strtolower($keyword)){
                 case 'all':{
-                    $groups = Group::orderBy('id','asc')->paginate(10);
+                    $groups = Group::latest()->paginate(10);
                     $groups->withPath('groups?keyword=all');
 
                 }break;
 
 
                 default : {
-                    $groups = Group::SearchByKeyword($keyword)->paginate(10);
+                    $groups = Group::SearchByKeyword($keyword)->latest()->paginate(10);
                     $groups->withPath('groups?keyword=' . strtolower($keyword));
                 }
             }
         }
         else
         {
-            $groups = Group::orderBy('id','asc')->paginate(10);
+            $groups = Group::latest()->paginate(10);
             $groups->withPath('groups?keyword=all');
 
         }
@@ -52,7 +52,8 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('crud.createGroup');
+
     }
 
     /**
@@ -63,7 +64,15 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+        Group::create([
+            'name' => request('name'),
+            'description' => request('description'),
+        ]);
+        return redirect('/');
     }
 
     /**
@@ -92,7 +101,9 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        $group = Group::find($id);
+
+        return view('crud.editGroup', compact('group'));
     }
 
     /**
@@ -104,7 +115,15 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+        Group::find($id)->update([
+            'name' => request('name'),
+            'description' => request('description'),
+        ]);
+        return redirect('/groups/'.$id);
     }
 
     /**
@@ -115,6 +134,8 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = Group::findOrFail($id);
+        $group->delete();
+        return redirect('groups');
     }
 }

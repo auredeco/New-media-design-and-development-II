@@ -23,30 +23,30 @@ class ElectionController extends Controller
 
             switch (strtolower($keyword)){
                 case 'open':{
-                    $elections = Election::WhereOpen()->paginate(10);
+                    $elections = Election::WhereOpen()->latest()->paginate(10);
                     $elections->withPath('elections?keyword=open');
 
                 }break;
                 case 'all':{
-                    $elections = Election::orderBy('id','asc')->paginate(10);
+                    $elections = Election::latest()->paginate(10);
                     $elections->withPath('elections?keyword=all');
 
                 }break;
                 case 'closed':{
-                    $elections = Election::WhereClosed()->paginate(10);
+                    $elections = Election::WhereClosed()->latest()->paginate(10);
                     $elections->withPath('elections?keyword=closed');
 
                 }break;
 
                 default : {
-                    $elections = Election::SearchByKeyword($keyword)->paginate(10);
+                    $elections = Election::SearchByKeyword($keyword)->latest()->paginate(10);
                     $elections->withPath('elections?keyword=' . strtolower($keyword));
                 }
             }
         }
         else
         {
-            $elections = Election::orderBy('id','asc')->paginate(10);
+            $elections = Election::latest()->paginate(10);
             $elections->withPath('elections?keyword=all');
 
         }
@@ -87,7 +87,7 @@ class ElectionController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
-            'startDate' => 'required|date|after_or_equal:now' ,
+            'startDate' => 'required|date|after_or_equal:yesterday' ,
             'startTime' => 'required',
             'endDate' => 'required|date|after_or_equal:startDate',
             'endTime' => 'required',
