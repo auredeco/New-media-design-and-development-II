@@ -190,6 +190,8 @@ class ElectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $election= Election::findOrFail($id);
+        $election->delete();
+        return redirect('elections');
     }
 }

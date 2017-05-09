@@ -212,6 +212,8 @@ class ReferendumController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $referendum = Referendum::findOrFail($id);
+        $referendum->delete();
+        return redirect('referenda');
     }
 }
