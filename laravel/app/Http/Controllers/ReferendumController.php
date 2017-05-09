@@ -6,6 +6,7 @@ use App\Models\Referendum;
 use App\Models\Group;
 use App\Models\Votemanager;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ReferendumController extends Controller
 {
@@ -69,7 +70,10 @@ class ReferendumController extends Controller
      */
     public function create()
     {
-        //
+        $groups = Group::all();
+        $datetime = Carbon::now();
+        return view('crud.createReferendum', compact('groups', 'datetime'));
+//        return $datetime;
     }
 
     /**
@@ -80,7 +84,38 @@ class ReferendumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $closed = true;
+        $time = strtotime(Carbon::now());
+
+        $this->validate(request(), [
+        'title' => 'required',
+        'description' => 'required',
+        'startDate' => 'required|date' ,
+        'startDate' => 'required|date|after_or_equal:now' ,
+        'startTime' => 'required',
+        'endDate' => 'required|date|after_or_equal:startDate',
+        'endTime' => 'required',
+        'group' => 'required',
+    ]);
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
+            $closed = false;
+        }
+
+        //TODO votemanager_id = huidige votemanger remove candidate_id
+        Referendum::create([
+            'title' => request('title'),
+            'description' => request('description'),
+            'startDate' => request('startDate') . " " .request('startTime'),
+            'endDate' => request('endDate') . " " . request('endTime'),
+            'group_id' => request('group'),
+            'isClosed' => $closed,
+            'votemanager_id' => 1,
+            'candidate_id' => 1,
+            'published' => Carbon::now(),
+        ]);
+        return redirect('/');
     }
 
     /**
@@ -102,13 +137,6 @@ class ReferendumController extends Controller
         $group = Group::find($referendum->group_id);
         $votemanager = Votemanager::find($referendum->votemanager_id);
 
-
-
-
-
-
-
-
 //        return $agree;
         return view('detail.referendum', compact('referendum', 'agree', 'disagree', 'total', 'group', 'votemanager'));
 
@@ -122,7 +150,10 @@ class ReferendumController extends Controller
      */
     public function edit($id)
     {
-        //
+        $referendum = Referendum::with('votes')->find($id);
+        $group = Group::find($referendum->group_id);
+        $groups = Group::all();
+        return view('crud.editReferendum', compact('referendum',  'group', 'groups'));
     }
 
     /**
@@ -134,7 +165,43 @@ class ReferendumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd(request()->all());
+        $closed = true;
+        $time = strtotime(Carbon::now());
+
+        $this->validate(request(), [
+            'title' => 'required',
+            'description' => 'required',
+            'startDate' => 'required|date',
+            'startTime' => 'required',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'endTime' => 'required',
+            'group' => 'required',
+        ]);
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
+            $closed = false;
+        }
+        if(request('published')){
+            $published = Carbon::now();
+        }
+        else{
+            $published = null;
+        }
+
+        //TODO votemanager_id = huidige votemanger remove candidate_id
+        Referendum::find($id)->update([
+            'title' => request('title'),
+            'description' => request('description'),
+            'startDate' => request('startDate') . " " .request('startTime'),
+            'endDate' => request('endDate') . " " . request('endTime'),
+            'group_id' => request('group'),
+            'isClosed' => $closed,
+            'votemanager_id' => 1,
+            'candidate_id' => 1,
+            'published' => $published,
+        ]);
+        return redirect('/referenda/' . $id);
     }
 
     /**

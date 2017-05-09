@@ -74,6 +74,6 @@
 
             </tbody>
         </table>
-
+        <a class="btn btn-default" href="/referenda/{{$referendum->id}}/edit">Edit</a>
     </div>
 @endsection

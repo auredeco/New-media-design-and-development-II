@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\User;
-use Illuminate\Database\Eloquent\Model;
-
+use App\Model;
+//use Illuminate\Database\Eloquent\Model;
 class Election extends Model
 {
     public function candidates()
