@@ -74,6 +74,11 @@
 
             </tbody>
         </table>
-
+        <form action="{{ URL::route('referenda.destroy',$referendum->id) }}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <a class="btn btn-default" href="/referenda/{{$referendum->id}}/edit">Edit</a>
+            <button onclick="return confirm('Are you sure you want to delete this referendum')" class="btn btn-danger">Delete</button>
+        </form>
     </div>
 @endsection

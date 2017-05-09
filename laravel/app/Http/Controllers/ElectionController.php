@@ -6,6 +6,7 @@ use App\Models\Election;
 use App\Models\Group;
 use App\Models\Votemanager;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ElectionController extends Controller
 {
@@ -61,7 +62,11 @@ class ElectionController extends Controller
      */
     public function create()
     {
-        //
+        $groups = Group::all();
+        $datetime = Carbon::now();
+
+        return view('crud.createElection', compact('groups', 'datetime'));
+
     }
 
     /**
@@ -72,7 +77,35 @@ class ElectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $closed = true;
+        $time = strtotime(Carbon::now());
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
+            $closed = false;
+        }
+
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+            'startDate' => 'required|date|after_or_equal:now' ,
+            'startTime' => 'required',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'endTime' => 'required',
+            'group' => 'required',
+        ]);
+
+        //TODO votemanager_id = huidige votemanger
+        Election::create([
+            'name' => request('name'),
+            'description' => request('description'),
+            'startDate' => request('startDate') . " " .request('startTime'),
+            'endDate' => request('endDate') . " " . request('endTime'),
+            'group_id' => request('group'),
+            'isClosed' => $closed,
+            'votemanager_id' => 1,
+        ]);
+        return redirect('/');
+
     }
 
     /**
@@ -102,7 +135,10 @@ class ElectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $election = Election::with('candidates.user')->with('candidates.party')->find($id);
+        $group = Group::find($election->group_id);
+        $groups = Group::all();
+        return view('crud.editElection', compact('election',  'group', 'groups'));
     }
 
     /**
@@ -114,7 +150,36 @@ class ElectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //        dd(request()->all());
+        $closed = true;
+        $time = strtotime(Carbon::now());
+
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+            'startDate' => 'required|date',
+            'startTime' => 'required',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'endTime' => 'required',
+            'group' => 'required',
+        ]);
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
+            $closed = false;
+        }
+
+
+        //TODO votemanager_id = huidige votemanger remove candidate_id
+        Election::find($id)->update([
+            'name' => request('name'),
+            'description' => request('description'),
+            'startDate' => request('startDate') . " " .request('startTime'),
+            'endDate' => request('endDate') . " " . request('endTime'),
+            'group_id' => request('group'),
+            'isClosed' => $closed,
+            'votemanager_id' => 1,
+        ]);
+        return redirect('/elections/' . $id);
     }
 
     /**
@@ -125,6 +190,8 @@ class ElectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $election= Election::findOrFail($id);
+        $election->delete();
+        return redirect('elections');
     }
 }

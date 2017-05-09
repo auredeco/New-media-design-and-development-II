@@ -110,6 +110,7 @@
 
             </tbody>
         </table>
+        <a class="btn btn-default" href="/elections/{{$election->id}}/edit">Edit</a>
 
     </div>
 @endsection

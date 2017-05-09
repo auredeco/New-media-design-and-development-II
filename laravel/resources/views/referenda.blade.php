@@ -20,7 +20,7 @@
     </ol>
 @endsection
 @section('content')
-    <ul class="list-inline">
+    <ul class="list-inline pull-left">
         <li>status:
             <form action="/referenda">
                 <select name="keyword" onchange="this.form.submit()">
@@ -47,6 +47,11 @@
         </li>
         <li><a href="/referenda">reset filters</a> </li>
     </ul>
+    <ul class="pull-right">
+        <l1>
+            <a class="btn btn-default" href="/elections/create">New</a>
+        </l1>
+    </ul>
     <table class="table">
         <thead>
         <tr>
@@ -55,6 +60,7 @@
             <th>Description</th>
             <th>Published</th>
             <th>status</th>
+            <th colspan="2">actions</th>
         </tr>
         </thead>
         <tbody>
@@ -65,6 +71,9 @@
                 <td><a href="/referenda/{{$item->id}}">{{$item->description}}</a></td>
                 <td><a href="/referenda/{{$item->id}}">{{$item->published? "Published": "Unpublished"}}</a></td>
                 <td><a href="/referenda/{{$item->id}}">{{$item->isClosed? "Closed": "Open"}}</a></td>
+                <td><a href="/referenda/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                <td><a href="/referenda/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+
             </tr>
         @endforeach
         </tbody>
