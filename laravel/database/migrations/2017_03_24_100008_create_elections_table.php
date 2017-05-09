@@ -21,6 +21,7 @@ class CreateElectionsTable extends Migration
             $table->dateTime('endDate');
             $table->boolean('isClosed');
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on groups table
             $table->integer('group_id')->unsigned();

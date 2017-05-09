@@ -13,6 +13,25 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+Route::group([
+    'middleware' => [
+        'cors',
+    ],
+    'namespace' => 'API',
+], function () {
+    $options = [
+        'except' => [
+            'create',
+            'edit',
+        ]
+    ];
+    Route::resource('users', 'UserController', $options);
+    Route::resource('elections', 'ElectionController', $options);
+    Route::resource('parties', 'PartyController', $options);
+    Route::resource('referenda', 'ReferendumController', $options);
+    Route::resource('groups', 'GroupController', $options);
 });

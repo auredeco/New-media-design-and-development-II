@@ -17,6 +17,7 @@ class CreateCandidateElectionsTable extends Migration
             $table->increments('id');
             $table->double('score');
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on candidates table
             $table->integer('candidate_id')->unsigned();

@@ -20,6 +20,7 @@ class CreateVotesTable extends Migration
             $table->string('hashCode');
             $table->boolean('agreed')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //Relation on candidates_elections table
             $table->integer('CandidateElection_id')->unsigned()->nullable();
