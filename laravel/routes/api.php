@@ -34,4 +34,5 @@ Route::group([
     Route::resource('parties', 'PartyController', $options);
     Route::resource('referenda', 'ReferendumController', $options);
     Route::resource('groups', 'GroupController', $options);
+    Route::resource('votes', 'VoteController', $options);
 });

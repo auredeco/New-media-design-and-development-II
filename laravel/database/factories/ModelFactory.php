@@ -175,7 +175,6 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
         return [
             'voteType' => $votetype,
             'agreed' => $faker->boolean(50),
-            'hashCode' => bcrypt($faker->word),
 
             //todo proper foreign keys
 
@@ -185,11 +184,6 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
                     ->min('id'),
                 \DB::table('referendums')
                     ->max('id')),
-            'voter_id' => random_int(
-                \DB::table('voters')
-                    ->min('id'),
-                \DB::table('voters')
-                    ->max('id')),
         ];
 
     }
@@ -197,7 +191,6 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
         return [
             'voteType' => $votetype,
             'agreed' => null,
-            'hashCode' => bcrypt($faker->word),
 
             //todo proper foreign keys
             'Referendum_id' => null,
@@ -205,11 +198,6 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
                 \DB::table('candidate_elections')
                     ->min('id'),
                 \DB::table('candidate_elections')
-                    ->max('id')),
-            'voter_id' => random_int(
-                \DB::table('voters')
-                    ->min('id'),
-                \DB::table('voters')
                     ->max('id')),
         ];
     }
