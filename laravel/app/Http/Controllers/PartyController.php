@@ -24,21 +24,21 @@ class PartyController extends Controller
 
             switch (strtolower($keyword)){
                 case 'all':{
-                    $parties = Party::orderBy('id','asc')->paginate(10);
+                    $parties = Party::latest()->paginate(10);
                     $parties->withPath('parties?keyword=all');
 
                 }break;
 
 
                 default : {
-                    $parties = Party::SearchByKeyword($keyword)->paginate(10);
+                    $parties = Party::SearchByKeyword($keyword)->latest()->paginate(10);
                     $parties->withPath('parties?keyword=' . strtolower($keyword));
                 }
             }
         }
         else
         {
-            $parties = Party::orderBy('id','asc')->paginate(10);
+            $parties = Party::latest()->paginate(10);
             $parties->withPath('parties?keyword=all');
 
         }
@@ -53,7 +53,8 @@ class PartyController extends Controller
      */
     public function create()
     {
-        //
+        return view('crud.createParty');
+
     }
 
     /**
@@ -64,7 +65,15 @@ class PartyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+        Party::create([
+            'name' => request('name'),
+            'description' => request('description'),
+        ]);
+        return redirect('/');
     }
 
     /**
@@ -92,7 +101,9 @@ class PartyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $party = Party::find($id);
+
+        return view('crud.editParty', compact('party'));
     }
 
     /**
@@ -104,7 +115,15 @@ class PartyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+        Party::find($id)->update([
+            'name' => request('name'),
+            'description' => request('description'),
+        ]);
+        return redirect('/parties/'.$id);
     }
 
     /**
@@ -115,6 +134,8 @@ class PartyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $party = Party::findOrFail($id);
+        $party->delete();
+        return redirect('parties');
     }
 }

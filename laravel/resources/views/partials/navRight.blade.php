@@ -1,5 +1,5 @@
 <ul class="nav navbar-right top-nav">
-    <li><a href="/settings">  <i class="fa fa-fw fa-gear"></i>  Settings</a></li>
+    <li><a href="/backoffice/settings">  <i class="fa fa-fw fa-gear"></i>  Settings</a></li>
     <li>
         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" >

@@ -5,26 +5,26 @@
 
 @endsection
 @section('navigation')
-    <li  ><a href="/">Dashboard</a></li>
-    <li ><a href="/users">Users</a></li>
-    <li ><a href="/parties">Parties</a></li>
-    <li ><a href="/referenda">Referenda</a></li>
-    <li ><a href="/groups">Groups</a></li>
-    <li class="active" ><a href="/elections">Elections</a></li>
+    <li  ><a href="/backoffice/">Dashboard</a></li>
+    <li ><a href="/backoffice/users">Users</a></li>
+    <li ><a href="/backoffice/parties">Parties</a></li>
+    <li ><a href="/backoffice/referenda">Referenda</a></li>
+    <li ><a href="/backoffice/groups">Groups</a></li>
+    <li class="active" ><a href="/backoffice/elections">Elections</a></li>
 @endsection
 @section('navigation-right')
-    <li ><a href="/settings">Settings</a></li>
-    <li ><a href="/login">Login</a></li>
+    <li ><a href="/backoffice/settings">Settings</a></li>
+    <li ><a href="/backoffice/login">Login</a></li>
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="/elections">Elections</a></li>
+        <li><a href="/backoffice/elections">Elections</a></li>
         <li class="active" >New</li>
     </ol>
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <form method="POST" action="/elections">
+        <form method="POST" action="/backoffice/elections">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="name">Name</label>
