@@ -10,19 +10,27 @@ use App\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-Route::get('/', 'DashboardController@index')->middleware('auth');
-Route::resource('users', 'UserController');
-Route::resource('parties', 'PartyController');
-Route::resource('referenda', 'ReferendumController');
-Route::resource('elections', 'ElectionController');
-Route::resource('groups', 'GroupController');
-
-Route::get('/settings', function () {
-    return view('settings');
+Route::group(['prefix' => 'backoffice'], function () {
+    Route::get('/', 'DashboardController@index')->middleware('auth');
+    Route::resource('users', 'UserController');
+    Route::resource('parties', 'PartyController');
+    Route::resource('referenda', 'ReferendumController');
+    Route::resource('elections', 'ElectionController');
+    Route::resource('groups', 'GroupController');
+    Route::get('/settings', function () {
+        return view('settings');
+    });
 });
+
+//Route::get('/', 'DashboardController@index')->middleware('auth');
+//Route::resource('users', 'UserController');
+//Route::resource('parties', 'PartyController');
+//Route::resource('referenda', 'ReferendumController');
+//Route::resource('elections', 'ElectionController');
+//Route::resource('groups', 'GroupController');
+
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index')->middleware(null);
