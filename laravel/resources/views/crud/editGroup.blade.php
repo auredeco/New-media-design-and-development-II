@@ -18,7 +18,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/groups">Groups</a></li>
-        <li><a href="/groups/{{$group->id}}">{{$group->name}}</a></li>
+        <li><a href="/backoffice/groups/{{$group->id}}">{{$group->name}}</a></li>
         <li class="active" >edit</li>
     </ol>
 @endsection

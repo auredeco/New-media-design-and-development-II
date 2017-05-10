@@ -3,27 +3,27 @@
         Users
     @endsection
 @section('navigation')
-    <li ><a href="/">Dashboard</a></li>
-    <li class="active" ><a href="/users">Users</a></li>
-    <li ><a href="/parties">Parties</a></li>
-    <li ><a href="/referenda">Referenda</a></li>
-    <li ><a href="/groups">Groups</a></li>
-    <li ><a href="/elections">Elections</a></li>
+    <li ><a href="/backoffice/">Dashboard</a></li>
+    <li class="active" ><a href="/backoffice/users">Users</a></li>
+    <li ><a href="/backoffice/parties">Parties</a></li>
+    <li ><a href="/backoffice/referenda">Referenda</a></li>
+    <li ><a href="/backoffice/groups">Groups</a></li>
+    <li ><a href="/backoffice/elections">Elections</a></li>
 @endsection
 @section('navigation-right')
-        <li ><a href="/settings">Settings</a></li>
-        <li ><a href="/login">Login</a></li>
+        <li ><a href="/backoffice/settings">Settings</a></li>
+        <li ><a href="/backoffice/login">Login</a></li>
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li class="active" ><a href="/users">Users</a></li>
+        <li class="active" ><a href="/backoffice/users">Users</a></li>
     </ol>
 @endsection
     @section('content')
 
         <ul class="list-inline">
             <li>Gender:
-                <form action="/users">
+                <form action="/backoffice/users">
                     <select name="keyword" onchange="this.form.submit()">
                         <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                         <option <?php if($_GET){ if ($_GET['keyword'] == 'male') { ?>selected="true" <?php }}; ?> value="male">male</option>
@@ -32,12 +32,12 @@
                 </form>
             </li>
             <li>
-                <form action="/users">
+                <form action="/backoffice/users">
                     <input type="text" name="keyword" id="keyword">
                     <input type="submit" name="submit" value="Search">
                 </form>
             </li>
-            <li><a href="/users">reset filters</a> </li>
+            <li><a href="/backoffice/users">reset filters</a> </li>
         </ul>
 
         <table class="table">
@@ -53,11 +53,11 @@
             <tbody>
             @foreach($users as $item)
                 <tr>
-                    <td><a href="/users/{{$item->id}}">{{$item->firstname}}</a></td>
-                    <td><a href="/users/{{$item->id}}">{{$item->lastname}}</a></td>
-                    <td><a href="/users/{{$item->id}}">{{$item->email}}</a></td>
-                    <td><a href="/users/{{$item->id}}">{{$item->birthdate}}</a></td>
-                    <td><a href="/users/{{$item->id}}">{{$item->gender}}</a></td>
+                    <td><a href="/backoffice/users/{{$item->id}}">{{$item->firstname}}</a></td>
+                    <td><a href="/backoffice/users/{{$item->id}}">{{$item->lastname}}</a></td>
+                    <td><a href="/backoffice/users/{{$item->id}}">{{$item->email}}</a></td>
+                    <td><a href="/backoffice/users/{{$item->id}}">{{$item->birthdate}}</a></td>
+                    <td><a href="/backoffice/users/{{$item->id}}">{{$item->gender}}</a></td>
                 </tr>
             @endforeach
             </tbody>

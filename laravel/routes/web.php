@@ -20,6 +20,9 @@ Route::group(['prefix' => 'backoffice'], function () {
     Route::get('/settings', function () {
         return view('settings');
     });
+
+    Auth::routes();
+
 });
 
 //Route::get('/', 'DashboardController@index')->middleware('auth');
@@ -31,6 +34,5 @@ Route::group(['prefix' => 'backoffice'], function () {
 
 
 
-Auth::routes();
 
 Route::get('/', 'HomeController@index')->middleware(null);

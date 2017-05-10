@@ -3,36 +3,36 @@
     Parties
 @endsection
 @section('navigation')
-    <li  ><a href="/">Dashboard</a></li>
-    <li ><a href="/users">Users</a></li>
-    <li class="active" ><a href="/parties">Parties</a></li>
-    <li ><a href="/referenda">Referenda</a></li>
-    <li ><a href="/groups">Groups</a></li>
-    <li ><a href="/elections">Elections</a></li>
+    <li  ><a href="/backoffice/">Dashboard</a></li>
+    <li ><a href="/backoffice/users">Users</a></li>
+    <li class="active" ><a href="/backoffice/parties">Parties</a></li>
+    <li ><a href="/backoffice/referenda">Referenda</a></li>
+    <li ><a href="/backoffice/groups">Groups</a></li>
+    <li ><a href="/backoffice/elections">Elections</a></li>
 @endsection
 @section('navigation-right')
-        <li ><a href="/settings">Settings</a></li>
-        <li ><a href="/login">Login</a></li>
+        <li ><a href="/backoffice/settings">Settings</a></li>
+        <li ><a href="/backoffice/login">Login</a></li>
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li class="active" ><a href="/parties">Parties</a></li>
+        <li class="active" ><a href="/backoffice/parties">Parties</a></li>
     </ol>
 @endsection
 @section('content')
     <ul class="pull-left list-inline">
 
         <li>
-            <form action="/elections">
+            <form action="/backoffice/elections">
                 <input type="text" name="keyword" id="keyword">
                 <input type="submit" name="submit" value="Search">
             </form>
         </li>
-        <li><a href="/elections">reset filters</a> </li>
+        <li><a href="/backoffice/elections">reset filters</a> </li>
     </ul>
     <ul class="pull-right">
         <l1>
-            <a class="btn btn-default" href="/parties/create">New</a>
+            <a class="btn btn-default" href="/backoffice/parties/create">New</a>
         </l1>
     </ul>
     <table class="table">
@@ -46,10 +46,10 @@
         <tbody>
         @foreach($parties as $item)
             <tr>
-                <td><a href="/parties/{{$item->id}}">{{$item->name}}</a></td>
-                <td><a href="/parties/{{$item->id}}">{{$item->description}}</a></td>
-                <td><a href="/parties/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                <td><a href="/parties/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                <td><a href="/backoffice/parties/{{$item->id}}">{{$item->name}}</a></td>
+                <td><a href="/backoffice/parties/{{$item->id}}">{{$item->description}}</a></td>
+                <td><a href="/backoffice/parties/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                <td><a href="/backoffice/parties/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
                 <td>
                     <form id="delete_form{{$item->id}}" action="{{ URL::route('parties.destroy',$item->id) }}" method="POST">
                         <input type="hidden" name="_method" value="DELETE">

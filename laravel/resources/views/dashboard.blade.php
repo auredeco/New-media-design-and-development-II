@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/users">
+                <a href="/backoffice/users">
                     <div class="panel-footer">
                         <span class="pull-left">View All users</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/groups">
+                <a href="/backoffice/groups">
                     <div class="panel-footer">
                         <span class="pull-left">View all groups</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/parties">
+                <a href="/backoffice/parties">
                     <div class="panel-footer">
                         <span class="pull-left">View all parties</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda?keyword=open">
+                <a href="/backoffice/referenda?keyword=open">
                     <div class="panel-footer">
                         <span class="pull-left">View all open Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda?keyword=closed">
+                <a href="/backoffice/referenda?keyword=closed">
                     <div class="panel-footer">
                         <span class="pull-left">View all closed Referenda</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/referenda?keyword=unpublished">
+                <a href="/backoffice/referenda?keyword=unpublished">
                     <div class="panel-footer">
                         <span class="pull-left">View all referenda requests</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/elections?keyword=open">
+                <a href="/backoffice/elections?keyword=open">
                     <div class="panel-footer">
                         <span class="pull-left">View all open elections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/elections?keyword=closed">
+                <a href="/backoffice/elections?keyword=closed">
                     <div class="panel-footer">
                         <span class="pull-left">View all closed ellections</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
