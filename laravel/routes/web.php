@@ -20,10 +20,10 @@ Route::group(['prefix' => 'backoffice'], function () {
     Route::get('/settings', function () {
         return view('settings');
     });
-
     Auth::routes();
-
 });
+
+Auth::routes();
 
 //Route::get('/', 'DashboardController@index')->middleware('auth');
 //Route::resource('users', 'UserController');

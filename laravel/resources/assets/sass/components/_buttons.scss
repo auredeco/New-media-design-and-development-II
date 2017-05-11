@@ -13,6 +13,7 @@
     text-transform: uppercase;
     margin: 0 0.5rem;
     font-weight: bold;
+    text-align: center;
   }
 
   .btn:first-child {
@@ -35,5 +36,9 @@
     color: $sub;
     background: white;
     border: 1px solid $sub;
+  }
+
+  .borderless-btn {
+    border: none !important;
   }
 }
