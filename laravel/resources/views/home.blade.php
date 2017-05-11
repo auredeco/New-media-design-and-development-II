@@ -21,10 +21,13 @@
 <body>
 
 <div id="app">
-    <p v-bind:title="message"></p>
+    {{--<p v-text="message"></p>--}}
+    <navigation></navigation>
+    <vuehead></vuehead>
 </div>
 
 <script src="{{ URL::asset('js/vue.js') }}" ></script>
+<script src="{{ URL::asset('js/main.js') }}" ></script>
 
 
 </body>

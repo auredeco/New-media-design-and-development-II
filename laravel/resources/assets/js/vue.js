@@ -1,10 +1,8 @@
 import Vue from 'vue';
-
-console.log('loaded');
+import navigation from './components/navigation.vue'
+import vuehead from './components/vuehead.vue'
 
 new Vue({
     el: '#app',
-    data : {
-        'message': "hallo"
-    }
+    components: {navigation, vuehead}
 })
