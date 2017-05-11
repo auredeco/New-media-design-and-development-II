@@ -10483,13 +10483,13 @@ __webpack_require__(30);
 
 // Vue.component('example', require('./components/Example.vue'));
 
-console.log('loaded');
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: "Hello World"
-  }
-});
+/*console.log('loaded');
+const app = new Vue({
+    el: '#app',
+    data: {
+        message: "Hello World"
+    }
+});*/
 
 /***/ }),
 /* 10 */,

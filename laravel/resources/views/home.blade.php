@@ -21,8 +21,7 @@
 <body>
 
 <div id="app">
-    <input type="text" id="input" v-model="message">
-    {{--<p>the value of input is {{message}}</p>--}}
+    <p v-bind:title="message"></p>
 </div>
 
 <script src="{{ URL::asset('js/vue.js') }}" ></script>
