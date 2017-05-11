@@ -63,25 +63,51 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */
+/******/ ({
+
+/***/ 1:
+/***/ (function(module, exports) {
+
+(function () {
+
+    //Select the hamburger icon and store it into the hamburger variable.
+    var hamburger = document.querySelector('#hamburger');
+
+    //When the hamburger icon is clicked, open the navbar.
+    hamburger.addEventListener('click', function () {
+        var nav = document.querySelector("#mobile-nav");
+        nav.classList.remove("is-closed");
+        nav.classList.add("is-open");
+    });
+
+    var cross = document.querySelector('#cross');
+
+    cross.addEventListener('click', function () {
+        var nav = document.querySelector("#mobile-nav");
+        nav.classList.remove("is-open");
+        nav.classList.add("is-closed");
+    });
+})();
+
+/***/ }),
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(3);
+
+
+/***/ }),
+
+/***/ 3:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-/* 2 */,
-/* 3 */,
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function webpackMissingModule() { throw new Error("Cannot find module \"C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\app.js\""); }());
-module.exports = __webpack_require__(1);
-
-
 /***/ })
-/******/ ]);
+
+/******/ });
