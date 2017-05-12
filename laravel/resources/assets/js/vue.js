@@ -8,7 +8,8 @@ import  elections from './components/pages/elections.vue'
 import  referenda from './components/pages/referenda.vue'
 import  groups from './components/pages/groups.vue'
 import  parties from './components/pages/parties.vue'
-
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
 Vue.use(VueRouter);
 
 const routes = [

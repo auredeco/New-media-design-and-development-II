@@ -39,10 +39,10 @@
             return{
                 mobileNav: '',
             }
-        }
+        },
         methods: {
             hideNav(){
-                console.log('this.$els.mobileNav');
+                console.log(this.$els.mobileNav);
             }
     }
     }
