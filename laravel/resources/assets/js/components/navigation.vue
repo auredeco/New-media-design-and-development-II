@@ -5,56 +5,45 @@
             <i class="fa fa-times fa-2x" aria-hidden="true" id="cross"></i>
         </header>
         <ul>
-            <li v-for="element in data.elements">
-                <i :class="element.fontA" aria-hidden="true"></i>
-                <a :href="element.link">
-                    {{element.name}}
-                </a>
+            <li>
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <router-link @click.native="hideNav" :to="{ path: '/'}">Home</router-link>
+
+            </li>
+            <li>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <router-link @click.native="hideNav" :to="{ path: 'elections'}">elections</router-link>
+            </li>
+            <li>
+                <i class="fa fa-comments" aria-hidden="true"></i>
+                    <router-link @click.native="hideNav" :to="{ path: 'referenda'}">referenda</router-link>
+            </li>
+            <li>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                    <router-link @click.native="hideNav" :to="{ path: 'groups'}">groups</router-link>
+            </li>
+            <li>
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                    <router-link @click.native="hideNav" :to="{ path: 'parties'}">parties</router-link>
+            </li>
+            <li>
+                <i class="fa fa-power-off" aria-hidden="true"></i>
+                    <router-link @click.native="hideNav" :to="{ path: 'account'}">account</router-link>
             </li>
         </ul>
     </nav>
 </template>
 <script>
-    let data = {
-        elements: [
-            {
-                name: 'home',
-                fontA: 'fa fa-home',
-                link: '#'
-            },
-            {
-                name: 'verkiezingen',
-                fontA: 'fa fa-check',
-                link: '#'
-            },
-            {
-                name: 'Referenda',
-                fontA: 'fa fa-comments',
-                link: '#'
-            },
-            {
-                name: 'Mijn Profiel',
-                fontA: 'fa fa-user',
-                link: '#'
-            },
-            {
-                name: 'Instellingen',
-                fontA: 'fa fa-cog',
-                link: '#'
-            },
-            {
-                name: 'Inloggen',
-                fontA: 'fa fa-power-off',
-                link: '#'
-            },
-        ],
-
-    };
     export default{
-        data() {
-        return {
-            data
-        }
+        data(){
+            return{
+                mobileNav: '',
+            }
+        },
+        methods: {
+            hideNav(){
+                document.getElementById('mobile-nav').className= "is-closed";
+            }
     }
     }
 </script>
