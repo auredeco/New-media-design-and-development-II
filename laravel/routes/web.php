@@ -23,7 +23,7 @@ Route::group(['prefix' => 'backoffice'], function () {
     Auth::routes();
 });
 
-Auth::routes();
+//Auth::routes();
 
 //Route::get('/', 'DashboardController@index')->middleware('auth');
 //Route::resource('users', 'UserController');
