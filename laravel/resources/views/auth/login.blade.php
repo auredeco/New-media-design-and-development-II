@@ -39,7 +39,7 @@
                             <button type="submit" class="btn green">
                                 Login
                             </button>
-                            <a href="#" class="btn white borderless-btn">Registreer</a>
+                            <a href="{{ route('register') }}" class="btn white borderless-btn">Registreer</a>
                         </div>
                     </div>
                     @if ($errors->has('email'))
