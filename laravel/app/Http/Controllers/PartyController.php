@@ -73,7 +73,7 @@ class PartyController extends Controller
             'name' => request('name'),
             'description' => request('description'),
         ]);
-        return redirect('/');
+        return redirect('/backoffice/');
     }
 
     /**
@@ -123,7 +123,7 @@ class PartyController extends Controller
             'name' => request('name'),
             'description' => request('description'),
         ]);
-        return redirect('/parties/'.$id);
+        return redirect('/backoffice/parties/'.$id);
     }
 
     /**
@@ -136,6 +136,6 @@ class PartyController extends Controller
     {
         $party = Party::findOrFail($id);
         $party->delete();
-        return redirect('parties');
+        return redirect('/backoffice/parties/');
     }
 }

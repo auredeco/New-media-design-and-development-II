@@ -115,7 +115,7 @@ class ReferendumController extends Controller
             'candidate_id' => 1,
             'published' => Carbon::now(),
         ]);
-        return redirect('/');
+        return redirect('/backoffice/');
     }
 
     /**
@@ -201,7 +201,7 @@ class ReferendumController extends Controller
             'candidate_id' => 1,
             'published' => $published,
         ]);
-        return redirect('/referenda/' . $id);
+        return redirect('/backoffice/referenda/' . $id);
     }
 
     /**
@@ -214,6 +214,6 @@ class ReferendumController extends Controller
     {
         $referendum = Referendum::findOrFail($id);
         $referendum->delete();
-        return redirect('referenda');
+        return redirect('/backoffice/referenda');
     }
 }

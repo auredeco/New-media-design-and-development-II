@@ -72,7 +72,7 @@ class GroupController extends Controller
             'name' => request('name'),
             'description' => request('description'),
         ]);
-        return redirect('/');
+        return redirect('/backoffice/');
     }
 
     /**
@@ -123,7 +123,7 @@ class GroupController extends Controller
             'name' => request('name'),
             'description' => request('description'),
         ]);
-        return redirect('/groups/'.$id);
+        return redirect('/backoffice/groups/'.$id);
     }
 
     /**
@@ -136,6 +136,6 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
         $group->delete();
-        return redirect('groups');
+        return redirect('/backoffice/groups');
     }
 }

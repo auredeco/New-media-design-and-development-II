@@ -104,7 +104,7 @@ class ElectionController extends Controller
             'isClosed' => $closed,
             'votemanager_id' => 1,
         ]);
-        return redirect('/');
+        return redirect('/backoffice/');
 
     }
 
@@ -179,7 +179,7 @@ class ElectionController extends Controller
             'isClosed' => $closed,
             'votemanager_id' => 1,
         ]);
-        return redirect('/elections/' . $id);
+        return redirect('/backoffice/elections/' . $id);
     }
 
     /**
@@ -192,6 +192,6 @@ class ElectionController extends Controller
     {
         $election= Election::findOrFail($id);
         $election->delete();
-        return redirect('elections');
+        return redirect('/backoffice/elections/');
     }
 }
