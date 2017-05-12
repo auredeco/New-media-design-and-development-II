@@ -1,5 +1,5 @@
 <template>
-    <nav id="mobile-nav" v-el:mobileNav class="is-closed">
+    <nav id="mobile-nav" class="is-closed">
         <header>
             <img src="images/logo.svg">
             <i class="fa fa-times fa-2x" aria-hidden="true" id="cross"></i>
@@ -42,7 +42,7 @@
         },
         methods: {
             hideNav(){
-                console.log(this.$els.mobileNav);
+                document.getElementById('mobile-nav').className= "is-closed";
             }
     }
     }

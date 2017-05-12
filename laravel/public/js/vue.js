@@ -227,7 +227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         hideNav: function hideNav() {
-            console.log(this.$els.mobileNav);
+            document.getElementById('mobile-nav').className = "is-closed";
         }
     }
 });
@@ -631,11 +631,6 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('nav', {
-    directives: [{
-      name: "el",
-      rawName: "v-el:mobileNav",
-      arg: "mobileNav"
-    }],
     staticClass: "is-closed",
     attrs: {
       "id": "mobile-nav"
