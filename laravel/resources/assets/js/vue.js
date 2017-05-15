@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import navigation from './components/navigation.vue'
 import vuehead from './components/vuehead.vue'
 import  home from './components/pages/home.vue'
@@ -11,6 +13,7 @@ import  parties from './components/pages/parties.vue'
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 Vue.use(VueRouter);
+Vue.use(VueAxios, axios)
 
 const routes = [
     { path: '/', component: home },
