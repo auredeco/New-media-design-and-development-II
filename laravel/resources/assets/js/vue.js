@@ -10,10 +10,12 @@ import  elections from './components/pages/elections.vue'
 import  referenda from './components/pages/referenda.vue'
 import  groups from './components/pages/groups.vue'
 import  parties from './components/pages/parties.vue'
-import VeeValidate from 'vee-validate';
+import VeeValidate from 'vee-validate'
+import VuePaginate from 'vue-paginate';
 Vue.use(VeeValidate);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
+Vue.use(VuePaginate)
 
 const routes = [
     { path: '/', component: home },

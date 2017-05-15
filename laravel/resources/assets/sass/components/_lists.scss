@@ -1,0 +1,25 @@
+.paginate-links {
+  display: inline;
+  float: right;
+  margin: 1rem 0;
+
+  &:after {
+    clear: both;
+  }
+
+  li {
+    float: left;
+    background: $sub;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    cursor: hand;
+    width: 30px;
+    height: 15px;
+    text-align: center;
+
+    a {
+      color: white;
+    }
+  }
+}

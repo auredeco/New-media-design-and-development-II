@@ -27,8 +27,6 @@
     <transition name="slide">
         <router-view></router-view>
     </transition>
-
-
 </div>
 
 <script src="{{ URL::asset('js/vue.js') }}" ></script>
