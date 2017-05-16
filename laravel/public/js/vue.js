@@ -10559,14 +10559,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_pages_elections_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_pages_elections_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_pages_referenda_vue__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_pages_referenda_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_pages_referenda_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_groups_vue__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_groups_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_pages_groups_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_parties_vue__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_parties_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_pages_parties_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vee_validate__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_vee_validate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_paginate__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_vue_paginate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_details_referendum_vue__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_pages_details_referendum_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_pages_details_referendum_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_details_election_vue__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_pages_details_election_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_pages_details_election_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_details_group_vue__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_pages_details_group_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_pages_details_group_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_details_party_vue__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_pages_details_party_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_pages_details_party_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_groups_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_pages_groups_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_pages_groups_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_pages_parties_vue__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_pages_parties_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_pages_parties_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vee_validate__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_vee_validate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_paginate__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17_vue_paginate__);
 
 
 
@@ -10581,12 +10589,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_12_vee_validate___default.a);
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_16_vee_validate___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_axios___default.a, __WEBPACK_IMPORTED_MODULE_2_axios___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_13_vue_paginate___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_17_vue_paginate___default.a);
 
-var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_6__components_pages_home_vue___default.a }, { path: '/elections', component: __WEBPACK_IMPORTED_MODULE_8__components_pages_elections_vue___default.a }, { path: '/referenda', component: __WEBPACK_IMPORTED_MODULE_9__components_pages_referenda_vue___default.a }, { path: '/groups', component: __WEBPACK_IMPORTED_MODULE_10__components_pages_groups_vue___default.a }, { path: '/parties', component: __WEBPACK_IMPORTED_MODULE_11__components_pages_parties_vue___default.a }, { path: '/account', component: __WEBPACK_IMPORTED_MODULE_7__components_pages_account_vue___default.a }];
+var routes = [{
+    path: '/',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_pages_home_vue___default.a,
+    name: 'home'
+}, {
+    path: '/elections',
+    component: __WEBPACK_IMPORTED_MODULE_8__components_pages_elections_vue___default.a,
+    name: 'elections'
+}, {
+    path: '/elections/:id',
+    component: __WEBPACK_IMPORTED_MODULE_11__components_pages_details_election_vue___default.a,
+    name: 'election',
+    props: true
+}, {
+    path: '/referenda',
+    component: __WEBPACK_IMPORTED_MODULE_9__components_pages_referenda_vue___default.a,
+    name: 'referenda'
+}, {
+    path: '/referenda/:id',
+    component: __WEBPACK_IMPORTED_MODULE_10__components_pages_details_referendum_vue___default.a,
+    name: 'referendum',
+    props: true
+}, {
+    path: '/groups',
+    component: __WEBPACK_IMPORTED_MODULE_14__components_pages_groups_vue___default.a,
+    name: 'groups'
+}, {
+    path: '/groups/:id',
+    component: __WEBPACK_IMPORTED_MODULE_12__components_pages_details_group_vue___default.a,
+    name: 'group',
+    props: true
+}, {
+    path: '/parties',
+    component: __WEBPACK_IMPORTED_MODULE_15__components_pages_parties_vue___default.a,
+    name: 'parties'
+}, {
+    path: '/parties/:id',
+    component: __WEBPACK_IMPORTED_MODULE_13__components_pages_details_party_vue___default.a,
+    name: 'party',
+    props: true
+}, {
+    path: '/account',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_pages_account_vue___default.a,
+    name: 'account'
+}];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes // short for routes: routes
 });
@@ -11631,6 +11687,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11693,21 +11761,29 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
             referenda: []
         };
     },
-    mounted: function mounted() {
-        var _this = this;
 
-        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/elections').then(function (response) {
-            _this.elections = response.data.sort(function (a, b) {
-                return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/elections').then(function (response) {
+                _this.elections = response.data.sort(function (a, b) {
+                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+                });
+                _this.elections = _this.elections.slice(0, 3);
             });
-            _this.elections = _this.elections.slice(0, 3);
-        });
-        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/referenda').then(function (response) {
-            _this.referenda = response.data.sort(function (a, b) {
-                return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+            __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/referenda').then(function (response) {
+                _this.referenda = response.data.sort(function (a, b) {
+                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+                });
+                _this.referenda = _this.referenda.slice(0, 3);
             });
-            _this.referenda = _this.referenda.slice(0, 3);
-        });
+        }
+
+    },
+
+    mounted: function mounted() {
+        this.loadData();
     }
 });
 
@@ -11738,10 +11814,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            items: [],
+            paginate: ['referenda']
+        };
+    },
+
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            this.axios.get('/api/referenda').then(function (response) {
+                _this.items = response.data.sort(function (a, b) {
+                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+                });
+            });
+        }
+    },
+
     mounted: function mounted() {
-        console.log('referenda mounted.');
+        this.loadData();
+        console.log('Referenda mounted.');
     }
 });
 
@@ -15374,7 +15493,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/navigation.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15408,7 +15527,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/account.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\account.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] account.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15442,7 +15561,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/elections.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\elections.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] elections.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15476,7 +15595,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/groups.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\groups.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] groups.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15510,7 +15629,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/home.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15544,7 +15663,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/parties.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\parties.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] parties.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15578,7 +15697,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/referenda.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\referenda.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] referenda.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15612,7 +15731,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/vuehead.vue"
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\vuehead.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] vuehead.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15780,41 +15899,61 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "verkiezingen",
       "selected": true
     }
-  }, [_c('div', _vm._l((_vm.elections), function(election) {
-    return _c('item', {
-      key: election.id,
+  }, [_vm._l((_vm.elections), function(election) {
+    return _c('div', {
+      key: election.id
+    }, [_c('router-link', {
       attrs: {
-        "propImage": "/images/logo-square.svg",
-        "propLink": "/elections/#",
-        "propName": election.name
+        "to": {
+          name: 'election',
+          params: {
+            id: election.id
+          }
+        }
       }
-    })
-  })), _vm._v(" "), _c('router-link', {
+    }, [_c('div', {
+      staticClass: "card-element"
+    }, [_c('img', {
+      attrs: {
+        "src": "/images/logo-square.svg"
+      }
+    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(election.name))])])])], 1)
+  }), _vm._v(" "), _c('router-link', {
     attrs: {
       "to": {
         path: 'elections'
       }
     }
-  }, [_vm._v("elections")])], 1) : _vm._e(), _vm._v(" "), (_vm.referenda) ? _c('tab', {
+  }, [_vm._v("elections")])], 2) : _vm._e(), _vm._v(" "), (_vm.referenda) ? _c('tab', {
     attrs: {
       "name": "referenda"
     }
-  }, [_c('div', _vm._l((_vm.referenda), function(referendum) {
-    return _c('item', {
-      key: _vm.referenda.id,
+  }, [_vm._l((_vm.referenda), function(referendum) {
+    return _c('div', {
+      key: referendum.id
+    }, [_c('router-link', {
       attrs: {
-        "propImage": "/images/logo-square.svg",
-        "propLink": "/referenda/#",
-        "propName": referendum.title
+        "to": {
+          name: 'referendum',
+          params: {
+            id: referendum.id
+          }
+        }
       }
-    })
-  })), _vm._v(" "), _c('router-link', {
+    }, [_c('div', {
+      staticClass: "card-element"
+    }, [_c('img', {
+      attrs: {
+        "src": "/images/logo-square.svg"
+      }
+    }), _vm._v(" "), _c('p', [_vm._v(_vm._s(referendum.title))])])])], 1)
+  }), _vm._v(" "), _c('router-link', {
     attrs: {
       "to": {
         path: 'referenda'
       }
     }
-  }, [_vm._v("referenda")])], 1) : _vm._e()], 1)], 1)])])
+  }, [_vm._v("referenda")])], 2) : _vm._e()], 1)], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -15870,7 +16009,33 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("Referenda")])
+  return _c('div', [_c('paginate-links', {
+    attrs: {
+      "for": "items"
+    }
+  }), _vm._v(" "), _c('paginate', {
+    attrs: {
+      "name": "referenda",
+      "list": _vm.items,
+      "per": 5
+    }
+  }, _vm._l((_vm.paginated('referenda')), function(item) {
+    return _c('div', [_c('p', [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c('p', [_vm._v("Status:\n                    "), (item.isClosed) ? _c('span', [_vm._v("Closed")]) : _c('span', [_vm._v("Open")])]), _vm._v(" "), _c('p', [_c('router-link', {
+      attrs: {
+        "to": {
+          name: 'referendum',
+          params: {
+            id: item.id
+          }
+        }
+      }
+    }, [_vm._v("lees meer")])], 1)])
+  })), _vm._v(" "), _c('paginate-links', {
+    attrs: {
+      "for": "referenda",
+      "limit": 5
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -24703,6 +24868,273 @@ if (inBrowser && window.Vue) {
 
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Referendum mounted.');
+    }
+});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(65),
+  /* template */
+  __webpack_require__(67),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\referendum.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] referendum.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-352fb38c", Component.options)
+  } else {
+    hotAPI.reload("data-v-352fb38c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h1', [_vm._v("referendum")])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-352fb38c", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Election mounted.');
+    }
+});
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(68),
+  /* template */
+  __webpack_require__(70),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\election.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] election.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c71a5e9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-c71a5e9c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h1', [_vm._v("Election")])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c71a5e9c", module.exports)
+  }
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Group mounted.');
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Party mounted.');
+    }
+});
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(75),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\group.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] group.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5ad2ea94", Component.options)
+  } else {
+    hotAPI.reload("data-v-5ad2ea94", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(72),
+  /* template */
+  __webpack_require__(76),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\party.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] party.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7ef1b8c6", Component.options)
+  } else {
+    hotAPI.reload("data-v-7ef1b8c6", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h1', [_vm._v("group")])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5ad2ea94", module.exports)
+  }
+}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h1', [_vm._v("party")])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7ef1b8c6", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
