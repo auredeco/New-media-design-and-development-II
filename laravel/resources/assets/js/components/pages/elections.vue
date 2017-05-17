@@ -1,29 +1,35 @@
 <template>
     <div>
-        <paginate-links for="items"></paginate-links>
         <div id="cards">
             <paginate
                     name="elections"
-                    :list="items"
+                    :list="filterByName"
                     :per="5"
             >
-                <div class="standard-card" v-for="item in paginated('elections')">
+                <div class="filters">
+                    <input type="text" v-model="filterQuery" placeholder="Search...">
+                    <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
+                    <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
+                </div>
+                <div class="standard-card" v-for="election in paginated('elections')">
                     <div class="card-wrapper">
                         <div class="card">
                             <img src="/images/logo-square.svg">
                             <div class="card-info">
-                                <h1 class="title">{{ item.name }}</h1>
+                                <h1 class="title">{{ election.name }}</h1>
                                 <p>
-                                    {{ item.description }}
+                                    {{ election.description }}
                             </p>
                                 <ul>
-                                    <li v-if="item.isClosed" class="closed">Status: Gesloten</li>
+                                    <li v-if="election.isClosed" class="closed">Status: Gesloten</li>
                                     <li v-else class="open">Status: Lopend</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="button-field">
-                            <button class="btn blue">Stemmen</button>
+                            <router-link :to="{ name: 'election', params: { id: election.id }}">
+                                <button class="btn blue">Stemmen</button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -32,23 +38,35 @@
         <paginate-links for="elections" :limit="5"></paginate-links>
     </div>
 </template>
-
-
 <script>
     export default {
-
         data() {
             return {
-                items: [],
-                paginate: ['elections']
+                elections: [],
+                paginate: ['elections'],
+                filterQuery: '',
+                checkboxValues: []
             }
         },
 
         methods: {
-            loadData: function () {
+            loadData() {
                 this.axios.get('/api/elections').then((response) => {
-                    this.items = response.data;
+                    this.elections = response.data;
                 });
+            },
+        },
+
+        computed: {
+            filterByName() {
+                return this.elections.filter( election => {
+                    if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){
+                        return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+                    }else{
+                        let value = this.checkboxValues[0];
+                        return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == value;
+                    }
+                })
             },
         },
 
