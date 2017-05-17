@@ -8,7 +8,7 @@
             >
                 <div class="filters">
                     <input type="text" v-model="filterQuery" placeholder="Search...">
-                    <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Open
+                    <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
                     <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
                 </div>
                 <div class="standard-card" v-for="election in paginated('elections')">
