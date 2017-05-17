@@ -66,7 +66,7 @@ class VoteController extends Controller
 
         $vote->save();
 
-        return 'Vote created with vote id:' . $vote->uuid;
+        return $vote;
     }
 
     /**

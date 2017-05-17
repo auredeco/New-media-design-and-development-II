@@ -12,23 +12,23 @@
             </li>
             <li>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <router-link @click.native="hideNav" :to="{ path: 'elections'}">elections</router-link>
+                <router-link @click.native="hideNav" replace :to="{ name: 'elections'}">elections</router-link>
             </li>
             <li>
                 <i class="fa fa-comments" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" :to="{ path: 'referenda'}">referenda</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'referenda'}">referenda</router-link>
             </li>
             <li>
                 <i class="fa fa-user" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" :to="{ path: 'groups'}">groups</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'groups'}">groups</router-link>
             </li>
             <li>
                 <i class="fa fa-cog" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" :to="{ path: 'parties'}">parties</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'parties'}">parties</router-link>
             </li>
             <li>
                 <i class="fa fa-power-off" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" :to="{ path: 'account'}">account</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'account'}">account</router-link>
             </li>
         </ul>
     </nav>
