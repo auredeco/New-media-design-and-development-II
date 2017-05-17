@@ -6,14 +6,26 @@
             -        <div class="card-field">
             <tabs>
                 <tab v-if="elections" name="verkiezingen" :selected="true">
-                    <div>
-                        <item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>
+                    <div v-for="election in elections" :key="election.id" >
+                        <router-link :to="{ name: 'election', params: { id: election.id }}">
+                            <div class="card-element">
+                                <img src="/images/logo-square.svg">
+                                <p>{{election.name}}</p>
+                            </div>
+                        </router-link>
+                        <!--<item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>-->
                     </div>
                     <router-link :to="{ path: 'elections'}">elections</router-link>
                 </tab>
                 <tab v-if="referenda" name="referenda">
-                    <div>
-                        <item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>
+                    <div v-for="referendum in referenda" :key="referendum.id">
+                        <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
+                            <div class="card-element">
+                                <img src="/images/logo-square.svg">
+                                <p>{{referendum.title}}</p>
+                            </div>
+                        </router-link>
+                        <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
                     </div>
                     <router-link :to="{ path: 'referenda'}">referenda</router-link>
                 </tab>
@@ -107,21 +119,26 @@
                 referenda: [],
             };
         },
+        methods: {
+            loadData: function () {
+                Vue.axios.get('/api/elections').then((response) => {
+                    this.elections = response.data.sort(function(a,b) {
+                        return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+                    });
+                    this.elections = this.elections.slice(0,3);
+                })
+                Vue.axios.get('/api/referenda').then((response) => {
+                    this.referenda = response.data.sort(function(a,b) {
+                        return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+                    });
+                    this.referenda = this.referenda.slice(0,3);
+                })
+            }
+
+        },
 
         mounted() {
-            Vue.axios.get('/api/elections').then((response) => {
-                this.elections = response.data.sort(function(a,b) {
-                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
-                });
-                this.elections = this.elections.slice(0,3);
-            })
-            Vue.axios.get('/api/referenda').then((response) => {
-                this.referenda = response.data.sort(function(a,b) {
-                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
-                });
-                this.referenda = this.referenda.slice(0,3);
-            })
-
+            this.loadData();
         }
     }
 
