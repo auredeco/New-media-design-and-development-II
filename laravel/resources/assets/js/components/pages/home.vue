@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <img src="images/logo-square.svg">
+    <div id="home" class="container">
+        <figure id="logo">
+            <img src="images/logo-square.svg">
+        </figure>
 
         <div id="cards">
-            -        <div class="card-field">
+           <div class="card-field">
             <tabs>
                 <tab v-if="elections" name="verkiezingen" :selected="true">
                     <div v-for="election in elections" :key="election.id" >
@@ -15,7 +17,6 @@
                         </router-link>
                         <!--<item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>-->
                     </div>
-                    <router-link :to="{ path: 'elections'}">elections</router-link>
                 </tab>
                 <tab v-if="referenda" name="referenda">
                     <div v-for="referendum in referenda" :key="referendum.id">
@@ -27,7 +28,6 @@
                         </router-link>
                         <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
                     </div>
-                    <router-link :to="{ path: 'referenda'}">referenda</router-link>
                 </tab>
 
             </tabs>

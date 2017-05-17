@@ -1,12 +1,15 @@
 <template>
-    <div>
-        <img src="/images/logo-square.svg">
+    <div id="election-detail" class="container">
+        <figure class="election-image">
+            <img src="/images/logo-square.svg">
+        </figure>
         <h1>{{election.name}}</h1>
-        <p>{{election.description}}</p>
-        <p v-if="election.isClosed">Gesloten</p>
-        <p v-else>Lopend</p>
+        <p class="description">{{election.description}}</p>
+        <p v-if="election.isClosed" class="closed">Gesloten</p>
+        <p v-else class="open">Lopend</p>
         <p>loopt af op: {{ election.endDate }}</p>
         <hr />
+        <h1 class="candidates-title">Kandidaten</h1>
         <table>
             <thead>
                 <th>Kandidaat</th>
@@ -20,7 +23,7 @@
             </tbody>
         </table>
         <div class="button-field" v-if="!election.isClosed">
-            <router-link :to="{ name: 'electionVote', params: { id: election.id }}">
+            <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
                                 <button class="btn blue">Stemmen</button>
             </router-link>
         </div>

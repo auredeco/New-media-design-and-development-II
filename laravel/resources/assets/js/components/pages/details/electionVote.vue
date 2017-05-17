@@ -1,13 +1,17 @@
 <template>
-    <div>
+    <div id="election-vote" class="container">
         <div class="candidate" v-for="candidate in election.candidates">
-            <figure>
-                <img v-bind:src="candidate.user.pictureUri" />
-            </figure>
-            <h1>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</h1>
-            <p>{{ candidate.party.name }}</p>
-            <div class="button-field">
-                <button class="btn green" v-bind:id="candidate.pivot.id" @click="vote">Stemmen</button>
+            <div class="candidate-wrapper">
+                <figure class="user-image">
+                    <img v-bind:src="candidate.user.pictureUri" />
+                </figure>
+                <div class="candidate-info">
+                    <h1>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</h1>
+                    <p>{{ candidate.party.name }}</p>
+                    <div class="button-field">
+                        <button class="btn green" v-bind:id="candidate.pivot.id" @click="vote">Stemmen</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

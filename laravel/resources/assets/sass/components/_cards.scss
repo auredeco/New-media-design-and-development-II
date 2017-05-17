@@ -37,6 +37,10 @@
 
       div {
         display: inherit;
+
+        div {
+          width: calc(100% / 3);
+        }
       }
 
 

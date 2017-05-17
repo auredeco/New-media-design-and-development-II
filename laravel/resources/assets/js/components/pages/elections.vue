@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="elections" class="container">
         <div id="cards">
             <paginate
                     name="elections"
@@ -7,29 +7,39 @@
                     :per="5"
             >
                 <div class="filters">
-                    <input type="text" v-model="filterQuery" placeholder="Search...">
-                    <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
-                    <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
+
+                    <div class="searchfield">
+                        <figure class="icon">
+                            <img src="images/magnifier.svg" class="search"/>
+                        </figure>
+                        <input type="text" v-model="filterQuery" placeholder="Search...">
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
+                        <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
+                    </div>
                 </div>
-                <div class="standard-card" v-for="election in paginated('elections')">
-                    <div class="card-wrapper">
-                        <div class="card">
-                            <img src="/images/logo-square.svg">
-                            <div class="card-info">
-                                <h1 class="title">{{ election.name }}</h1>
-                                <p>
-                                    {{ election.description }}
-                            </p>
-                                <ul>
-                                    <li v-if="election.isClosed" class="closed">Status: Gesloten</li>
-                                    <li v-else class="open">Status: Lopend</li>
-                                </ul>
+                <div class="card-field">
+                    <div class="standard-card" v-for="election in paginated('elections')">
+                        <div class="card-wrapper">
+                            <div class="card">
+                                <img src="/images/logo-square.svg">
+                                <div class="card-info">
+                                    <h1 class="title">{{ election.name }}</h1>
+                                    <p>
+                                        {{ election.description }}
+                                    </p>
+                                    <ul>
+                                        <li v-if="election.isClosed" class="closed">Status: Gesloten</li>
+                                        <li v-else class="open">Status: Lopend</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="button-field">
-                            <router-link :to="{ name: 'election', params: { id: election.id }}">
-                                <button class="btn blue">Stemmen</button>
-                            </router-link>
+                            <div class="button-field">
+                                <router-link :to="{ name: 'election', params: { id: election.id }}" class="to-detail">
+                                    <button class="btn blue">Stemmen</button>
+                                </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
