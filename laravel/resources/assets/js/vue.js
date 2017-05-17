@@ -16,10 +16,14 @@ import  groups from './components/pages/groups.vue'
 import  parties from './components/pages/parties.vue'
 import VeeValidate from 'vee-validate'
 import VuePaginate from 'vue-paginate';
-Vue.use(VeeValidate);
-Vue.use(VueRouter);
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash/dist/vue-lodash.min'
+
+Vue.use(VeeValidate)
+Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(VuePaginate)
+Vue.use(VueLodash, lodash)
 
 const routes = [
     {
