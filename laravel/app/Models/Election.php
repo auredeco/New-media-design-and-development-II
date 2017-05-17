@@ -19,7 +19,7 @@ class Election extends Model
 
     public function candidates()
     {
-        return $this->belongsToMany(Candidate::class, 'candidate_elections')->withPivot('score');
+        return $this->belongsToMany(Candidate::class, 'candidate_elections')->withPivot('score', 'id');
     }
 
     public function scopeSearchByKeyword($query, $keyword)

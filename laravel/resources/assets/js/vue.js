@@ -18,6 +18,7 @@ import VeeValidate from 'vee-validate'
 import VuePaginate from 'vue-paginate';
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
+import electionVote from './components/pages/details/electionVote.vue'
 
 Vue.use(VeeValidate)
 Vue.use(VueRouter)
@@ -40,6 +41,12 @@ const routes = [
         path: '/elections/:id',
         component: election,
         name: 'election',
+        props: true,
+    },
+    {
+        path: '/elections/:id/vote',
+        component: electionVote,
+        name: 'electionVote',
         props: true,
     },
     {

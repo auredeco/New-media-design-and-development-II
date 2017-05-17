@@ -1,9 +1,30 @@
 <template>
-    <!--<h1>{{election.name}}</h1>-->
-    <!--<p>Status: -->
-        <!--<span v-if="election.isClosed">Closed</span>-->
-        <!--<span v-else>Closed</span>-->
-    </p>
+    <div>
+        <img src="/images/logo-square.svg">
+        <h1>{{election.name}}</h1>
+        <p>{{election.description}}</p>
+        <p v-if="election.isClosed">Gesloten</p>
+        <p v-else>Lopend</p>
+        <p>loopt af op: {{ election.endDate }}</p>
+        <hr />
+        <table>
+            <thead>
+                <th>Kandidaat</th>
+                <th>Partij</th>
+            </thead>
+            <tbody>
+            <tr v-for="candidate in election.candidates">
+                <td>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</td>
+                <td>{{ candidate.party.name }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-field" v-if="!election.isClosed">
+            <router-link :to="{ name: 'electionVote', params: { id: election.id }}">
+                                <button class="btn blue">Stemmen</button>
+            </router-link>
+        </div>
+    </div>
 </template>
 
 <script>
