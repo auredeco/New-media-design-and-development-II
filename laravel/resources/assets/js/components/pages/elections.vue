@@ -27,7 +27,9 @@
                             </div>
                         </div>
                         <div class="button-field">
-                            <button class="btn blue">Stemmen</button>
+                            <router-link :to="{ name: 'election', params: { id: election.id }}">
+                                <button class="btn blue">Stemmen</button>
+                            </router-link>
                         </div>
                     </div>
                 </div>

@@ -11692,6 +11692,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -16387,7 +16389,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }
-  }), _vm._v(" Open\n                "), _c('input', {
+  }), _vm._v(" Lopend\n                "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -16441,9 +16443,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "open"
     }, [_vm._v("Status: Lopend")])])])]), _vm._v(" "), _c('div', {
       staticClass: "button-field"
+    }, [_c('router-link', {
+      attrs: {
+        "to": {
+          name: 'election',
+          params: {
+            id: election.id
+          }
+        }
+      }
     }, [_c('button', {
       staticClass: "btn blue"
-    }, [_vm._v("Stemmen")])])])])
+    }, [_vm._v("Stemmen")])])], 1)])])
   })], 2)], 1), _vm._v(" "), _c('paginate-links', {
     attrs: {
       "for": "elections",
