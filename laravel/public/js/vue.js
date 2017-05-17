@@ -24884,8 +24884,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            referendum: []
+        };
+    },
+
+
+    methods: {
+        loadData: function loadData(id) {
+            var _this = this;
+
+            this.axios.get('/api/referenda/' + id).then(function (response) {
+                _this.referendum = response.data;
+                console.log(_this.referendum);
+            });
+        }
+    },
     mounted: function mounted() {
+        this.loadData(this.$route.params.id);
         console.log('Referendum mounted.');
+        console.log(this.$route.params.id);
     }
 });
 
