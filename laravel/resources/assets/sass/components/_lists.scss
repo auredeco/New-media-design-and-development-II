@@ -1,23 +1,24 @@
 .paginate-links {
-  display: inline;
+  display: inline-flex;
   float: right;
   margin: 1rem 0;
-
-  &:after {
-    clear: both;
-  }
+  justify-content: space-between;
 
   li {
-    float: left;
-    background: $sub;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    cursor: hand;
-    width: 30px;
-    height: 15px;
+    border: 1px solid $sub;
     text-align: center;
+    cursor: pointer; cursor: hand;
+    display: inline-block;
+    a {
+      color: $sub;
+      padding: 0.5rem;
+      display: inline-block;
+      width: 20px;
+    }
+  }
 
+  .active {
+    background: $sub;
     a {
       color: white;
     }

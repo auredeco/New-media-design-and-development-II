@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="referenda" class="container">
         <paginate-links for="items"></paginate-links>
             <paginate
                     name="referenda"
