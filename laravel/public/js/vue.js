@@ -11545,14 +11545,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            items: [],
-            paginate: ['elections']
+            elections: [],
+            paginate: ['elections'],
+            filterQuery: ''
         };
     },
 
@@ -11562,7 +11561,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.axios.get('/api/elections').then(function (response) {
-                _this.items = response.data;
+                _this.elections = response.data;
+            });
+        }
+    },
+
+    computed: {
+        filterByName: function filterByName() {
+            var _this2 = this;
+
+            return this.elections.filter(function (election) {
+                return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1;
             });
         }
     },
@@ -15885,21 +15894,37 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('paginate-links', {
-    attrs: {
-      "for": "items"
-    }
-  }), _vm._v(" "), _c('div', {
+  return _c('div', [_c('div', {
     attrs: {
       "id": "cards"
     }
   }, [_c('paginate', {
     attrs: {
       "name": "elections",
-      "list": _vm.items,
+      "list": _vm.filterByName,
       "per": 5
     }
-  }, _vm._l((_vm.paginated('elections')), function(item) {
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.filterQuery),
+      expression: "filterQuery"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Search..."
+    },
+    domProps: {
+      "value": (_vm.filterQuery)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.filterQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._l((_vm.paginated('elections')), function(election) {
     return _c('div', {
       staticClass: "standard-card"
     }, [_c('div', {
@@ -15914,7 +15939,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "card-info"
     }, [_c('h1', {
       staticClass: "title"
-    }, [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                " + _vm._s(item.description) + "\n                        ")]), _vm._v(" "), _c('ul', [(item.isClosed) ? _c('li', {
+    }, [_vm._v(_vm._s(election.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                " + _vm._s(election.description) + "\n                        ")]), _vm._v(" "), _c('ul', [(election.isClosed) ? _c('li', {
       staticClass: "closed"
     }, [_vm._v("Status: Gesloten")]) : _c('li', {
       staticClass: "open"
@@ -15923,7 +15948,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('button', {
       staticClass: "btn blue"
     }, [_vm._v("Stemmen")])])])])
-  }))], 1), _vm._v(" "), _c('paginate-links', {
+  })], 2)], 1), _vm._v(" "), _c('paginate-links', {
     attrs: {
       "for": "elections",
       "limit": 5

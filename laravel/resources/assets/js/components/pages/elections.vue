@@ -1,23 +1,23 @@
 <template>
     <div>
-        <paginate-links for="items"></paginate-links>
         <div id="cards">
             <paginate
                     name="elections"
-                    :list="items"
+                    :list="filterByName"
                     :per="5"
             >
-                <div class="standard-card" v-for="item in paginated('elections')">
+                <input type="text" v-model="filterQuery" placeholder="Search...">
+                <div class="standard-card" v-for="election in paginated('elections')">
                     <div class="card-wrapper">
                         <div class="card">
                             <img src="/images/logo-square.svg">
                             <div class="card-info">
-                                <h1 class="title">{{ item.name }}</h1>
+                                <h1 class="title">{{ election.name }}</h1>
                                 <p>
-                                    {{ item.description }}
+                                    {{ election.description }}
                             </p>
                                 <ul>
-                                    <li v-if="item.isClosed" class="closed">Status: Gesloten</li>
+                                    <li v-if="election.isClosed" class="closed">Status: Gesloten</li>
                                     <li v-else class="open">Status: Lopend</li>
                                 </ul>
                             </div>
@@ -32,24 +32,30 @@
         <paginate-links for="elections" :limit="5"></paginate-links>
     </div>
 </template>
-
-
 <script>
     export default {
-
         data() {
             return {
-                items: [],
-                paginate: ['elections']
+                elections: [],
+                paginate: ['elections'],
+                filterQuery: ''
             }
         },
 
         methods: {
             loadData: function () {
                 this.axios.get('/api/elections').then((response) => {
-                    this.items = response.data;
+                    this.elections = response.data;
                 });
             },
+        },
+
+        computed: {
+            filterByName() {
+                return this.elections.filter( election => {
+                    return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+                })
+            }
         },
 
         mounted() {
