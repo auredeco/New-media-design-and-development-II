@@ -36,3 +36,7 @@ Route::group([
     Route::resource('groups', 'GroupController', $options);
     Route::resource('votes', 'VoteController', $options);
 });
+
+    Route::get('user', function(Request $request) {
+        return 	Auth::guard('api')->user();
+    })->middleware('auth:api');

@@ -38,6 +38,8 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
         $user->lastLogin = Carbon::now();
+//        $user->api_token =  str_random(60);
+
 
         $user->save();
 

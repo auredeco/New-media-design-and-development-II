@@ -26,6 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'birthdate' => $faker->dateTimeThisCentury,
         'pictureUri' => $faker->imageUrl(640, 840, 'people'),
         'remember_token' => str_random(10),
+        'api_token' => str_random(60),
     ];
 });
 $factory->define(App\Models\Admin::class, function (Faker\Generator $faker) {

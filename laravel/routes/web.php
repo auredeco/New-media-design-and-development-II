@@ -35,4 +35,4 @@ Route::group(['prefix' => 'backoffice'], function () {
 
 
 
-Route::get('/', 'HomeController@index')->middleware(null);
+Route::get('/', 'HomeController@index')->middleware('auth');
