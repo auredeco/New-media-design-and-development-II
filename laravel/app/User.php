@@ -93,6 +93,7 @@ class User extends Authenticatable
         }
         return $query;
     }
+
     public static function getAge($birthDate) {
         $birthDate = explode("-", $birthDate);
         $currentDate = explode("-", date('Y-m-d'));
@@ -114,5 +115,12 @@ class User extends Authenticatable
             else $age =$currentDate[0]-$birthDate[0]-1;
         }
         return $age;
+    }
+
+    public static function getRegisteredMonth(){
+        return User::select(\DB::raw('count(id) as `total`'),
+                            \DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+            ->groupby('year','month')
+            ->get();
     }
 }
