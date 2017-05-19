@@ -68,7 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+             $user = User::create([
             'username' => $data['username'],
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
@@ -77,7 +77,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'lastLogin' => Carbon::now(),
+            'api_token' => str_random(60),
             'pictureUri' => 'http://blog.ramboll.com/fehmarnbelt/wp-content/themes/ramboll2/images/profile-img.jpg'
         ]);
+        return $user;
     }
 }

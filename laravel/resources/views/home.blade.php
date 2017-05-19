@@ -14,6 +14,8 @@
     <script>
         window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
+                'api_token' => Auth::user()->api_token,
+
             ]) !!}
     </script>
 
@@ -23,9 +25,9 @@
 <div id="app">
     {{--<p v-text="message"></p>--}}
     <navigation></navigation>
-    <vuehead></vuehead>
+    <vuehead ></vuehead>
     <transition name="slide">
-        <router-view></router-view>
+        <router-view ></router-view>
     </transition>
 </div>
 

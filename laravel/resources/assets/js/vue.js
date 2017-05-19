@@ -26,6 +26,15 @@ Vue.use(VueAxios, axios)
 Vue.use(VuePaginate)
 Vue.use(VueLodash, lodash)
 
+window.axios = require('axios');
+
+
+window.axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + window.Laravel.api_token,
+};
+
 const routes = [
     {
         path: '/',

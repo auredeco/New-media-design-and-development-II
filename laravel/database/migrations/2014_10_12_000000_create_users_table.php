@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->date('birthdate');
             $table->string('pictureUri');
             $table->rememberToken();
+            $table->string('api_token', 60)->unique();
             $table->timestamps();
             $table->softDeletes();
         });
