@@ -19,25 +19,17 @@ class DashboardController extends Controller
     public function index()
     {
         $all = [
-//            todo replace "Referendum::count" with correct query
             User::count(),
             Group::count(),
             Party::count(),
-//            Referendum::count(),
-//            Referendum::count(),
             Referendum::where('isClosed','=','0')->count(),
             Referendum::where('isClosed','=','1')->count(),
             Election::where('isClosed','=','0')->count(),
             Election::where('isClosed','=','1')->count(),
             Referendum::count(),
             Referendum::WhereUnpublished()->count(),
-//            Referendum::where(function($query)
-//            {
-//                $query->where('isClosed', '=', '1')
-//                    ->where('published', '=', '0');
-//            }),
+            User::getRegisteredMonth()
         ];
-
 
         return view('dashboard', compact('all'));
     }
