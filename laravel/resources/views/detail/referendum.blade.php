@@ -16,7 +16,7 @@
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="/referenda">Referenda</a></li>
+        <li><a href="../referenda">Referenda</a></li>
         <li class="active" ><a href="/referenda/{{$referendum->id}}">{{$referendum->title}}</a></li>
     </ol>
 
@@ -33,13 +33,12 @@
                 <li>disagree:{{$disagree}}</li>
                 <li>total:{{$total}}</li>
             </ul>
-
+            <div id="results-chart"></div>
         @else
             <h4>Status: Open</h4>
             <h3>Referendum</h3>
             <p>{{$referendum->description}}</p>
         @endif
-
     </div>
 
     <div class="col-xs-12 col-sm-3 userInfo">
@@ -81,4 +80,18 @@
             <button onclick="return confirm('Are you sure you want to delete this referendum')" class="btn btn-danger">Delete</button>
         </form>
     </div>
+@endsection
+@section('scripts')
+    <script>
+       var morris = new Morris.Donut({
+            element: 'results-chart',
+
+            data: [
+                {label: "agreed", value:{{ $agree}}},
+                {label: "disagreed", value:{{$disagree}}}
+            ],
+
+           colors: ["#347C90", "#C34F33"]
+        });
+    </script>
 @endsection

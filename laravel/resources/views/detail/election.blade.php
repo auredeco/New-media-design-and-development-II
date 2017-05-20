@@ -48,7 +48,8 @@
                 @endforeach
                 </tbody>
             </table>
-
+            <h4>Statistics</h4>
+            <div id="results-chart"></div>
         @else
             <h4>Status: Open</h4>
             <h3>Candidates</h3>
@@ -110,11 +111,32 @@
 
             </tbody>
         </table>
-        <form action="{{ URL::route('elections.destroy',$referendum->id) }}" method="POST">
+        <form action="{{ URL::route('elections.destroy',$election->id) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <a class="btn btn-default" href="/backoffice/elections/{{$election->id}}/edit">Edit</a>
             <button onclick="return confirm('Are you sure you want to delete this election')" class="btn btn-danger">Delete</button>
         </form>
     </div>
+@endsection
+@section('scripts')
+<script>
+    var $candidates = [
+            @foreach ($election->candidates as $candidate)
+            {
+              firstname: "{{ $candidate->user->firstname }}" + " " + "{{ $candidate->user->lastname }}",
+              lastname:"",
+              score: "{{$candidate->pivot->score}}"
+            },
+        @endforeach
+    ];
+
+    Morris.Bar({
+        element: 'results-chart',
+        data: $candidates,
+        xkey: 'firstname',
+        ykeys: ['score'],
+        labels: ['Score']
+    });
+</script>
 @endsection
