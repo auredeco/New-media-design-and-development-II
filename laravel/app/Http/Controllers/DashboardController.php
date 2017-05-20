@@ -31,7 +31,6 @@ class DashboardController extends Controller
             User::getRegisteredMonth()
         ];
 
-
         return view('dashboard', compact('all'));
     }
 

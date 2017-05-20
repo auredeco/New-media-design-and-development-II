@@ -201,10 +201,42 @@
     {{-- Graphic centered content--}}
     <h4>Graphics</h4>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 col-md-6">
             <div id="chart-users">
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        var dates = {!! $all[9] !!};
+
+        new Morris.Line({
+            element: 'chart-users',
+
+            data: {!! $all[9] !!},
+
+            xkey: ['month'],
+
+            xLabelFormat: function(x){
+                var monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
+                return monthNames[x.label - 1];
+            },
+
+            // Fix display bug with months
+            parseTime: false,
+
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['total'],
+
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['total']
+        });
+    </script>
 @endsection
