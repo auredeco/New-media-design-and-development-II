@@ -60,8 +60,16 @@ class UserController extends Controller
             ->with('candidate.elections')
             ->with('voter')
             ->find($id);
+        $groups = User::find($id)->groups;
 
-        return $user ?: response()
+
+        $object = (object) [
+            'user' => $user,
+            'groups' => $groups,
+        ];
+
+         return response()->json($object)
+ ?: response()
             ->json([
                 'error' => "User `${id}` not found",
             ])

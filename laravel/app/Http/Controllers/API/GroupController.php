@@ -43,8 +43,15 @@ class GroupController extends Controller
             with('referendums')
             ->with('users')
             ->find($id);
+        $users = $group->users()->get();
 
-        return $group ?: response()
+        $object = (object) [
+            'group' => $group,
+            'users' => $users,
+        ];
+
+
+        return response()->json($object)?: response()
             ->json([
                 'error' => "Group `${id}` not found",
             ])
