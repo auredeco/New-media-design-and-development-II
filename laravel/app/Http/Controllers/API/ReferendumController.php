@@ -58,6 +58,7 @@ class ReferendumController extends Controller
             ->with('candidate.user')
             ->with('candidate.party')
             ->with('group')
+            ->with('votes')
             ->find($id);
 
         return $referendum ?: response()
