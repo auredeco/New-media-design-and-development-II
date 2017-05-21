@@ -11808,11 +11808,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            users: [],
+            userItems: [],
+            paginate: ['users'],
+            //                users : [],
             group: []
         };
     },
@@ -11823,7 +11837,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.axios.get('/api/groups/' + id).then(function (response) {
                 console.log(response.data);
-                _this.users = response.data.users;
+                _this.userItems = response.data.users;
                 _this.group = response.data.group;
             });
         }
@@ -11844,9 +11858,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            userItems: [],
+            paginate: ['users'],
+            party: []
+        };
+    },
+
+    methods: {
+        loadData: function loadData(id) {
+            var _this = this;
+
+            this.axios.get('/api/parties/' + id).then(function (response) {
+                console.log(response.data);
+                _this.party = response.data;
+                _this.userItems = _this.party.candidates;
+            });
+        }
+    },
     mounted: function mounted() {
+        this.loadData(this.$route.params.id);
         console.log('Party mounted.');
     }
 });
@@ -12056,6 +12110,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -33893,9 +33950,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "group"
     }
-  }, [_c('h1', [_vm._v(_vm._s(_vm.group.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.group.description))]), _vm._v(" "), _c('h2', [_vm._v("Users")]), _vm._v(" "), _c('ul', _vm._l((_vm.users), function(user) {
-    return _c('li', [_vm._v(_vm._s(user.firstname))])
-  }))])
+  }, [_c('div', {
+    staticClass: "card-field"
+  }, [_c('h1', [_vm._v(_vm._s(_vm.group.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.group.description))]), _vm._v(" "), _c('h2', [_vm._v("Users")]), _vm._v(" "), _c('paginate', {
+    attrs: {
+      "name": "users",
+      "list": _vm.userItems,
+      "per": 5
+    }
+  }, _vm._l((_vm.paginated('users')), function(user) {
+    return _c('div', {
+      staticClass: "standard-card"
+    }, [_c('div', {
+      staticClass: "card-wrapper"
+    }, [_c('p', [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))])])])
+  })), _vm._v(" "), _c('paginate-links', {
+    attrs: {
+      "for": "users",
+      "limit": 5
+    }
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -33915,6 +33989,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "groups"
     }
+  }, [_c('div', {
+    staticClass: "card-field"
   }, [_c('paginate-links', {
     attrs: {
       "for": "items"
@@ -33949,7 +34025,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "groups",
       "limit": 5
     }
-  })], 1)
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -34180,7 +34256,31 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("party")])
+  return _c('div', {
+    staticClass: "container",
+    attrs: {
+      "id": "party"
+    }
+  }, [_c('div', {
+    staticClass: "card-field"
+  }, [_c('h1', [_vm._v(_vm._s(_vm.party.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.party.description))]), _vm._v(" "), _c('h2', [_vm._v("kandidaten")]), _vm._v(" "), _c('paginate', {
+    attrs: {
+      "name": "users",
+      "list": _vm.userItems,
+      "per": 5
+    }
+  }, _vm._l((_vm.paginated('users')), function(candidate) {
+    return _c('div', {
+      staticClass: "standard-card"
+    }, [_c('div', {
+      staticClass: "card-wrapper"
+    }, [_c('p', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))])])])
+  })), _vm._v(" "), _c('paginate-links', {
+    attrs: {
+      "for": "users",
+      "limit": 5
+    }
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

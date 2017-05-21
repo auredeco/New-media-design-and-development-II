@@ -1,5 +1,7 @@
 <template>
     <div id="groups" class="container">
+        <div class="card-field">
+
         <paginate-links for="items"></paginate-links>
         <paginate
                 name="groups"
@@ -16,6 +18,7 @@
             </div>
         </paginate>
         <paginate-links for="groups" :limit="5"></paginate-links>
+    </div>
     </div>
 </template>
 

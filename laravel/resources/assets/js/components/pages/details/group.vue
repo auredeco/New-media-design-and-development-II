@@ -1,12 +1,24 @@
 <template>
     <div id="group" class="container">
-        <h1>{{group.name}}</h1>
-        <p>{{group.description}}</p>
-        <h2>Users</h2>
-        <ul>
-            <li v-for="user in users">{{user.firstname}}</li>
-        </ul>
+        <div class="card-field">
+            <h1>{{group.name}}</h1>
+            <p>{{group.description}}</p>
+            <h2>Users</h2>
+            <paginate
+                    name="users"
+                    :list="userItems"
+                    :per="5"
+            >
+                <div class="standard-card" v-for="user in paginated('users')">
+                    <div class="card-wrapper">
+                        <!--<img :src="user.pictureUri">-->
+                        <p>{{user.firstname}} {{user.lastname}}</p>
+                    </div>
+                </div>
 
+            </paginate>
+            <paginate-links for="users" :limit="5"></paginate-links>
+        </div>
     </div>
 </template>
 
@@ -14,7 +26,9 @@
     export default {
         data() {
             return {
-                users : [],
+                userItems:[],
+                paginate: ['users'],
+//                users : [],
                 group: [],
             }
         },
@@ -22,7 +36,7 @@
             loadData: function (id) {
                 this.axios.get('/api/groups/' + id).then((response) => {
                     console.log(response.data);
-                    this.users = response.data.users;
+                    this.userItems = response.data.users;
                     this.group = response.data.group;
                 });
             },
