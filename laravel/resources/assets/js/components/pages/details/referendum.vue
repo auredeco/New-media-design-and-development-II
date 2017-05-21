@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="info">
             <h1>{{referendum.title}}</h1>
             <p>Status:
@@ -13,6 +13,8 @@
             <p>{{referendum.description}}</p>
             <div v-if="referendum.isClosed">
                 <h2>Resultaat</h2>
+                <p v-model="agree">Akkoord: {{ agree }}</p>
+                <p v-model="disagree">Niet akkoord: {{ disagree }}</p>
             </div>
             <div v-else>
                 <h2>Mening</h2>
@@ -22,7 +24,7 @@
                 <input type="radio" id="disagreed" value="0" v-model="opinion">
                 <label for="disagreed">Niet akkoord</label>
             </div>
-
+            <div class="ct-chart ct-perfect-fourth"></div>
         </div>
         <div class="buttons" >
             <button v-if="!referendum.isClosed" @click="vote">Stemmen</button>
@@ -36,6 +38,8 @@
         data() {
             return {
                 referendum: [],
+                agree: 0,
+                disagree: 0,
                 referenda: [],
                 next:[],
                 opinion: 0,
@@ -46,12 +50,36 @@
             loadData: function (id) {
                 this.axios.get('/api/referenda/' + id).then((response) => {
                     this.referendum = response.data;
+                    this.drawGraph();
                 });
                 this.axios.get('/api/referenda').then((response) => {
                     this.referenda = response.data.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                 });
+            },
+            drawGraph(){
+                if(this.referendum.isClosed)
+                {
+                    let votes = this.referendum.votes;
+
+                    for(let i =0; i < votes.length; i++){
+                        if(votes[i].agreed){
+                            this.agree++;
+                        } else {
+                            this.disagree++
+                        }
+                    }
+                    console.log(this.agree);
+                    console.log(this.disagree);
+
+                    let Chartdata = {
+                        labels: ['Akkoord', 'Niet Akkoord'],
+                        series: [this.agree, this.disagree]
+                    };
+
+                    new Chartist.Pie('.ct-chart', Chartdata);
+                }
             },
             nextReferenda: function ()  {
 
@@ -87,7 +115,7 @@
         },
         mounted() {
             this.loadData(this.$route.params.id);
-            console.log(this.$route.params.id)
+            console.log(this.$route.params.id);
         }
     }
 </script>
