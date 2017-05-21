@@ -82,7 +82,6 @@
                 }
             },
             nextReferenda: function ()  {
-
                 var referendum = this.referendum;
                 var index = _.findIndex(this.referenda, function(o) { return o.id == referendum.id; });
                 this.next = this.referenda[index + 1];

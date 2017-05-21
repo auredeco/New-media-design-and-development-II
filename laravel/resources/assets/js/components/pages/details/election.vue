@@ -27,6 +27,11 @@
                                 <button class="btn blue">Stemmen</button>
             </router-link>
         </div>
+        <div class="results">
+            <h1>Uitslag</h1>
+            <div class="ct-chart">
+        </div>
+        </div>
     </div>
 </template>
 
@@ -35,6 +40,8 @@
         data() {
             return {
                 election: [],
+                candidates: [],
+                scores: []
             }
         },
 
@@ -42,14 +49,32 @@
             loadData: function (id) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
-                    console.log(this.election)
+                    this.drawGraph();
                 });
+            },
+            drawGraph() {
+                if(this.election.isClosed) {
+                    for(let i = 0; i < this.election.candidates.length; i++){
+                        //console.log(this.election.candidates[i]);
+                        this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
+                        this.scores.push(this.election.candidates[i].pivot.score)
+                    }
+                    var options = {
+                        labelInterpolationFnc: function(value) {
+                            return value[0]
+                        }
+                    };
+                    new Chartist.Bar('.ct-chart', {
+                        labels: this.candidates,
+                        series: [this.scores]
+                    }, options);
+                }
             },
         },
         mounted() {
             this.loadData(this.$route.params.id);
             console.log('Election mounted.')
-            console.log(this.$route.params.id)
+            console.log(this.$route.params.id);
         }
     }
 </script>
