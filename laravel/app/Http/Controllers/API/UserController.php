@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\User;
+use App\Models\Election;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -54,22 +55,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
+
         $user = User::
             with('candidate')
             ->with('candidate.referendums')
             ->with('candidate.elections')
             ->with('voter')
+            ->with('groups')
             ->find($id);
-        $groups = User::find($id)->groups;
 
-
-        $object = (object) [
-            'user' => $user,
-            'groups' => $groups,
-        ];
-
-         return response()->json($object)
- ?: response()
+         return $user ?: response()
             ->json([
                 'error' => "User `${id}` not found",
             ])

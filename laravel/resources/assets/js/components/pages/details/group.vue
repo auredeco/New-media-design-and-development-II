@@ -10,10 +10,12 @@
                     :per="5"
             >
                 <div class="standard-card" v-for="user in paginated('users')">
-                    <div class="card-wrapper">
-                        <!--<img :src="user.pictureUri">-->
-                        <p>{{user.firstname}} {{user.lastname}}</p>
-                    </div>
+                    <router-link :to="{ name: 'user', params: { id: user.id }}">
+                        <div class="card-wrapper">
+                            <!--<img :src="user.pictureUri">-->
+                            <p>{{user.firstname}} {{user.lastname}}</p>
+                        </div>
+                    </router-link>
                 </div>
 
             </paginate>

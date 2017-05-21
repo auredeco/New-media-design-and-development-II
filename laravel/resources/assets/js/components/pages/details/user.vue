@@ -1,8 +1,7 @@
 <template>
     <div class="container">
-        <h1>Welkom {{user.username}}</h1>
-        <h2>Persoonlijke info</h2>
         <img :src="user.picture">
+        <h2>Persoonlijke info</h2>
         <table>
             <tbody>
             <tr>
@@ -50,7 +49,6 @@
         },
         methods: {
             loadData: function (id) {
-
                 this.axios.get('/api/users/' + id).then((response) => {
                     let user = response.data;
                     this.groups = user.groups;
@@ -67,15 +65,9 @@
                     console.log(response.data);
                 });
             },
-            loadUserData: function () {
-                this.axios.get('api/user').then((response) => {
-                    this.loadData(response.data.id);
-                });
-            }
-
         },
         mounted() {
-            this.loadUserData()
+            this.loadData(this.$route.params.id);
         },
 
 
