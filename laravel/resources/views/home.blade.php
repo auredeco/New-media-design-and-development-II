@@ -7,6 +7,7 @@
 
     <title>Laravel</title>
 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -31,6 +32,7 @@
     </transition>
 </div>
 
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script src="{{ URL::asset('js/vue.js') }}" ></script>
 <script src="{{ URL::asset('js/main.js') }}" ></script>
 
