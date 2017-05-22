@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Referendum;
+use App\Models\Candidate;
 use Carbon\Carbon;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -28,21 +30,53 @@ class ReferendumController extends Controller
      */
     public function store(Request $request)
     {
-        $referendum = new Referendum();
 
-        $referendum->title = $request->input('title');
-        $referendum->description = $request->input('description');
-        $referendum->isClosed = $request->input('isClosed');
-        $referendum->startDate = $request->input('startDate');
-        $referendum->endDate = $request->input('endDate');
-        $referendum->published = $request->input('published');
-        $referendum->candidate_id = $request->input('candidate_id');
-        $referendum->group_id = $request->input('group_id');
-        $referendum->votemanager_id = $request->input('votemanager_id');
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'description' => 'required',
+//            'startDate' => 'required|date' ,
+            'startDate' => 'required|date|after_or_equal:yesterday' ,
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'group_id' => 'required',
+        ]);
 
-        $referendum->save();
+        if ($validator->fails()) {
+            return response()->json([
+                $validator->errors()->all(),
+//                ])
+                ])->setStatusCode(201);
+        }else {
+            $closed = true;
+            $candidate = Candidate::where('user_id',$request->input('user_id'))->get();
+            $time = strtotime(Carbon::now());
+            $startTime = strtotime($request->input('startDate'));
+            if( $startTime <= $time){
+                $closed = false;
+            }
 
-        return 'Referendum created!';
+            if(0 != count($candidate)){
+                $candidateId = $candidate[0]->id;
+            }else {
+                $candidateId = 1;
+            }
+            $referendum = new Referendum();$referendum->title = $request->input('title');
+            $referendum->description = $request->input('description');
+            $referendum->isClosed = $closed;
+            $referendum->startDate = $request->input('startDate');
+            $referendum->endDate = $request->input('endDate');
+            $referendum->published = null;
+            $referendum->candidate_id = $candidateId;
+            $referendum->group_id = $request->input('group_id');
+            $referendum->votemanager_id = 1;
+
+            $referendum->save();
+            return response()
+                ->json([
+                    'Referendum created!',
+                ])
+                ->setStatusCode(Response::HTTP_OK);
+
+        }
     }
 
     /**

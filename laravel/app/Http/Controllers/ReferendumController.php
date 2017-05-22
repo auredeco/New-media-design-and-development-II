@@ -91,7 +91,7 @@ class ReferendumController extends Controller
         $this->validate(request(), [
         'title' => 'required',
         'description' => 'required',
-        'startDate' => 'required|date' ,
+//        'startDate' => 'required|date' ,
         'startDate' => 'required|date|after_or_equal:yesterday' ,
         'startTime' => 'required',
         'endDate' => 'required|date|after_or_equal:startDate',
