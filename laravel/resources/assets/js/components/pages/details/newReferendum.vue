@@ -28,6 +28,11 @@
                 </textarea>
             </div>
             <input type="submit" value="submit" >
+            <div>
+                <p v-for="message in messages">
+                    {{message}}
+                </p>
+            </div>
         </form>
 
     </div>
@@ -46,11 +51,10 @@
                 endTime: null,
                 description: '',
                 user: [],
-
-
+                messages: [],
+                status: false,
             }
         },
-
         methods: {
             loadData: function () {
                 this.axios.get('/api/groups/').then((response) => {
@@ -69,12 +73,20 @@
                     endDate:  this.endDate + " " + this.endTime,
                     group_id: this.group,
                     user_id: this.user.id
-                }).then(function (response) {
+                }).then((response) => {
                     console.log(response);
-                }).catch(function (error) {
-                    console.log(error);
+                    if(response.status === 200){
+                        this.status = true;
+                        if(confirm("uw referendum werd doorgestuurd")){
+                           this.$router.push({ name: 'referenda' });
+                        }
+                    }
+                    else {
+                        this.status = false;
+                    }
+                    this.messages = response.data[0];
+                    console.log(this.messages);
                 });
-
             }
         },
         mounted() {

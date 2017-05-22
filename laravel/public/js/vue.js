@@ -11906,6 +11906,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11918,11 +11923,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             endDate: null,
             endTime: null,
             description: '',
-            user: []
-
+            user: [],
+            messages: [],
+            status: false
         };
     },
-
 
     methods: {
         loadData: function loadData() {
@@ -11937,6 +11942,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         placeNew: function placeNew() {
+            var _this2 = this;
+
             this.axios.post('api/referenda/', {
                 title: this.title,
                 description: this.description,
@@ -11946,8 +11953,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 user_id: this.user.id
             }).then(function (response) {
                 console.log(response);
-            }).catch(function (error) {
-                console.log(error);
+                if (response.status === 200) {
+                    _this2.status = true;
+                    if (confirm("uw referendum werd doorgestuurd")) {
+                        _this2.$router.push({ name: 'referenda' });
+                    }
+                } else {
+                    _this2.status = false;
+                }
+                _this2.messages = response.data[0];
+                console.log(_this2.messages);
             });
         }
     },
@@ -34990,7 +35005,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit",
       "value": "submit"
     }
-  })])])
+  }), _vm._v(" "), _c('div', _vm._l((_vm.messages), function(message) {
+    return _c('p', [_vm._v("\n                " + _vm._s(message) + "\n            ")])
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
