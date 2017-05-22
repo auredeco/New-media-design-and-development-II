@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Referendum;
+use App\Models\Candidate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -28,20 +29,23 @@ class ReferendumController extends Controller
      */
     public function store(Request $request)
     {
-        $referendum = new Referendum();
-
-        $referendum->title = $request->input('title');
+        $candidate = Candidate::where('user_id',$request->input('user_id'))->get();
+        if(0 != count($candidate)){
+            $candidateId = $candidate[0]->id;
+        }else {
+            $candidateId = 1;
+        }
+        $referendum = new Referendum();$referendum->title = $request->input('title');
         $referendum->description = $request->input('description');
-        $referendum->isClosed = $request->input('isClosed');
+        $referendum->isClosed = false;
         $referendum->startDate = $request->input('startDate');
         $referendum->endDate = $request->input('endDate');
-        $referendum->published = $request->input('published');
-        $referendum->candidate_id = $request->input('candidate_id');
+        $referendum->published = null;
+        $referendum->candidate_id = $candidateId;
         $referendum->group_id = $request->input('group_id');
-        $referendum->votemanager_id = $request->input('votemanager_id');
+        $referendum->votemanager_id = 1;
 
         $referendum->save();
-
         return 'Referendum created!';
     }
 

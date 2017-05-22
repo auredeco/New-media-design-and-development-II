@@ -36,7 +36,24 @@ Route::group([
     Route::resource('groups', 'GroupController', $options);
     Route::resource('votes', 'VoteController', $options);
 });
-
+Route::group([
+    'middleware' => [
+        'auth:api',
+    ],
+    'namespace' => 'secure',
+], function () {
+    $options = [
+        'except' => [
+            'create',
+            'edit',
+        ]
+    ];
     Route::get('user', function(Request $request) {
         return 	Auth::guard('api')->user();
-    })->middleware('auth:api');
+    });
+//    Route::resource('votes', 'VoteController', $options);
+});
+
+//    Route::get('user', function(Request $request) {
+//        return 	Auth::guard('api')->user();
+//    })->middleware('auth:api');
