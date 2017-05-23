@@ -1,22 +1,36 @@
 <template>
     <div id="referenda-overview" class="container">
-        <paginate-links for="items"></paginate-links>
+
             <paginate
                     name="referenda"
-                    :list="items"
+                    :list="filterByName"
                     :per="5"
             >
-                <div class="referendum" v-for="item in paginated('referenda')">
-                    <h1>{{item.title}}</h1>
-                    <p>{{item.description}}</p>
+                <div class="filters">
+                    <div class="searchfield">
+                        <figure class="icon">
+                            <img src="images/magnifier.svg" class="search"/>
+                        </figure>
+                        <input type="text" v-model="filterQuery" placeholder="Search...">
+                    </div>
+                    <div class="checkboxes">
+                        <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
+                        <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
+                    </div>
+                    <router-link :to="{ name: 'newReferenda'}">nieuw</router-link>
+                </div>
+                <div class="referendum" v-for="referendum in paginated('referenda')">
+                    <h1>{{referendum.title}}</h1>
+                    <p>{{referendum.description}}</p>
                     <p>Status:
-                        <span class="closed"v-if="item.isClosed">Closed</span>
+                        <span class="closed"v-if="referendum.isClosed">Closed</span>
                         <span class="open"v-else >Open</span>
                     </p>
                     <p class="read-more">
-                        <router-link :to="{ name: 'referendum', params: { id: item.id }}">Lees meer</router-link>
+                        <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">Lees meer</router-link>
                     </p>
                 </div>
+
 
             </paginate>
         <paginate-links for="referenda" :limit="5"></paginate-links>
@@ -29,21 +43,34 @@
 
         data() {
             return {
-                items: [],
-                paginate: ['referenda']
+                referenda: [],
+                paginate: ['referenda'],
+                filterQuery: '',
+                checkboxValues: []
             }
         },
 
         methods: {
             loadData: function () {
                 this.axios.get('/api/referenda').then((response) => {
-                    this.items = response.data.sort(function(a,b) {
+                    this.referenda = response.data.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                 });
             },
         },
-
+        computed: {
+            filterByName() {
+                return this.referenda.filter( referendum => {
+                    if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){
+                        return referendum.title.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+                    }else{
+                        let value = this.checkboxValues[0];
+                        return referendum.title.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && referendum.isClosed == value;
+                    }
+                })
+            },
+        },
         mounted() {
             this.loadData();
             console.log('Referenda mounted.');

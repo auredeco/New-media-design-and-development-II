@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Group;
+use App\Models\Group_user;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -120,5 +121,14 @@ class GroupController extends Controller
                 'error' => "Group `${id}` not found",
             ])
             ->setStatusCode(Response::HTTP_NOT_FOUND);
+    }
+    public function join(Request $request) {
+
+        $group_user = new Group_user();
+        $group_user->user_id = $request->input('user_id');
+        $group_user->group_id = $request->input('group_id');
+        $group_user->save();
+
+        return $group_user;
     }
 }

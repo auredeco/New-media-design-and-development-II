@@ -3,6 +3,7 @@
         <div class="card-field">
             <h1>{{group.name}}</h1>
             <p>{{group.description}}</p>
+            <button v-if="!listed" @click="join">Lid worden</button>
             <h2>Users</h2>
             <paginate
                     name="users"
@@ -30,8 +31,10 @@
             return {
                 userItems:[],
                 paginate: ['users'],
-//                users : [],
+                user : [],
                 group: [],
+                listed: false,
+
             }
         },
         methods: {
@@ -40,11 +43,37 @@
                     console.log(response.data);
                     this.userItems = response.data.users;
                     this.group = response.data.group;
+                    console.log(this.user);
+                    console.log(this.group);
+                    this.checkListed();
                 });
             },
+            loadUserData: function (groupId) {
+                this.axios.get('/api/user').then((response) => {
+                    this.user = response.data;
+                    this.loadData(groupId);
+                });
+            },
+            join: function() {
+                this.axios.post('/api/groups/join',{
+                    group_id: this.group.id,
+                    user_id: this.user.id,
+
+                }).then((response) => {
+                    console.log(response.data);
+                });
+
+            },
+            checkListed() {
+                let filtered = _.filter(this.userItems, { 'id': this.user.id});
+                (filtered.length === 0)?this.listed = false : this.listed = true;
+                console.log(this.listed);
+
+
+            }
         },
         mounted() {
-            this.loadData(this.$route.params.id);
+            this.loadUserData(this.$route.params.id);
             console.log('Group mounted.')
         }
     }
