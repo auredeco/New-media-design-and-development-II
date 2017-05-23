@@ -109,7 +109,8 @@ const routes = [
         path: '/account',
         component: account,
         name: 'account',
-    },{
+    },
+    {
         path: '/users/:id',
         component: user,
         name: 'user',

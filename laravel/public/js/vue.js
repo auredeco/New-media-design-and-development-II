@@ -11739,6 +11739,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         register: function register() {
+            var _this3 = this;
+
             console.log(this.election.id);
             console.log(this.party);
             console.log(this.user.id);
@@ -11749,11 +11751,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             }).then(function (response) {
                 console.log(response.data);
-                //                    if(response.status === 200){
-                //                        this.status = true;
-                //                        if(confirm("uw referendum werd doorgestuurd")){
-                //                            this.$router.push({ name: 'referenda' });
-                //                        }
+                _this3.$router.push({ name: 'election', params: { id: _this3.$route.params.id } });
             });
         }
     },
@@ -11973,14 +11971,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             userItems: [],
             paginate: ['users'],
-            //                users : [],
-            group: []
+            user: [],
+            group: [],
+            listed: false
+
         };
     },
 
@@ -11992,11 +11993,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
                 _this.userItems = response.data.users;
                 _this.group = response.data.group;
+                console.log(_this.user);
+                console.log(_this.group);
+                _this.checkListed();
             });
+        },
+        loadUserData: function loadUserData(groupId) {
+            var _this2 = this;
+
+            this.axios.get('/api/user').then(function (response) {
+                _this2.user = response.data;
+                _this2.loadData(groupId);
+            });
+        },
+        join: function join() {
+            this.axios.post('/api/groups/join', {
+                group_id: this.group.id,
+                user_id: this.user.id
+
+            }).then(function (response) {
+                console.log(response.data);
+            });
+        },
+        checkListed: function checkListed() {
+            var filtered = _.filter(this.userItems, { 'id': this.user.id });
+            filtered.length === 0 ? this.listed = false : this.listed = true;
+            console.log(this.listed);
         }
     },
     mounted: function mounted() {
-        this.loadData(this.$route.params.id);
+        this.loadUserData(this.$route.params.id);
         console.log('Group mounted.');
     }
 });
@@ -34472,7 +34498,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "card-field"
-  }, [_c('h1', [_vm._v(_vm._s(_vm.group.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.group.description))]), _vm._v(" "), _c('h2', [_vm._v("Users")]), _vm._v(" "), _c('paginate', {
+  }, [_c('h1', [_vm._v(_vm._s(_vm.group.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.group.description))]), _vm._v(" "), (!_vm.listed) ? _c('button', {
+    on: {
+      "click": _vm.join
+    }
+  }, [_vm._v("Lid worden")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Users")]), _vm._v(" "), _c('paginate', {
     attrs: {
       "name": "users",
       "list": _vm.userItems,

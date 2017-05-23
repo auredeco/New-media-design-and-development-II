@@ -55,12 +55,8 @@
 
                 }).then((response) => {
                     console.log(response.data);
-//                    if(response.status === 200){
-//                        this.status = true;
-//                        if(confirm("uw referendum werd doorgestuurd")){
-//                            this.$router.push({ name: 'referenda' });
-//                        }
-                    });
+                    this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
+                });
             },
         },
         mounted() {

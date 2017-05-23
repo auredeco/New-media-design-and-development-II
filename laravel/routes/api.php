@@ -34,6 +34,7 @@ Route::group([
     Route::resource('parties', 'PartyController', $options);
     Route::resource('referenda', 'ReferendumController', $options);
     Route::resource('groups', 'GroupController', $options);
+    Route::post('groups/join', 'GroupController@join');
     Route::resource('votes', 'VoteController', $options);
     Route::resource('candidates', 'CandidateController', $options);
 });
