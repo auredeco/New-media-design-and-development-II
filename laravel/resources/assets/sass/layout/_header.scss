@@ -1,9 +1,12 @@
-header {
+.main-header {
     background: $main;
     display: flex;
     flex-direction: row;
     padding: 1rem;
     align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
 
     h1 {
         color: white;

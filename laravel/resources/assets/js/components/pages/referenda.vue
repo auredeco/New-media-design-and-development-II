@@ -1,5 +1,6 @@
 <template>
     <div id="referenda-overview" class="container">
+
             <paginate
                     name="referenda"
                     :list="filterByName"

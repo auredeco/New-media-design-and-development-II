@@ -23,6 +23,17 @@ Route::group(['prefix' => 'backoffice'], function () {
     Auth::routes();
 });
 
+Route::group([
+    'middleware' => [
+        'auth',
+    ],
+    'name' => 'verify',
+    'as' => 'verify.'
+], function () {
+    Route::get('/verify', 'VerifyController@index')->name('index');
+    Route::post('/verify', 'VerifyController@check')->name('check');
+});
+
 //Auth::routes();
 
 //Route::get('/', 'DashboardController@index')->middleware('auth');

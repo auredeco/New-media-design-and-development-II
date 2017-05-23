@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="main-header">
         <figure>
             <p id="hamburger">
                 <i class="fa fa-bars fa-2x" aria-hidden="true"></i>

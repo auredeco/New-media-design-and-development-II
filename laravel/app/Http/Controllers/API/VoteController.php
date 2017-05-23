@@ -42,31 +42,32 @@ class VoteController extends Controller
             ->exists());
         $vote->uuid = $uuid;
 
-        // Create Checksum, assume password
-        $data = $vote->getAttributes();
-        ksort($data);
-        $value = hash('sha512', (json_encode($data)).$vote->checksum);
-        // \Log::debug([$data, $value]);
-        $vote->checksum = bcrypt($value);
 
+        $vote->checksum = $request->input('checksum');
         $vote->voteType = $request->input('voteType');
 
-        if($vote->voteTye == 0)
+        if($vote->voteTye === 0)
         {
             $vote->agreed = null;
             $vote->referendum_id = null;
             $vote->CandidateElection_id = $request->input('CandidateElection_id');
         } else {
-            $vote->agreed = $request->input('agreed');
+            $vote->agreed = intval($request->input('agreed'));
             $vote->referendum_id = $request->input('referendum_id');
             $vote->CandidateElection_id = null;
         }
 
-        $vote->created_at = Carbon::now();
+        // Create Checksum, assume password
+        $data = $vote->getAttributes();
+        ksort($data);
+
+        $value = hash('sha512', (json_encode($data)).$vote->checksum);
+        // \Log::debug([$data, $value]);
+        $vote->checksum = $value;
 
         $vote->save();
 
-        return $vote;
+        return $data;
     }
 
     /**

@@ -12296,19 +12296,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             window.location.reload();
         },
         vote: function vote() {
-            var opinion = Boolean(parseInt(this.opinion));
+            var opinion = parseInt(this.opinion);
             var question = "Bent u zeker dat u ";
             opinion ? question += "akkoord stemt?" : question += "niet akkoord stemt?";
+            var password = prompt('Geef een wachtwoord op om later je stem te valideren');
 
             if (confirm(question)) {
                 this.axios.post('api/votes/', {
                     voteType: 1,
                     agreed: opinion,
                     referendum_id: this.referendum.id,
-                    CandidateElection_id: null
+                    CandidateElection_id: null,
+                    checksum: password
                 }).then(function (response) {
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
+                    console.log(response.data);
                 }).catch(function (error) {});
             }
         }
@@ -12763,6 +12766,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -33575,7 +33579,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\navigation.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33609,7 +33613,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\account.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/account.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] account.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33643,7 +33647,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\apply.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/apply.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] apply.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33677,7 +33681,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\election.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/election.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] election.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33711,7 +33715,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\electionVote.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/electionVote.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] electionVote.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33745,7 +33749,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\group.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/group.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] group.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33779,7 +33783,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\newReferendum.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/newReferendum.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] newReferendum.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33813,7 +33817,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\party.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/party.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] party.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33847,7 +33851,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\referendum.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/referendum.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] referendum.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33881,7 +33885,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\details\\user.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/details/user.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] user.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33915,7 +33919,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\elections.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/elections.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] elections.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33949,7 +33953,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\groups.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/groups.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] groups.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33983,7 +33987,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\home.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34017,7 +34021,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\parties.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/parties.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] parties.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34051,7 +34055,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\pages\\referenda.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/pages/referenda.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] referenda.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34085,7 +34089,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\basie\\Code\\nmdad2-19-votebox\\laravel\\resources\\assets\\js\\components\\vuehead.vue"
+Component.options.__file = "/Users/Rellee/Code/nmdad2-19-votebox.local/laravel/resources/assets/js/components/vuehead.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] vuehead.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34421,7 +34425,9 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
+  return _c('header', {
+    staticClass: "main-header"
+  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', [_c('p', {
     attrs: {
