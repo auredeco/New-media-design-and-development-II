@@ -13,6 +13,7 @@ import  election from './components/pages/details/election.vue'
 import  group from './components/pages/details/group.vue'
 import  party from './components/pages/details/party.vue'
 import  user from './components/pages/details/user.vue'
+import  newReferendum from './components/pages/details/newReferendum.vue'
 import  groups from './components/pages/groups.vue'
 import  parties from './components/pages/parties.vue'
 import VeeValidate from 'vee-validate'
@@ -63,6 +64,11 @@ const routes = [
         path: '/referenda',
         component: referenda,
         name: 'referenda',
+    },
+    {
+        path: '/referenda/new',
+        component: newReferendum,
+        name: 'newReferenda',
     },
     {
         path: '/referenda/:id',
