@@ -59,7 +59,8 @@ class ReferendumController extends Controller
             }else {
                 $candidateId = 1;
             }
-            $referendum = new Referendum();$referendum->title = $request->input('title');
+            $referendum = new Referendum();
+            $referendum->title = $request->input('title');
             $referendum->description = $request->input('description');
             $referendum->isClosed = $closed;
             $referendum->startDate = $request->input('startDate');

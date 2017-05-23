@@ -18,13 +18,13 @@ class Candidate extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      *
      * Relates a Candidate with a User
      */
     public function user()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->belongsTo(User::class);
     }
 
     /**
