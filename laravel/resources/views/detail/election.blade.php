@@ -64,8 +64,8 @@
                 <tbody>
                 @foreach($election->candidates as $candidate)
                     <tr>
-                        <td><a href="/backoffice/groups/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
-                        <td><a href="/backoffice/groups/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                        <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
+                        <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
                         <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
                     </tr>
                 @endforeach

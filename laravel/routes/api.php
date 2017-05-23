@@ -35,6 +35,7 @@ Route::group([
     Route::resource('referenda', 'ReferendumController', $options);
     Route::resource('groups', 'GroupController', $options);
     Route::resource('votes', 'VoteController', $options);
+    Route::resource('candidates', 'CandidateController', $options);
 });
 Route::group([
     'middleware' => [

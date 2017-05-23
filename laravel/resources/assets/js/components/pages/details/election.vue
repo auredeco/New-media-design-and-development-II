@@ -9,6 +9,8 @@
         <p v-else class="open">Lopend</p>
         <p>loopt af op: {{ election.endDate }}</p>
         <hr />
+        <router-link :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
             <thead>

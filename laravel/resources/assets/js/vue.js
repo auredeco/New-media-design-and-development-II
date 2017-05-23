@@ -9,6 +9,7 @@ import  account from './components/pages/account.vue'
 import  elections from './components/pages/elections.vue'
 import  referenda from './components/pages/referenda.vue'
 import  referendum from './components/pages/details/referendum.vue'
+import  apply from './components/pages/details/apply.vue'
 import  election from './components/pages/details/election.vue'
 import  group from './components/pages/details/group.vue'
 import  party from './components/pages/details/party.vue'
@@ -58,6 +59,12 @@ const routes = [
         path: '/elections/:id/vote',
         component: electionVote,
         name: 'electionVote',
+        props: true,
+    },
+    {
+        path: '/elections/:id/apply',
+        component: apply,
+        name: 'applyElection',
         props: true,
     },
     {
