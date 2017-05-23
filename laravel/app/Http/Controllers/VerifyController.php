@@ -46,7 +46,7 @@ class VerifyController extends Controller
             $value = hash('sha512', (json_encode($data)).$vote->checksum);
 
             if ($value === $hashedValue) {
-                return view('verify.success');
+                return view('verify.succes');
             } else {
                 return view('verify.index');
             }
