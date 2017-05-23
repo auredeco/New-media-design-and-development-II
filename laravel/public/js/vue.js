@@ -12049,16 +12049,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var opinion = Boolean(parseInt(this.opinion));
             var question = "Bent u zeker dat u ";
             opinion ? question += "akkoord stemt?" : question += "niet akkoord stemt?";
+            var password = prompt('Geef een wachtwoord op om later je stem te valideren');
 
             if (confirm(question)) {
                 this.axios.post('api/votes/', {
                     voteType: 1,
                     agreed: opinion,
                     referendum_id: this.referendum.id,
-                    CandidateElection_id: null
+                    CandidateElection_id: null,
+                    checksum: password
                 }).then(function (response) {
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
+                    console.log(response.data);
                 }).catch(function (error) {});
             }
         }
