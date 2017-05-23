@@ -34075,7 +34075,9 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
+  return _c('header', {
+    staticClass: "main-header"
+  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', [_c('p', {
     attrs: {
@@ -34252,7 +34254,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "container",
     attrs: {
-      "id": "referenda"
+      "id": "referenda-overview"
     }
   }, [_c('paginate-links', {
     attrs: {
@@ -34265,7 +34267,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "per": 5
     }
   }, _vm._l((_vm.paginated('referenda')), function(item) {
-    return _c('div', [_c('p', [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c('p', [_vm._v("Status:\n                    "), (item.isClosed) ? _c('span', [_vm._v("Closed")]) : _c('span', [_vm._v("Open")])]), _vm._v(" "), _c('p', [_c('router-link', {
+    return _c('div', {
+      staticClass: "referendum"
+    }, [_c('h1', [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(item.description))]), _vm._v(" "), _c('p', [_vm._v("Status:\n                    "), (item.isClosed) ? _c('span', {
+      staticClass: "closed"
+    }, [_vm._v("Closed")]) : _c('span', {
+      staticClass: "open"
+    }, [_vm._v("Open")])]), _vm._v(" "), _c('p', {
+      staticClass: "read-more"
+    }, [_c('router-link', {
       attrs: {
         "to": {
           name: 'referendum',
@@ -34274,7 +34284,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }, [_vm._v("lees meer")])], 1)])
+    }, [_vm._v("Lees meer")])], 1)])
   })), _vm._v(" "), _c('paginate-links', {
     attrs: {
       "for": "referenda",

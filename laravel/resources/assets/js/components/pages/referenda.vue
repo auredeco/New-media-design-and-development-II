@@ -1,20 +1,20 @@
 <template>
-    <div id="referenda" class="container">
+    <div id="referenda-overview" class="container">
         <paginate-links for="items"></paginate-links>
             <paginate
                     name="referenda"
                     :list="items"
                     :per="5"
             >
-                <div v-for="item in paginated('referenda')">
-                    <p>{{item.title}}</p>
+                <div class="referendum" v-for="item in paginated('referenda')">
+                    <h1>{{item.title}}</h1>
                     <p>{{item.description}}</p>
                     <p>Status:
-                        <span v-if="item.isClosed">Closed</span>
-                        <span v-else >Open</span>
+                        <span class="closed"v-if="item.isClosed">Closed</span>
+                        <span class="open"v-else >Open</span>
                     </p>
-                    <p>
-                        <router-link :to="{ name: 'referendum', params: { id: item.id }}">lees meer</router-link>
+                    <p class="read-more">
+                        <router-link :to="{ name: 'referendum', params: { id: item.id }}">Lees meer</router-link>
                     </p>
                 </div>
 
