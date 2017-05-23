@@ -43,18 +43,21 @@ class VerifyController extends Controller
 
             $data = $vote->getAttributes();
             ksort($data);
-            dd($data)
             $value = hash('sha512', (json_encode($data)).$vote->checksum);
-            if (Hash::check($value, $hashedValue)) {
+
+            if ($value === $hashedValue) {
                 return view('verify.success');
             } else {
                 return view('verify.index');
             }
+
+
         } else {
             return redirect()
                 ->route('verify.index')
                 ->withInput();
         }
+
     }
 
     /**
