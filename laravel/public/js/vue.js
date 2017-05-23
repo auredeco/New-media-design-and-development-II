@@ -11813,7 +11813,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             election: [],
             candidates: [],
-            scores: []
+            scores: [],
+            user: [],
+            listed: false
         };
     },
 
@@ -11824,13 +11826,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
+
                 _this.drawGraph();
+                _this.checkListed();
             });
+        },
+        loadUserData: function loadUserData(electionId) {
+            var _this2 = this;
+
+            this.axios.get('api/user').then(function (response) {
+                _this2.user = response.data;
+                _this2.loadData(electionId);
+            });
+        },
+        checkListed: function checkListed() {
+            var candidates = this.election.candidates;
+            for (var i = 0; i < candidates.length; i++) {
+                if (this.user.id === candidates[i].user_id) {
+                    this.listed = true;
+                }
+            }
+            console.log(this.listed);
         },
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
                 for (var i = 0; i < this.election.candidates.length; i++) {
-                    //console.log(this.election.candidates[i]);
                     this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
                     this.scores.push(this.election.candidates[i].pivot.score);
                 }
@@ -11847,7 +11867,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        this.loadData(this.$route.params.id);
+        this.loadUserData(this.$route.params.id);
         console.log('Election mounted.');
         console.log(this.$route.params.id);
     }
@@ -35016,7 +35036,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "party"
     }
-  }, [_vm._v("group")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("party:")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35025,7 +35045,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     attrs: {
       "id": "party",
-      "name": "party"
+      "name": "party",
+      "required": ""
     },
     on: {
       "change": function($event) {
@@ -35288,7 +35309,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "closed"
   }, [_vm._v("Gesloten")]) : _c('p', {
     staticClass: "open"
-  }, [_vm._v("Lopend")]), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('router-link', {
+  }, [_vm._v("Lopend")]), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed) ? _c('router-link', {
     attrs: {
       "to": {
         name: 'applyElection',
@@ -35297,7 +35318,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }
-  }, [_vm._v("registreer")]), _vm._v(" "), _c('h1', {
+  }, [_vm._v("registreer")]) : _vm._e(), _vm._v(" "), _c('h1', {
     staticClass: "candidates-title"
   }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])])

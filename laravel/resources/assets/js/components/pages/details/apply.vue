@@ -3,8 +3,8 @@
         <h2>Kandidatuur</h2>
         <form @submit.prevent="register">
             <div class="form-group">
-                <label for="party">group</label>
-                <select id="party" name="party" v-model="party" >
+                <label for="party">party:</label>
+                <select id="party" name="party" v-model="party" required >
                     <option v-for="party in parties" :value="party.id">{{party.name}}</option>
                 </select>
             </div>

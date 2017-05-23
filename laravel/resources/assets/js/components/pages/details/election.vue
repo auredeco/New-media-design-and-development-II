@@ -9,7 +9,7 @@
         <p v-else class="open">Lopend</p>
         <p>loopt af op: {{ election.endDate }}</p>
         <hr />
-        <router-link :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+        <router-link v-if="!listed" :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
@@ -43,7 +43,9 @@
             return {
                 election: [],
                 candidates: [],
-                scores: []
+                scores: [],
+                user: [],
+                listed: false,
             }
         },
 
@@ -51,13 +53,29 @@
             loadData: function (id) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
+
                     this.drawGraph();
+                    this.checkListed();
                 });
+            },
+            loadUserData: function (electionId) {
+                this.axios.get('api/user').then((response) => {
+                    this.user = response.data;
+                    this.loadData(electionId);
+                });
+            },
+            checkListed() {
+                let candidates = this.election.candidates;
+                for (let i = 0; i < candidates.length; i++) {
+                    if(this.user.id === candidates[i].user_id){
+                        this.listed = true;
+                    }
+                }
+                console.log(this.listed);
             },
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){
-                        //console.log(this.election.candidates[i]);
                         this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
                         this.scores.push(this.election.candidates[i].pivot.score)
                     }
@@ -74,7 +92,7 @@
             },
         },
         mounted() {
-            this.loadData(this.$route.params.id);
+            this.loadUserData(this.$route.params.id);
             console.log('Election mounted.')
             console.log(this.$route.params.id);
         }
