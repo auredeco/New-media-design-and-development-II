@@ -1,5 +1,5 @@
 <template>
-    <div id="referenda" class="container">
+    <div id="referenda-overview" class="container">
             <paginate
                     name="referenda"
                     :list="filterByName"
@@ -18,23 +18,18 @@
                     </div>
                     <router-link :to="{ name: 'newReferenda'}">nieuw</router-link>
                 </div>
-                <div class="card-field">
-                    <div class="standard-card" v-for="item in paginated('referenda')">
-                        <div class="card-wrapper">
-                            <div class="card">
-                                <p>{{item.title}}</p>
-                                <p>{{item.description}}</p>
-                                <p>Status:
-                                    <span v-if="item.isClosed">Closed</span>
-                                    <span v-else >Open</span>
-                                </p>
-                                <p>
-                                    <router-link :to="{ name: 'referendum', params: { id: item.id }}">lees meer</router-link>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="referendum" v-for="referendum in paginated('referenda')">
+                    <h1>{{referendum.title}}</h1>
+                    <p>{{referendum.description}}</p>
+                    <p>Status:
+                        <span class="closed"v-if="referendum.isClosed">Closed</span>
+                        <span class="open"v-else >Open</span>
+                    </p>
+                    <p class="read-more">
+                        <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">Lees meer</router-link>
+                    </p>
                 </div>
+
 
             </paginate>
         <paginate-links for="referenda" :limit="5"></paginate-links>
