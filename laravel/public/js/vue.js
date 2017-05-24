@@ -11726,6 +11726,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
+                _this.checkReg();
             });
             this.axios.get('/api/parties/').then(function (response) {
                 _this.parties = response.data;
@@ -11754,6 +11755,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
                 _this3.$router.push({ name: 'election', params: { id: _this3.$route.params.id } });
             });
+        },
+        checkReg: function checkReg() {
+            var candidates = this.election.candidates;
+
+            self = this;
+            for (var i = 0; i < candidates.length; i++) {
+
+                if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
+                    console.log("nope");
+                    self.$router.push({ name: 'election', params: { id: self.$route.params.id } });
+                }
+            }
         }
     },
     mounted: function mounted() {
@@ -11806,6 +11819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11814,7 +11828,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             candidates: [],
             scores: [],
             user: [],
-            listed: false
+            listed: false,
+            reg: false
         };
     },
 
@@ -11828,6 +11843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 _this.drawGraph();
                 _this.checkListed();
+                _this.checkReg();
             });
         },
         loadUserData: function loadUserData(electionId) {
@@ -11845,7 +11861,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.listed = true;
                 }
             }
-            console.log(this.listed);
+        },
+        checkReg: function checkReg() {
+            if (new Date() < new Date(this.election.startDate)) {
+                this.reg = true;
+            } else {
+                this.reg = false;
+            }
         },
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
@@ -11868,6 +11890,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
         console.log('Election mounted.');
+
         console.log(this.$route.params.id);
     }
 });
@@ -35349,7 +35372,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "closed"
   }, [_vm._v("Gesloten")]) : _c('p', {
     staticClass: "open"
-  }, [_vm._v("Lopend")]), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed) ? _c('router-link', {
+  }, [_vm._v("Lopend")]), _vm._v(" "), (_vm.reg) ? _c('p', [_vm._v("start op: " + _vm._s(_vm.election.startDate))]) : _vm._e(), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.reg) ? _c('router-link', {
     attrs: {
       "to": {
         name: 'applyElection',

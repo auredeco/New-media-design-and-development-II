@@ -33,6 +33,7 @@
             loadData: function (id) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
+                    this.checkReg();
                 });
                 this.axios.get('/api/parties/').then((response) => {
                     this.parties = response.data;
@@ -57,6 +58,18 @@
                     console.log(response.data);
                     this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
                 });
+            },
+            checkReg(){
+                let candidates = this.election.candidates;
+
+                self = this;
+                for (let i = 0; i < candidates.length; i++) {
+
+                    if(self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)){
+                            console.log("nope");
+                            self.$router.push({ name: 'election', params: { id: self.$route.params.id }});                    }
+
+                }
             },
         },
         mounted() {

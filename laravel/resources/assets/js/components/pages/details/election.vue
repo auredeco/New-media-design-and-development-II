@@ -7,9 +7,10 @@
         <p class="description">{{election.description}}</p>
         <p v-if="election.isClosed" class="closed">Gesloten</p>
         <p v-else class="open">Lopend</p>
+        <p v-if="reg">start op: {{ election.startDate }}</p>
         <p>loopt af op: {{ election.endDate }}</p>
         <hr />
-        <router-link v-if="!listed" :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+        <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
@@ -46,6 +47,7 @@
                 scores: [],
                 user: [],
                 listed: false,
+                reg: false,
             }
         },
 
@@ -56,6 +58,7 @@
 
                     this.drawGraph();
                     this.checkListed();
+                    this.checkReg();
                 });
             },
             loadUserData: function (electionId) {
@@ -68,10 +71,17 @@
                 let candidates = this.election.candidates;
                 for (let i = 0; i < candidates.length; i++) {
                     if(this.user.id === candidates[i].user_id){
-                        this.listed = true;
+                        this.listed = true
                     }
                 }
-                console.log(this.listed);
+
+            },
+            checkReg(){
+                if(new Date() < new Date(this.election.startDate)){
+                    this.reg = true;
+                }else {
+                    this.reg = false;
+                }
             },
             drawGraph() {
                 if(this.election.isClosed) {
@@ -93,7 +103,8 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Election mounted.')
+            console.log('Election mounted.');
+
             console.log(this.$route.params.id);
         }
     }

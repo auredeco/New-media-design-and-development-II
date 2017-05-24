@@ -16,6 +16,7 @@ class CreateElectionsTable extends Migration
         Schema::create('elections', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('pictureUri');
             $table->string('description');
             $table->dateTime('startDate');
             $table->dateTime('endDate');
