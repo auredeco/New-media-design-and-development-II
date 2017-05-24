@@ -10690,6 +10690,7 @@ var routes = [{
     name: 'user'
 }];
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    // mode: 'history',
     routes: routes // short for routes: routes
 });
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -12016,7 +12017,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 user_id: self.user.id
 
             }).then(function (response) {});
-            vm.$forceUpdate();
+            window.location.reload();
         },
         checkListed: function checkListed() {
             var filtered = _.filter(this.userItems, { 'id': this.user.id });

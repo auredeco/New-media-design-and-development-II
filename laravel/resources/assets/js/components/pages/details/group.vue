@@ -64,7 +64,7 @@
                 }).then((response) => {
 
             });
-                vm.$forceUpdate();
+                window.location.reload()
 
             },
             checkListed() {
