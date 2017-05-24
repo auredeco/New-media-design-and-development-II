@@ -25,7 +25,7 @@
 
     <div class="col-xs-12 col-sm-9">
         @if($election->isClosed)
-            <h4>Status: Closed</h4>
+            <h4>Status: <span class="status-closed">Closed</span></h4>
             <h3>results</h3>
             <table class="table">
                 <thead>
@@ -51,7 +51,7 @@
             <h4>Statistics</h4>
             <div id="results-chart"></div>
         @else
-            <h4>Status: Open</h4>
+            <h4>Status: <span class="status-open">Open</span></h4>
             <h3>Candidates</h3>
             <table class="table">
                 <thead>
@@ -77,6 +77,11 @@
 
     <div class="col-xs-12 col-sm-3 userInfo">
         <h3>info</h3>
+        <div class="detail-page-head-image">
+            <figure>
+                <img src="{{$election->pictureUri}}" alt="election image">
+            </figure>
+        </div>
         <table class="table">
             <tbody>
             <tr>
