@@ -162,10 +162,16 @@ class ElectionController extends Controller
             'endDate' => 'required|date|after_or_equal:startDate',
             'endTime' => 'required',
             'group' => 'required',
+            'pictureUri' => 'image'
         ]);
         $startTime = strtotime(request('startDate'). " " .request('startTime'));
         if( $startTime <= $time){
             $closed = false;
+        }
+
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('election-images', 'election'.$id.'.jpg');
         }
 
 
@@ -178,6 +184,7 @@ class ElectionController extends Controller
             'group_id' => request('group'),
             'isClosed' => $closed,
             'votemanager_id' => 1,
+            'pictureUri' => url('/').'/storage/election-images/election'.$id.'.jpg'
         ]);
         return redirect('/backoffice/elections/' . $id);
     }
