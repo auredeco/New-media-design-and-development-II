@@ -33,12 +33,15 @@
             },
             vote(e) {
                 if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
+                    var password = prompt('Geef een wachtwoord op om later je stem te valideren');
+                    console.log(e);
                     // get the event and take the id from the element that is clicked
                     // Store it in the candidateElection_id variable
-                    let candidateElection_id = e.path[0].id;
+                    let candidateElection_id = e.srcElement.id;
                     let _self = this;
 
                     this.axios.post('api/votes/',{
+                        checksum: password,
                         voteType: 0,
                         agreed: null,
                         referendum_id: null,

@@ -11915,12 +11915,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         vote: function vote(e) {
             if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
+                var password = prompt('Geef een wachtwoord op om later je stem te valideren');
+                console.log(e);
                 // get the event and take the id from the element that is clicked
                 // Store it in the candidateElection_id variable
-                var candidateElection_id = e.path[0].id;
+                var candidateElection_id = e.srcElement.id;
                 var _self = this;
 
                 this.axios.post('api/votes/', {
+                    checksum: password,
                     voteType: 0,
                     agreed: null,
                     referendum_id: null,
