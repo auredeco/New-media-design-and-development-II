@@ -113,7 +113,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
 });
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
     return [
-        'score' =>  mt_rand(0.00, 5000.00),
+        'score' =>  mt_rand(200.00, 5000.00),
 
         //todo proper foreign keys
         'election_id' => random_int(
