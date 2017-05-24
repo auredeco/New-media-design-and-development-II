@@ -11805,6 +11805,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11813,7 +11814,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             candidates: [],
             scores: [],
             user: [],
-            listed: false
+            listed: false,
+            reg: false
         };
     },
 
@@ -11827,6 +11829,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 _this.drawGraph();
                 _this.checkListed();
+                _this.checkReg();
             });
         },
         loadUserData: function loadUserData(electionId) {
@@ -11844,7 +11847,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.listed = true;
                 }
             }
-            console.log(this.listed);
+        },
+        checkReg: function checkReg() {
+            if (new Date() < new Date(this.election.startDate)) {
+                this.reg = true;
+            } else {
+                this.reg = false;
+            }
         },
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
@@ -11867,6 +11876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
         console.log('Election mounted.');
+
         console.log(this.$route.params.id);
     }
 });
@@ -35348,7 +35358,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "closed"
   }, [_vm._v("Gesloten")]) : _c('p', {
     staticClass: "open"
-  }, [_vm._v("Lopend")]), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed) ? _c('router-link', {
+  }, [_vm._v("Lopend")]), _vm._v(" "), (_vm.reg) ? _c('p', [_vm._v("start op: " + _vm._s(_vm.election.startDate))]) : _vm._e(), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.reg) ? _c('router-link', {
     attrs: {
       "to": {
         name: 'applyElection',
