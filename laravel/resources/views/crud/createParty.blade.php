@@ -24,7 +24,7 @@
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <form method="POST" action="/backoffice/parties">
+        <form method="POST" action="/backoffice/parties" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="name">Name</label>
@@ -33,6 +33,10 @@
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="imgUpload">Image</label>
+                <input type="file" class="form-control" id="imgUpload" name="imgUpload" accept="image/*"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">submit</button>

@@ -115,7 +115,7 @@ class ReferendumController extends Controller
             'candidate_id' => 1,
             'published' => Carbon::now(),
         ]);
-        return redirect('/backoffice/');
+        return redirect('/backoffice/referenda');
     }
 
     /**
