@@ -175,6 +175,8 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
 
     if($votetype){
         return [
+            'uuid' => str_random(36),
+            'checksum' => hash('sha512', 'password'),
             'voteType' => $votetype,
             'agreed' => $faker->boolean(50),
 
@@ -191,6 +193,8 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
     }
     else{
         return [
+            'uuid' => str_random(36),
+            'checksum' => hash('sha512', $faker->password()),
             'voteType' => $votetype,
             'agreed' => null,
 
