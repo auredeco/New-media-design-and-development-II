@@ -11725,6 +11725,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
+                _this.checkReg();
             });
             this.axios.get('/api/parties/').then(function (response) {
                 _this.parties = response.data;
@@ -11753,6 +11754,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
                 _this3.$router.push({ name: 'election', params: { id: _this3.$route.params.id } });
             });
+        },
+        checkReg: function checkReg() {
+            var candidates = this.election.candidates;
+
+            self = this;
+            for (var i = 0; i < candidates.length; i++) {
+
+                if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
+                    console.log("nope");
+                    self.$router.push({ name: 'election', params: { id: self.$route.params.id } });
+                }
+            }
         }
     },
     mounted: function mounted() {
