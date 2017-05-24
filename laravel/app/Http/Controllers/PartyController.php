@@ -68,13 +68,25 @@ class PartyController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
+            'pictureUri' => 'image'
+
         ]);
-        Party::create([
-            'name' => request('name'),
-            'description' => request('description'),
-        ]);
-        return redirect('/backoffice/');
+
+
+        $party = New Party();
+        $party->name = request('name');
+        $party->description = request('description');
+        $party->pictureUri = "";
+        $party->save();
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('party-images', 'party'.$party->id.'.jpg');
+        }
+        $party->pictureUri = url('/').'/storage/party-images/party'.$party->id.'.jpg';
+        $party->save();
+        return redirect('/backoffice/parties');
     }
+
 
     /**
      * Display the specified resource.

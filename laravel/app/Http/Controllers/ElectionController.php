@@ -92,19 +92,33 @@ class ElectionController extends Controller
             'endDate' => 'required|date|after_or_equal:startDate',
             'endTime' => 'required',
             'group' => 'required',
+            'pictureUri' => 'image'
+
         ]);
 
+
+
+
         //TODO votemanager_id = huidige votemanger
-        Election::create([
-            'name' => request('name'),
-            'description' => request('description'),
-            'startDate' => request('startDate') . " " .request('startTime'),
-            'endDate' => request('endDate') . " " . request('endTime'),
-            'group_id' => request('group'),
-            'isClosed' => $closed,
-            'votemanager_id' => 1,
-        ]);
-        return redirect('/backoffice/');
+
+
+        $election = New Election();
+        $election->name = request('name');
+        $election->description = request('description');
+        $election->startDate = request('startDate') . " " .request('startTime');
+        $election->endDate = request('endDate') . " " . request('endTime');
+        $election->group_id = request('group');
+        $election->isClosed = true;
+        $election->votemanager_id = 1;
+        $election->pictureUri = "";
+        $election->save();
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('election-images', 'election'.$election->id.'.jpg');
+        }
+        $election->pictureUri = url('/').'/storage/election-images/election'.$election->id.'.jpg';
+        $election->save();
+        return redirect('/backoffice/elections');
 
     }
 

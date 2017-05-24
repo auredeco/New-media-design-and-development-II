@@ -67,12 +67,23 @@ class GroupController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
+            'pictureUri' => 'image'
+
         ]);
-        Group::create([
-            'name' => request('name'),
-            'description' => request('description'),
-        ]);
-        return redirect('/backoffice/');
+
+
+        $group = New Group();
+        $group->name = request('name');
+        $group->description = request('description');
+        $group->pictureUri = "";
+        $group->save();
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('group-images', 'group'.$group->id.'.jpg');
+        }
+        $group->pictureUri = url('/').'/storage/group-images/group'.$group->id.'.jpg';
+        $group->save();
+        return redirect('/backoffice/groups');
     }
 
     /**
