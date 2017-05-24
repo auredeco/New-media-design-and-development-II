@@ -19,7 +19,17 @@ class ReferendumController extends Controller
      */
     public function index()
     {
-        return Referendum::all();
+        $all = Referendum::all();
+        $open = Referendum::WhereOpen()->get();
+        $closed = Referendum::WhereClosed()->get();
+
+        $object = (object) [
+            'all' => $all,
+            'open' => $open,
+            'closed' => $closed,
+        ];
+//        return $all;
+        return response()->json($object);
     }
 
     /**

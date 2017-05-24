@@ -94,7 +94,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'description' => $faker->sentence,
         'startDate' => $startDate,
         'endDate' => $endDate,
-        'isClosed' => $faker->boolean(50),
+        'isClosed' => true,
         'group_id' => random_int(
             \DB::table('groups')
                 ->min('id'),
@@ -143,7 +143,7 @@ $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker)
         'startDate' => $startDate,
         'endDate' => $endDate,
         'published' => $faker->dateTimeThisYear,
-        'isClosed' => $faker->boolean(50),
+        'isClosed' => true,
 
         'candidate_id' => random_int(
             \DB::table('candidates')
@@ -177,6 +177,7 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
         return [
             'voteType' => $votetype,
             'agreed' => $faker->boolean(50),
+            'uuid' => str_random(36),
 
             //todo proper foreign keys
 
@@ -193,6 +194,7 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
         return [
             'voteType' => $votetype,
             'agreed' => null,
+            'uuid' => str_random(36),
 
             //todo proper foreign keys
             'Referendum_id' => null,

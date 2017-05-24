@@ -53,7 +53,7 @@
         methods: {
             loadData: function () {
                 this.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.sort(function(a,b) {
+                    this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                 });

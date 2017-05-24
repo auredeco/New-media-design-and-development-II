@@ -17,7 +17,16 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        return Election::all();
+        $all = Election::all();
+        $open = Election::WhereOpen()->get();
+        $closed = Election::WhereClosed()->get();
+
+        $object = (object) [
+            'all' => $all,
+            'open' => $open,
+            'closed' => $closed,
+        ];
+        return response()->json($object);
     }
 
     /**
