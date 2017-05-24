@@ -55,13 +55,16 @@
                 });
             },
             join: function() {
-                this.axios.post('/api/groups/join',{
-                    group_id: this.group.id,
-                    user_id: this.user.id,
+                self = this;
+                self.axios.post('/api/groups/join',{
+                    group_id: self.group.id,
+                    user_id: self.user.id,
+
 
                 }).then((response) => {
-                    console.log(response.data);
-                });
+
+            });
+                vm.$forceUpdate();
 
             },
             checkListed() {

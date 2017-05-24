@@ -12010,13 +12010,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         join: function join() {
-            this.axios.post('/api/groups/join', {
-                group_id: this.group.id,
-                user_id: this.user.id
+            self = this;
+            self.axios.post('/api/groups/join', {
+                group_id: self.group.id,
+                user_id: self.user.id
 
-            }).then(function (response) {
-                console.log(response.data);
-            });
+            }).then(function (response) {});
+            vm.$forceUpdate();
         },
         checkListed: function checkListed() {
             var filtered = _.filter(this.userItems, { 'id': this.user.id });
@@ -12685,13 +12685,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
             var _this = this;
 
             __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/elections').then(function (response) {
-                _this.elections = response.data.sort(function (a, b) {
+                _this.elections = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
                 _this.elections = _this.elections.slice(0, 3);
             });
             __WEBPACK_IMPORTED_MODULE_0_vue___default.a.axios.get('/api/referenda').then(function (response) {
-                _this.referenda = response.data.sort(function (a, b) {
+                _this.referenda = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
                 _this.referenda = _this.referenda.slice(0, 3);

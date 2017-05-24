@@ -122,13 +122,13 @@
         methods: {
             loadData: function () {
                 Vue.axios.get('/api/elections').then((response) => {
-                    this.elections = response.data.sort(function(a,b) {
+                    this.elections = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                     this.elections = this.elections.slice(0,3);
                 })
                 Vue.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.sort(function(a,b) {
+                    this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                     this.referenda = this.referenda.slice(0,3);
