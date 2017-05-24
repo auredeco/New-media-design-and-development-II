@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Model;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Referendum extends Model
@@ -67,10 +68,47 @@ class Referendum extends Model
     }
 
     public function scopeWhereOpen($query){
-        return $query->where('isClosed', false);
+        $open = $query
+            ->where('startDate', '<', Carbon::now())
+            ->where('endDate', '>', Carbon::now());
+
+        foreach ($open->get() as $referendum) {
+            $referendum->isClosed = false;
+            $referendum->save();
+        }
+        return $open;
+    }
+    public function scopeWhereOpenInit($query){
+        $open = $query
+            ->where('startDate', '<', Carbon::now())
+            ->where('endDate', '>', Carbon::now());
+
+        foreach ($open->get() as $referendum) {
+            $referendum->isClosed = false;
+            $referendum->save();
+
+        }
+        return $open;
     }
     public function scopeWhereClosed($query){
-        return $query->where('isClosed', true);
+        $closed = $query
+            ->where('endDate', '<', Carbon::now());
+
+        foreach ($closed->get() as $referendum) {
+            $referendum->isClosed = true;
+            $referendum->save();
+        }
+        return $closed;
+    }
+    public function scopeWhereClosedInit($query){
+        $closed = $query
+            ->where('endDate', '<', Carbon::now());
+
+        foreach ($closed->get() as $referendum) {
+            $referendum->isClosed = true;
+            $referendum->save();
+        }
+        return $closed;
     }
     public function scopeWherePublished($query){
         return $query->whereNotNull('published');

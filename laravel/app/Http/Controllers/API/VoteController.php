@@ -21,6 +21,7 @@ class VoteController extends Controller
     public function index()
     {
         return Vote::all();
+
     }
 
     /**

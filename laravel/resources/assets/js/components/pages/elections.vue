@@ -62,7 +62,7 @@
         methods: {
             loadData() {
                 this.axios.get('/api/elections').then((response) => {
-                    this.elections = response.data;
+                    this.elections = response.data.all;
                 });
             },
         },

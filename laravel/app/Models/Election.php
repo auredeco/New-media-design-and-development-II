@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Model;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -33,14 +34,86 @@ class Election extends Model
         return $query;
     }
 
+    public function scopeWhereOpenInit($query)
+    {
+        $open = $query
+            ->with('candidates')
+            ->where('startDate', '<', Carbon::now())
+            ->where('endDate', '>', Carbon::now());
+
+        foreach ($open->get() as $election) {
+            $election->isClosed = false;
+            $election->save();
+
+        }
+    }
     public function scopeWhereOpen($query)
     {
-        return $query->where('isClosed', false);
+        $open = $query
+            ->with('candidates')
+            ->where('startDate', '<', Carbon::now())
+            ->where('endDate', '>', Carbon::now());
+
+        foreach ($open->get() as $election) {
+            $original = $election->isClosed;
+            if($original){
+                $election->isClosed = false;
+                $election->save();
+            }
+
+        }
+        return $open;
     }
 
+
+    public function scopeWhereClosedInit($query)
+    {
+        $closed = $query
+            ->with('candidates')
+            ->where('endDate', '<', Carbon::now());
+
+        foreach ($closed->get() as $election) {
+            $election->isClosed = true;
+            $election->save();
+            $candidates = $election->candidates;
+
+            foreach ($candidates as $candidate){
+                $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+
+                //replace the old score
+                $canEl = Candidate_election::find($candidate->pivot->id);
+                $canEl->score = $score;
+                $canEl->save();
+            }
+
+        }
+        return $closed;
+
+    }
     public function scopeWhereClosed($query)
     {
-        return $query->where('isClosed', true);
+        $closed = $query
+            ->with('candidates')
+            ->where('endDate', '<', Carbon::now());
+
+
+        foreach ($closed->get() as $election) {
+            $original = $election->isClosed;
+            $election->isClosed = true;
+            $election->save();
+            $candidates = $election->candidates;
+
+            foreach ($candidates as $candidate){
+                $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+
+                //replace the old score
+                $canEl = Candidate_election::find($candidate->pivot->id);
+                $canEl->score = $score;
+                $canEl->save();
+            }
+        }
+        return $closed;
+
     }
 
 }
