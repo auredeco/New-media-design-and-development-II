@@ -118,10 +118,18 @@ class GroupController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
+            'pictureUri' => 'image'
         ]);
+
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('group-images', 'group'.$id.'.jpg');
+        }
+
         Group::find($id)->update([
             'name' => request('name'),
             'description' => request('description'),
+            'pictureUri' => url('/').'/storage/group-images/group'.$id.'.jpg'
         ]);
         return redirect('/backoffice/groups/'.$id);
     }

@@ -24,7 +24,7 @@
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <form action="{{action('GroupController@update',['id'=>$group->id])}}" method="post">
+        <form action="{{action('GroupController@update',['id'=>$group->id])}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
             {{csrf_field()}}
             {{csrf_field()}}
@@ -35,6 +35,10 @@
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description">{{$group->description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="imgUpload">Image</label>
+                <input type="file" class="form-control" id="imgUpload" name="imgUpload"  accept="image/*"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">submit</button>

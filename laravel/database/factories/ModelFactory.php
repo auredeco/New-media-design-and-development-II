@@ -59,6 +59,7 @@ $factory->define(App\Models\Party::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
+        'pictureUri' => $faker->imageUrl(640, 840, 'animals')
     ];
 });
 $factory->define(App\Models\Candidate::class, function (Faker\Generator $faker) {
@@ -79,6 +80,7 @@ $factory->define(App\Models\Group::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
+        'pictureUri' => $faker->imageUrl(640, 840, 'abstract')
     ];
 });
 $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
@@ -95,6 +97,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'startDate' => $startDate,
         'endDate' => $endDate,
         'isClosed' => true,
+        'pictureUri' => $faker->imageUrl(640, 840, 'business'),
         'group_id' => random_int(
             \DB::table('groups')
                 ->min('id'),
@@ -109,11 +112,8 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
     ];
 });
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
-
-
-
     return [
-        'score' =>  mt_rand(0.00, 5000.00),
+        'score' =>  mt_rand(200.00, 5000.00),
 
         //todo proper foreign keys
         'election_id' => random_int(

@@ -118,10 +118,18 @@ class PartyController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
+            'pictureUri' => 'image'
         ]);
+
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('party-images', 'party'.$id.'.jpg');
+        }
+
         Party::find($id)->update([
             'name' => request('name'),
             'description' => request('description'),
+            'pictureUri' => url('/').'/storage/party-images/party'.$id.'.jpg'
         ]);
         return redirect('/backoffice/parties/'.$id);
     }
