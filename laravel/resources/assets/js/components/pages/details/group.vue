@@ -1,5 +1,5 @@
 <template>
-    <div id="group" class="container">
+    <div id="group-detail" class="container">
         <div class="group">
             <div class="group-item">
                 <figure>

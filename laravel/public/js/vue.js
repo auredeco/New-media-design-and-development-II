@@ -34672,7 +34672,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "container",
     attrs: {
-      "id": "group"
+      "id": "group-detail"
     }
   }, [_c('div', {
     staticClass: "group"
