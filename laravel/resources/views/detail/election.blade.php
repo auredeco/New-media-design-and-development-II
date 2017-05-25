@@ -27,39 +27,43 @@
         @if($election->startDate > \Carbon\Carbon::now())
             <h4>Status: <span class="status-closed">Closed</span></h4>
         @if(count($election->candidates) !=0 )
-
-                <h3>Candidates</h3>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>party</th>
-                        <th>unapprove</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($election->candidates as $candidate)
-                        @if($candidate->pivot->approved)
+            @if($election->candidates[0]->pivot->approved)
+                    <h3>Candidates</h3>
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
-                            <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
-                            <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
-                            <td>
-                                <form id="unapprove_form{{$candidate->id}}" action="{{ URL::route('candidate.unapprove',['election' => $election->id, 'candidate' => $candidate->id ] ) }}" method="POST">
-                                    <input type="hidden" name="_method" value="PATCH">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
-                                    <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null" href="javascript:{}">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </a>
-                                </form>
-                            </td>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>party</th>
+                            <th>unapprove</th>
                         </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($election->candidates as $candidate)
+                            @if($candidate->pivot->approved)
+                                <tr>
+                                    <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
+                                    <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                                    <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
+                                    <td>
+                                        <form id="unapprove_form{{$candidate->id}}" action="{{ URL::route('candidate.unapprove',['election' => $election->id, 'candidate' => $candidate->id ] ) }}" method="POST">
+                                            <input type="hidden" name="_method" value="PATCH">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
+                                            <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null" href="javascript:{}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p>No Candidates have been approved for this election</p>
+                @endif
+
                 @if(count($unapproved) !=0 )
                     <h3>Unapproved candidates</h3>
                     <table class="table">

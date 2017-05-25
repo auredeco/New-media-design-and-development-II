@@ -1,7 +1,8 @@
 <template>
     <div id="election-detail" class="container">
         <figure class="election-image">
-            <img src="/images/logo-square.svg">
+            <img :src="election.pictureUri">
+            <!--<img src="/images/logo-square.svg">-->
         </figure>
         <h1>{{election.name}}</h1>
         <p class="description">{{election.description}}</p>
@@ -12,7 +13,7 @@
         <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
 
         <hr />
-        <router-link v-if="!listed && status == 'coming'"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+        <!--<router-link v-if="!listed && status == 'coming'"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>-->
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>

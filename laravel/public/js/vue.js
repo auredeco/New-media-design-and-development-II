@@ -11828,6 +11828,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12468,6 +12469,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -34992,7 +34994,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "card"
     }, [_c('img', {
       attrs: {
-        "src": "/images/logo-square.svg"
+        "src": election.pictureUri
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "card-info"
@@ -35444,24 +35446,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-detail"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.election.name))]), _vm._v(" "), _c('p', {
+  }, [_c('figure', {
+    staticClass: "election-image"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.election.pictureUri
+    }
+  })]), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.election.name))]), _vm._v(" "), _c('p', {
     staticClass: "description"
   }, [_vm._v(_vm._s(_vm.election.description))]), _vm._v(" "), (_vm.status == 'coming') ? _c('p', [_vm._v("Gepland")]) : _vm._e(), _vm._v(" "), (_vm.status == 'coming') ? _c('p', [_vm._v("Start op: " + _vm._s(_vm.election.startDate))]) : _vm._e(), _vm._v(" "), (_vm.status == 'open') ? _c('p', {
     staticClass: "is-open"
   }, [_vm._v(" open")]) : _vm._e(), _vm._v(" "), (_vm.status == 'open') ? _c('p', [_vm._v(" Eindigt op: " + _vm._s(_vm.election.endDate))]) : _vm._e(), _vm._v(" "), (_vm.status == 'closed') ? _c('p', {
     staticClass: "is-closed"
-  }, [_vm._v("Gesloten")]) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.status == 'coming') ? _c('router-link', {
-    attrs: {
-      "to": {
-        name: 'applyElection',
-        params: {
-          id: _vm.election.id
-        }
-      }
-    }
-  }, [_vm._v("registreer")]) : _vm._e(), _vm._v(" "), _c('h1', {
+  }, [_vm._v("Gesloten")]) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', {
     staticClass: "candidates-title"
-  }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
+  }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
     return (candidate.pivot.approved) ? _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])]) : _vm._e()
   }))]), _vm._v(" "), (_vm.status == 'open') ? _c('div', {
     staticClass: "button-field"
@@ -35494,16 +35493,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "results"
   }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
     staticClass: "ct-chart"
-  })]) : _vm._e()], 1)
+  })]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('figure', {
-    staticClass: "election-image"
-  }, [_c('img', {
-    attrs: {
-      "src": "/images/logo-square.svg"
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
 }]}
 module.exports.render._withStripped = true
