@@ -3,19 +3,6 @@ body {
     flex-direction: column;
     font-family: 'Open Sans', sans-serif;
 
-    main {
-        padding: 1rem;
-
-        #logo {
-            max-width: 50%;
-            margin: 5rem auto;
-
-            img {
-                width: 100%;
-            }
-        }
-    }
-
     a {
         color: black;
     }

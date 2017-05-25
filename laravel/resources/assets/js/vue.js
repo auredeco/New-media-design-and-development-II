@@ -4,6 +4,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import navigation from './components/navigation.vue'
 import vuehead from './components/vuehead.vue'
+import vueheaddesktop from './components/vuehead-desktop.vue'
 import  home from './components/pages/home.vue'
 import  account from './components/pages/account.vue'
 import  elections from './components/pages/elections.vue'
@@ -123,5 +124,5 @@ const router = new VueRouter({
 new Vue({
     router,
     el: '#app',
-    components: {navigation, vuehead}
+    components: {navigation, vuehead, vueheaddesktop}
 })

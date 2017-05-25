@@ -1,27 +1,39 @@
 <template>
     <div id="group" class="container">
-        <div class="card-field">
-            <h1>{{group.name}}</h1>
-            <p>{{group.description}}</p>
-            <button v-if="!listed" @click="join">Lid worden</button>
-            <h2>Users</h2>
+        <div class="group">
+            <div class="group-item">
+                <figure>
+                    <img :src="group.pictureUri"></img>
+                </figure>
+            </div>
+            <div class="group-item">
+                <h1>{{group.name}}</h1>
+                <p>{{group.description}}</p>
+                <div class="button-field">
+                    <button v-if="!listed" @click="join" class="btn green">Lid worden</button>
+                </div>
+            </div>
+        </div>
+            <h2>Gebruikers</h2>
             <paginate
                     name="users"
                     :list="userItems"
-                    :per="5"
+                    :per="12"
             >
-                <div class="standard-card" v-for="user in paginated('users')">
-                    <router-link :to="{ name: 'user', params: { id: user.id }}">
-                        <div class="card-wrapper">
-                            <!--<img :src="user.pictureUri">-->
-                            <p>{{user.firstname}} {{user.lastname}}</p>
-                        </div>
-                    </router-link>
+                <div class="card-field">
+                    <div class="standard-card" v-for="user in paginated('users')">
+                        <router-link :to="{ name: 'user', params: { id: user.id }}">
+                            <div class="card-wrapper">
+                                <div class="card">
+                                    <!--<img :src="user.pictureUri">-->
+                                    <p>{{user.firstname}} {{user.lastname}}</p>
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
                 </div>
-
             </paginate>
             <paginate-links for="users" :limit="5"></paginate-links>
-        </div>
     </div>
 </template>
 

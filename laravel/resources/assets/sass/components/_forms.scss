@@ -19,11 +19,28 @@
                 font-weight: bold;
             }
 
-            input {
+            input, select {
                 padding: 0.5rem;
                 border-radius: 2px;
                 border: 1px solid gray;
                 color: gray;
+            }
+
+            select {
+                padding: 0.45rem;
+            }
+        }
+
+        .errors {
+            margin-top: 15px;
+            color: red;
+
+            i {
+                margin-right: 5px;
+            }
+
+            error {
+                margin-bottom: 10px;
             }
         }
     }

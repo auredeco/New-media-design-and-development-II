@@ -4,7 +4,7 @@
             <paginate
                     name="elections"
                     :list="filterByName"
-                    :per="5"
+                    :per="6"
             >
                 <div class="filters">
 
@@ -23,7 +23,9 @@
                     <div class="standard-card" v-for="election in paginated('elections')">
                         <div class="card-wrapper">
                             <div class="card">
-                                <img src="/images/logo-square.svg">
+                                <figure>
+                                    <img :src="election.pictureUri">
+                                </figure>
                                 <div class="card-info">
                                     <h1 class="title">{{ election.name }}</h1>
                                     <p>
