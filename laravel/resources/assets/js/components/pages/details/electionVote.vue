@@ -1,6 +1,6 @@
 <template>
     <div id="election-vote" class="container">
-        <div class="candidate" v-for="candidate in election.candidates">
+        <div class="candidate" v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
             <div class="candidate-wrapper">
                 <figure class="user-image">
                     <img v-bind:src="candidate.user.pictureUri" />

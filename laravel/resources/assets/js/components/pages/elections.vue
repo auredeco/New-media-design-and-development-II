@@ -15,29 +15,40 @@
                         <input type="text" v-model="filterQuery" placeholder="Search...">
                     </div>
                     <div class="checkboxes">
-                        <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
-                        <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
+                        <input type="radio" id="3" value="3" checked v-model="radioValue"> Alle
+                        <input type="radio" id="0" value="0" v-model="radioValue"> Lopende
+                        <input type="radio" id="1" value="1" v-model="radioValue"> Gesloten
+                        <input type="radio" id="2" value="2"  v-model="radioValue"> Geplande
                     </div>
                 </div>
                 <div class="card-field">
                     <div class="standard-card" v-for="election in paginated('elections')">
                         <div class="card-wrapper">
                             <div class="card">
-                                <img src="/images/logo-square.svg">
+                                <img :src="election.pictureUri">
+                                <!--<img src="/images/logo-square.svg">-->
                                 <div class="card-info">
                                     <h1 class="title">{{ election.name }}</h1>
                                     <p>
                                         {{ election.description }}
                                     </p>
-                                    <ul>
-                                        <li v-if="election.isClosed" class="closed">Status: Gesloten</li>
-                                        <li v-else class="open">Status: Lopend</li>
+                                    <ul v-if="election.isComing && election.isClosed">
+                                        <li>Gepland</li>
+                                        <li>Start op: {{ election.startDate }}</li>
                                     </ul>
+                                    <ul v-else-if="!election.isComing && !election.isClosed">
+                                        <li class="is-open"> Lopend</li>
+                                        <li  > Eindigt op: {{ election.endDate }}</li>
+                                    </ul>
+                                    <ul v-else>
+                                        <li> Gesloten</li>
+                                    </ul>
+
                                 </div>
                             </div>
                             <div class="button-field">
                                 <router-link :to="{ name: 'election', params: { id: election.id }}" class="to-detail">
-                                    <button class="btn blue">Stemmen</button>
+                                    <button class="btn blue">Bekijken</button>
                                 </router-link>
                             </div>
                         </div>
@@ -55,26 +66,52 @@
                 elections: [],
                 paginate: ['elections'],
                 filterQuery: '',
-                checkboxValues: []
+                radioValue: 3,
+                checkboxComing: false,
+                dateNow: new Date(),
             }
+        },
+        components : {
+
         },
 
         methods: {
             loadData() {
                 this.axios.get('/api/elections').then((response) => {
-                    this.elections = response.data.all;
+                    this.elections = response.data.all.sort(function(a,b) {
+                        return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+                    });
                 });
-            },
+            }
         },
 
         computed: {
             filterByName() {
+                let value = this.radioValue;
                 return this.elections.filter( election => {
-                    if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){
-                        return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+                    if(value == 3){
+                            return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+//                        }
                     }else{
-                        let value = this.checkboxValues[0];
-                        return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == value;
+                        switch (parseInt(value)) {
+                            case 0: {
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == 0 ;
+
+                            }break;
+                            case 1: {
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == 1 && election.isComing == 0;
+
+                            }break;
+                            case 2: {
+
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isComing == 1 ;
+
+                            }break;
+                            case 3: {
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 ;
+
+                            }break;
+                        }
                     }
                 })
             },

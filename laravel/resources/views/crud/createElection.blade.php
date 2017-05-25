@@ -54,11 +54,11 @@
                     <label for="description">End time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="date" class="form-control col-xs-5" id="endDate" name="endDate">
+                            <input type="date" class="form-control col-xs-5" id="endDate" value="{{$end->toDateString()}}"name="endDate">
                         </div>
 
                         <div class="col-xs-6">
-                            <input type="time" class="form-control col-xs-5" id="endTime" name="endTime">
+                            <input type="time" class="form-control col-xs-5" id="endTime" value="{{$end->toTimeString()}}" name="endTime">
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'open') { ?>selected="true" <?php }}; ?> value="open">open</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'closed') { ?>selected="true" <?php }}; ?> value="closed">closed</option>
+                    <option <?php if($_GET){ if ($_GET['keyword'] == 'coming') { ?>selected="true" <?php }}; ?> value="coming">coming</option>
                 </select>
             </form>
         </li>

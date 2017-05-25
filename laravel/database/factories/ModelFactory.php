@@ -97,6 +97,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'startDate' => $startDate,
         'endDate' => $endDate,
         'isClosed' => true,
+        'isComing' => false,
         'pictureUri' => $faker->imageUrl(640, 840, 'business'),
         'group_id' => random_int(
             \DB::table('groups')
@@ -114,6 +115,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
     return [
         'score' =>  mt_rand(200.00, 5000.00),
+        'approved' => true,
 
         //todo proper foreign keys
         'election_id' => random_int(

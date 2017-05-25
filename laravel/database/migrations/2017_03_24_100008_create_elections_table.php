@@ -21,6 +21,7 @@ class CreateElectionsTable extends Migration
             $table->dateTime('startDate');
             $table->dateTime('endDate');
             $table->boolean('isClosed');
+            $table->boolean('isComing');
             $table->timestamps();
             $table->softDeletes();
 

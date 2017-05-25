@@ -44,6 +44,7 @@ class CandidateController extends Controller
         $candidate->save();
         $candidate_election = new Candidate_election();
         $candidate_election->candidate_id = $candidate->id;
+        $candidate_election->approved = false;
         $candidate_election->election_id = $request->input('election_id');
         $candidate_election->score = 0;
         $candidate_election->save();
