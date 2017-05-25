@@ -5,12 +5,14 @@
         </figure>
         <h1>{{election.name}}</h1>
         <p class="description">{{election.description}}</p>
-        <p v-if="election.isClosed" class="closed">Gesloten</p>
-        <p v-else class="open">Lopend</p>
-        <p v-if="reg">start op: {{ election.startDate }}</p>
-        <p>loopt af op: {{ election.endDate }}</p>
+        <p v-if="status == 'coming'">Gepland</p>
+        <p v-if="status == 'coming'">Start op: {{ election.startDate }}</p>
+        <p v-if="status == 'open'" class="is-open"> open</p>
+        <p v-if="status == 'open'" > Eindigt op: {{ election.endDate }}</p>
+        <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
+
         <hr />
-        <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+        <router-link v-if="!listed && status == 'coming'"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
@@ -19,18 +21,24 @@
                 <th>Partij</th>
             </thead>
             <tbody>
-            <tr v-for="candidate in election.candidates">
-                <td>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</td>
-                <td>{{ candidate.party.name }}</td>
+            <tr v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
+                <td >{{ candidate.user.firstname }} {{ candidate.user.lastname }}</td>
+                <td >{{ candidate.party.name }}</td>
             </tr>
             </tbody>
         </table>
-        <div class="button-field" v-if="!election.isClosed">
+        <div class="button-field" v-if="status == 'open'">
             <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
                                 <button class="btn blue">Stemmen</button>
             </router-link>
         </div>
-        <div class="results">
+        <div class="button-field" v-if="status == 'coming' && !listed">
+            <router-link   :to="{ name: 'applyElection', params: { id: election.id }}">
+                <button class="btn blue">registreer</button>
+            </router-link>
+
+        </div>
+        <div v-if="status == 'closed'" class="results">
             <h1>Uitslag</h1>
             <div class="ct-chart">
         </div>
@@ -48,6 +56,7 @@
                 user: [],
                 listed: false,
                 reg: false,
+                status: 'closed',
             }
         },
 
@@ -59,6 +68,7 @@
                     this.drawGraph();
                     this.checkListed();
                     this.checkReg();
+                    this.checkStatus();
                 });
             },
             loadUserData: function (electionId) {
@@ -83,11 +93,33 @@
                     this.reg = false;
                 }
             },
+            checkStatus(){
+
+                if(new Date() < new Date(this.election.startDate)){
+                    this.status = 'coming';
+                }
+                else if ((new Date() > new Date(this.election.startDate))&& (new Date() < new Date(this.election.endDate))){
+                    this.status = 'open';
+                }else{
+                    this.status = 'closed';
+                }
+
+            },
+//                if(new Date() < new Date(this.election.startDate)){
+//                    this.status = 'coming';
+//                }else if((new Date() > new Date(this.election.startDate) ){
+//                    this.status = 'open';
+//                }else {
+//                    this.status = 'closed';
+//                }
+//            },
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){
-                        this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
-                        this.scores.push(this.election.candidates[i].pivot.score)
+                        if(this.election.candidates[i].pivot.approved){
+                            this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
+                            this.scores.push(this.election.candidates[i].pivot.score)
+                        }
                     }
                     var options = {
                         labelInterpolationFnc: function(value) {

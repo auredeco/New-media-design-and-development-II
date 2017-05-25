@@ -16,6 +16,7 @@ class CreateCandidateElectionsTable extends Migration
         Schema::create('candidate_elections', function (Blueprint $table) {
             $table->increments('id');
             $table->double('score');
+            $table->boolean('approved');
             $table->timestamps();
             $table->softDeletes();
 

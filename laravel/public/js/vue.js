@@ -11820,6 +11820,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11829,7 +11837,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             scores: [],
             user: [],
             listed: false,
-            reg: false
+            reg: false,
+            status: 'closed'
         };
     },
 
@@ -11844,6 +11853,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.drawGraph();
                 _this.checkListed();
                 _this.checkReg();
+                _this.checkStatus();
             });
         },
         loadUserData: function loadUserData(electionId) {
@@ -11869,11 +11879,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.reg = false;
             }
         },
+        checkStatus: function checkStatus() {
+
+            if (new Date() < new Date(this.election.startDate)) {
+                this.status = 'coming';
+            } else if (new Date() > new Date(this.election.startDate) && new Date() < new Date(this.election.endDate)) {
+                this.status = 'open';
+            } else {
+                this.status = 'closed';
+            }
+        },
+
+        //                if(new Date() < new Date(this.election.startDate)){
+        //                    this.status = 'coming';
+        //                }else if((new Date() > new Date(this.election.startDate) ){
+        //                    this.status = 'open';
+        //                }else {
+        //                    this.status = 'closed';
+        //                }
+        //            },
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
                 for (var i = 0; i < this.election.candidates.length; i++) {
-                    this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
-                    this.scores.push(this.election.candidates[i].pivot.score);
+                    if (this.election.candidates[i].pivot.approved) {
+                        this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
+                        this.scores.push(this.election.candidates[i].pivot.score);
+                    }
                 }
                 var options = {
                     labelInterpolationFnc: function labelInterpolationFnc(value) {
@@ -12487,6 +12518,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12494,17 +12535,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             elections: [],
             paginate: ['elections'],
             filterQuery: '',
-            checkboxValues: []
+            radioValue: 3,
+            checkboxComing: false,
+            dateNow: new Date()
         };
     },
 
+    components: {},
 
     methods: {
         loadData: function loadData() {
             var _this = this;
 
             this.axios.get('/api/elections').then(function (response) {
-                _this.elections = response.data.all;
+                _this.elections = response.data.all.sort(function (a, b) {
+                    return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+                });
             });
         }
     },
@@ -12513,12 +12559,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         filterByName: function filterByName() {
             var _this2 = this;
 
+            var value = this.radioValue;
             return this.elections.filter(function (election) {
-                if (_this2.checkboxValues.length == null || _this2.checkboxValues.length == 0 || _this2.checkboxValues.length == 2) {
+                if (value == 3) {
                     return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1;
+                    //                        }
                 } else {
-                    var value = _this2.checkboxValues[0];
-                    return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1 && election.isClosed == value;
+                    switch (parseInt(value)) {
+                        case 0:
+                            {
+                                return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1 && election.isClosed == 0;
+                            }break;
+                        case 1:
+                            {
+                                return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1 && election.isClosed == 1 && election.isComing == 0;
+                            }break;
+                        case 2:
+                            {
+
+                                return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1 && election.isComing == 1;
+                            }break;
+                        case 3:
+                            {
+                                return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1;
+                            }break;
+                    }
                 }
             });
         }
@@ -34486,7 +34551,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "election-vote"
     }
   }, _vm._l((_vm.election.candidates), function(candidate) {
-    return _c('div', {
+    return (candidate.pivot.approved) ? _c('div', {
       staticClass: "candidate"
     }, [_c('div', {
       staticClass: "candidate-wrapper"
@@ -34508,7 +34573,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": _vm.vote
       }
-    }, [_vm._v("Stemmen")])])])])])
+    }, [_vm._v("Stemmen")])])])])]) : _vm._e()
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -34839,69 +34904,84 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.checkboxValues),
-      expression: "checkboxValues"
+      value: (_vm.radioValue),
+      expression: "radioValue"
     }],
     attrs: {
-      "type": "checkbox",
+      "type": "radio",
+      "id": "3",
+      "value": "3",
+      "checked": ""
+    },
+    domProps: {
+      "checked": _vm._q(_vm.radioValue, "3")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.radioValue = "3"
+      }
+    }
+  }), _vm._v(" Alle\n                    "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.radioValue),
+      expression: "radioValue"
+    }],
+    attrs: {
+      "type": "radio",
       "id": "0",
       "value": "0"
     },
     domProps: {
-      "checked": Array.isArray(_vm.checkboxValues) ? _vm._i(_vm.checkboxValues, "0") > -1 : (_vm.checkboxValues)
+      "checked": _vm._q(_vm.radioValue, "0")
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.checkboxValues,
-          $$el = $event.target,
-          $$c = $$el.checked ? (true) : (false);
-        if (Array.isArray($$a)) {
-          var $$v = "0",
-            $$i = _vm._i($$a, $$v);
-          if ($$c) {
-            $$i < 0 && (_vm.checkboxValues = $$a.concat($$v))
-          } else {
-            $$i > -1 && (_vm.checkboxValues = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
-          }
-        } else {
-          _vm.checkboxValues = $$c
-        }
+        _vm.radioValue = "0"
       }
     }
-  }), _vm._v(" Lopend\n                    "), _c('input', {
+  }), _vm._v(" Lopende\n                    "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.checkboxValues),
-      expression: "checkboxValues"
+      value: (_vm.radioValue),
+      expression: "radioValue"
     }],
     attrs: {
-      "type": "checkbox",
+      "type": "radio",
       "id": "1",
       "value": "1"
     },
     domProps: {
-      "checked": Array.isArray(_vm.checkboxValues) ? _vm._i(_vm.checkboxValues, "1") > -1 : (_vm.checkboxValues)
+      "checked": _vm._q(_vm.radioValue, "1")
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.checkboxValues,
-          $$el = $event.target,
-          $$c = $$el.checked ? (true) : (false);
-        if (Array.isArray($$a)) {
-          var $$v = "1",
-            $$i = _vm._i($$a, $$v);
-          if ($$c) {
-            $$i < 0 && (_vm.checkboxValues = $$a.concat($$v))
-          } else {
-            $$i > -1 && (_vm.checkboxValues = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
-          }
-        } else {
-          _vm.checkboxValues = $$c
-        }
+        _vm.radioValue = "1"
       }
     }
-  }), _vm._v(" Gesloten\n                ")])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" Gesloten\n                    "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.radioValue),
+      expression: "radioValue"
+    }],
+    attrs: {
+      "type": "radio",
+      "id": "2",
+      "value": "2"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.radioValue, "2")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.radioValue = "2"
+      }
+    }
+  }), _vm._v(" Geplande\n                ")])]), _vm._v(" "), _c('div', {
     staticClass: "card-field"
   }, _vm._l((_vm.paginated('elections')), function(election) {
     return _c('div', {
@@ -34918,11 +34998,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "card-info"
     }, [_c('h1', {
       staticClass: "title"
-    }, [_vm._v(_vm._s(election.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                    " + _vm._s(election.description) + "\n                                ")]), _vm._v(" "), _c('ul', [(election.isClosed) ? _c('li', {
-      staticClass: "closed"
-    }, [_vm._v("Status: Gesloten")]) : _c('li', {
-      staticClass: "open"
-    }, [_vm._v("Status: Lopend")])])])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(election.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                    " + _vm._s(election.description) + "\n                                ")]), _vm._v(" "), (election.isComing && election.isClosed) ? _c('ul', [_c('li', [_vm._v("Gepland")]), _vm._v(" "), _c('li', [_vm._v("Start op: " + _vm._s(election.startDate))])]) : (!election.isComing && !election.isClosed) ? _c('ul', [_c('li', {
+      staticClass: "is-open"
+    }, [_vm._v(" Lopend")]), _vm._v(" "), _c('li', [_vm._v(" Eindigt op: " + _vm._s(election.endDate))])]) : _c('ul', [_c('li', [_vm._v(" Gesloten")])])])]), _vm._v(" "), _c('div', {
       staticClass: "button-field"
     }, [_c('router-link', {
       staticClass: "to-detail",
@@ -34936,7 +35014,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('button', {
       staticClass: "btn blue"
-    }, [_vm._v("Stemmen")])])], 1)])])
+    }, [_vm._v("Bekijken")])])], 1)])])
   }))])], 1), _vm._v(" "), _c('paginate-links', {
     attrs: {
       "for": "elections",
@@ -35368,11 +35446,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.election.name))]), _vm._v(" "), _c('p', {
     staticClass: "description"
-  }, [_vm._v(_vm._s(_vm.election.description))]), _vm._v(" "), (_vm.election.isClosed) ? _c('p', {
-    staticClass: "closed"
-  }, [_vm._v("Gesloten")]) : _c('p', {
-    staticClass: "open"
-  }, [_vm._v("Lopend")]), _vm._v(" "), (_vm.reg) ? _c('p', [_vm._v("start op: " + _vm._s(_vm.election.startDate))]) : _vm._e(), _vm._v(" "), _c('p', [_vm._v("loopt af op: " + _vm._s(_vm.election.endDate))]), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.reg) ? _c('router-link', {
+  }, [_vm._v(_vm._s(_vm.election.description))]), _vm._v(" "), (_vm.status == 'coming') ? _c('p', [_vm._v("Gepland")]) : _vm._e(), _vm._v(" "), (_vm.status == 'coming') ? _c('p', [_vm._v("Start op: " + _vm._s(_vm.election.startDate))]) : _vm._e(), _vm._v(" "), (_vm.status == 'open') ? _c('p', {
+    staticClass: "is-open"
+  }, [_vm._v(" open")]) : _vm._e(), _vm._v(" "), (_vm.status == 'open') ? _c('p', [_vm._v(" Eindigt op: " + _vm._s(_vm.election.endDate))]) : _vm._e(), _vm._v(" "), (_vm.status == 'closed') ? _c('p', {
+    staticClass: "is-closed"
+  }, [_vm._v("Gesloten")]) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.status == 'coming') ? _c('router-link', {
     attrs: {
       "to": {
         name: 'applyElection',
@@ -35384,8 +35462,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("registreer")]) : _vm._e(), _vm._v(" "), _c('h1', {
     staticClass: "candidates-title"
   }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])])
-  }))]), _vm._v(" "), (!_vm.election.isClosed) ? _c('div', {
+    return (candidate.pivot.approved) ? _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])]) : _vm._e()
+  }))]), _vm._v(" "), (_vm.status == 'open') ? _c('div', {
     staticClass: "button-field"
   }, [_c('router-link', {
     staticClass: "full-width",
@@ -35399,7 +35477,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('button', {
     staticClass: "btn blue"
-  }, [_vm._v("Stemmen")])])], 1) : _vm._e(), _vm._v(" "), _vm._m(2)], 1)
+  }, [_vm._v("Stemmen")])])], 1) : _vm._e(), _vm._v(" "), (_vm.status == 'coming' && !_vm.listed) ? _c('div', {
+    staticClass: "button-field"
+  }, [_c('router-link', {
+    attrs: {
+      "to": {
+        name: 'applyElection',
+        params: {
+          id: _vm.election.id
+        }
+      }
+    }
+  }, [_c('button', {
+    staticClass: "btn blue"
+  }, [_vm._v("registreer")])])], 1) : _vm._e(), _vm._v(" "), (_vm.status == 'closed') ? _c('div', {
+    staticClass: "results"
+  }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
+    staticClass: "ct-chart"
+  })]) : _vm._e()], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
     staticClass: "election-image"
@@ -35410,12 +35505,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "results"
-  }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
-    staticClass: "ct-chart"
-  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {
