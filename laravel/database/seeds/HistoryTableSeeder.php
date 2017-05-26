@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CandidateTableSeeder extends Seeder
+class HistoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,7 @@ class CandidateTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Candidate::class, 500)->create();
+        factory(App\Models\History::class, 500)->create();
+
     }
 }

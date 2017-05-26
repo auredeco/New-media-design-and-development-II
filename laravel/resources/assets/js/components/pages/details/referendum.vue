@@ -27,7 +27,7 @@
             <div class="ct-chart ct-perfect-fourth"></div>
         </div>
         <div class="buttons" >
-            <button v-if="!referendum.isClosed" @click="vote">Stemmen</button>
+            <button v-if="!referendum.isClosed && !voted" @click="vote">Stemmen</button>
             <button @click="nextReferenda">Volgende referenda</button>
         </div>
     </div>
@@ -43,6 +43,8 @@
                 referenda: [],
                 next:[],
                 opinion: 0,
+                user: [],
+                voted: false,
             }
         },
 
@@ -56,6 +58,16 @@
                     this.referenda = response.data.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
+                });
+                this.axios.get('/api/users/' + userId).then((response) => {
+                    this.user = response.data;
+                    this.checkVoted();
+
+                });
+            },
+            loadUserData: function (referendumId) {
+                this.axios.get('api/user').then((response) => {
+                    this.loadData(referendumId, response.data.id);
                 });
             },
             drawGraph(){
@@ -104,19 +116,35 @@
                         voteType: 1,
                         agreed: opinion,
                         referendum_id: this.referendum.id,
+                        user_id: this.user.id,
                         CandidateElection_id: null,
                         checksum: password
                     }).then(function (response) {
                         var vote = response.data;
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
                         console.log(response.data);
+                        location.reload();
                     }).catch(function (error) {
                     });
                 }
-            }
+            },
+            checkVoted: function(){
+                let self = this;
+                console.log(self.user.history);
+                for(let i = 0; i <= self.user.history.length;  i++){
+                    let referendumId = self.user.history[i].referendum_id;
+                    if(referendumId === self.referendum.id){
+                        self.voted = true;
+                        console.log('true mdfkr');
+                        console.log(self.voted);
+                        break;
+                    }
+                }
+
+            },
         },
         mounted() {
-            this.loadData(this.$route.params.id);
+            this.loadUserData(this.$route.params.id);
             console.log(this.$route.params.id);
         }
     }

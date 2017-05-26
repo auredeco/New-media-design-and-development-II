@@ -1,5 +1,8 @@
 <template>
     <div id="election-detail" class="container">
+        <<router-link   :to="{ name: 'elections'}">
+        <button class="btn">back</button>
+    </router-link>
         <figure class="election-image">
             <img :src="election.pictureUri">
             <!--<img src="/images/logo-square.svg">-->
@@ -28,7 +31,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="button-field" v-if="status == 'open'">
+        <div class="button-field" v-if="status == 'open' && !voted">
             <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
                                 <button class="btn blue">Stemmen</button>
             </router-link>
@@ -58,24 +61,31 @@
                 listed: false,
                 reg: false,
                 status: 'closed',
+                voted: false,
             }
         },
 
         methods: {
-            loadData: function (id) {
+            loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
-
                     this.drawGraph();
                     this.checkListed();
                     this.checkReg();
                     this.checkStatus();
                 });
+                this.axios.get('/api/users/' + userId).then((response) => {
+                    console.log(response.data);
+                    this.user = response.data;
+                    this.checkVoted();
+
+                });
             },
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
-                    this.user = response.data;
-                    this.loadData(electionId);
+//                    this.user = response.data;
+                    console.log(response.data);
+                    this.loadData(electionId, response.data.id);
                 });
             },
             checkListed() {
@@ -106,14 +116,25 @@
                 }
 
             },
-//                if(new Date() < new Date(this.election.startDate)){
-//                    this.status = 'coming';
-//                }else if((new Date() > new Date(this.election.startDate) ){
-//                    this.status = 'open';
-//                }else {
-//                    this.status = 'closed';
-//                }
-//            },
+            checkVoted(){
+                let self = this;
+
+                console.log(self.user.history);
+
+                for(let i = 0; i <= self.user.history.length;  i++){
+                    let electionId = self.user.history[i].election_id;
+                    if(electionId === self.election.id){
+                        self.voted = true;
+                        console.log('true mdfkr');
+                        console.log(self.voted);
+                        break;
+                    }
+                }
+
+            },
+            back() {
+                this.$router.go(-2)
+            },
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){

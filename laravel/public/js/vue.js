@@ -11829,6 +11829,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11839,30 +11842,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             user: [],
             listed: false,
             reg: false,
-            status: 'closed'
+            status: 'closed',
+            voted: false
         };
     },
 
 
     methods: {
-        loadData: function loadData(id) {
+        loadData: function loadData(id, userId) {
             var _this = this;
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
-
                 _this.drawGraph();
                 _this.checkListed();
                 _this.checkReg();
                 _this.checkStatus();
+            });
+            this.axios.get('/api/users/' + userId).then(function (response) {
+                console.log(response.data);
+                _this.user = response.data;
+                _this.checkVoted();
             });
         },
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
             this.axios.get('api/user').then(function (response) {
-                _this2.user = response.data;
-                _this2.loadData(electionId);
+                //                    this.user = response.data;
+                console.log(response.data);
+                _this2.loadData(electionId, response.data.id);
             });
         },
         checkListed: function checkListed() {
@@ -11890,15 +11899,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.status = 'closed';
             }
         },
+        checkVoted: function checkVoted() {
+            var self = this;
 
-        //                if(new Date() < new Date(this.election.startDate)){
-        //                    this.status = 'coming';
-        //                }else if((new Date() > new Date(this.election.startDate) ){
-        //                    this.status = 'open';
-        //                }else {
-        //                    this.status = 'closed';
-        //                }
-        //            },
+            console.log(self.user.history);
+
+            for (var i = 0; i <= self.user.history.length; i++) {
+                var electionId = self.user.history[i].election_id;
+                if (electionId === self.election.id) {
+                    self.voted = true;
+                    console.log('true mdfkr');
+                    console.log(self.voted);
+                    break;
+                }
+            }
+        },
+        back: function back() {
+            this.$router.go(-2);
+        },
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
                 for (var i = 0; i < this.election.candidates.length; i++) {
@@ -11956,45 +11974,87 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            election: []
+            election: [],
+            user: []
         };
     },
 
 
     methods: {
-        loadData: function loadData(id) {
+        loadData: function loadData(id, userId) {
             var _this = this;
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
             });
+            this.axios.get('/api/users/' + userId).then(function (response) {
+                _this.user = response.data;
+                _this.checkVoted();
+            });
+        },
+        loadUserData: function loadUserData(electionId) {
+            var _this2 = this;
+
+            this.axios.get('api/user').then(function (response) {
+                _this2.loadData(electionId, response.data.id);
+            });
         },
         vote: function vote(e) {
+            //                console.log(this.election.id);
+            //                console.log(this.user.id);
             if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                 var password = prompt('Geef een wachtwoord op om later je stem te valideren');
                 console.log(e);
                 // get the event and take the id from the element that is clicked
                 // Store it in the candidateElection_id variable
                 var candidateElection_id = e.srcElement.id;
+                console.log(candidateElection_id);
                 var _self = this;
 
                 this.axios.post('api/votes/', {
                     checksum: password,
                     voteType: 0,
+                    user_id: this.user.id,
+                    election_id: this.election.id,
                     agreed: null,
                     referendum_id: null,
                     CandidateElection_id: candidateElection_id
                 }).then(function (response) {
+                    console.log(response.data);
                     var vote = response.data;
+                    console.log('hallo');
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
+                    console.log('hallo2');
                     //redirect to the home page
-                    _self.$router.push('/');
+                    this.redirect();
+                    //                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
+                    window.location.reload();
                 }).catch(function (error) {});
             }
+        },
+        checkVoted: function checkVoted() {
+            var self = this;
+            console.log(self.user.history);
+            for (var i = 0; i <= self.user.history.length; i++) {
+                var electionId = self.user.history[i].election_id;
+                if (electionId == self.election.id) {
+                    self.voted = true;
+                    console.log('true mdfkr');
+                    console.log(self.voted);
+                    this.redirect();
+                    //                        this.$router.push({ name: 'election', params: { id: self.election.id }});
+                    break;
+                }
+            }
+        },
+        redirect: function redirect() {
+            console.log('redirecting fuck');
+            window.location.reload();
+            this.$router.push({ name: 'election', params: { id: this.election.id } });
         }
     },
     mounted: function mounted() {
-        this.loadData(this.$route.params.id);
+        this.loadUserData(this.$route.params.id);
     }
 });
 
@@ -12301,7 +12361,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             disagree: 0,
             referenda: [],
             next: [],
-            opinion: 0
+            opinion: 0,
+            user: [],
+            voted: false
         };
     },
 
@@ -12318,6 +12380,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.referenda = response.data.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
+            });
+            this.axios.get('/api/users/' + userId).then(function (response) {
+                _this.user = response.data;
+                _this.checkVoted();
+            });
+        },
+        loadUserData: function loadUserData(referendumId) {
+            var _this2 = this;
+
+            this.axios.get('api/user').then(function (response) {
+                _this2.loadData(referendumId, response.data.id);
             });
         },
         drawGraph: function drawGraph() {
@@ -12365,18 +12438,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     voteType: 1,
                     agreed: opinion,
                     referendum_id: this.referendum.id,
+                    user_id: this.user.id,
                     CandidateElection_id: null,
                     checksum: password
                 }).then(function (response) {
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
                     console.log(response.data);
+                    location.reload();
                 }).catch(function (error) {});
+            }
+        },
+        checkVoted: function checkVoted() {
+            var self = this;
+            console.log(self.user.history);
+            for (var i = 0; i <= self.user.history.length; i++) {
+                var referendumId = self.user.history[i].referendum_id;
+                if (referendumId === self.referendum.id) {
+                    self.voted = true;
+                    console.log('true mdfkr');
+                    console.log(self.voted);
+                    break;
+                }
             }
         }
     },
     mounted: function mounted() {
-        this.loadData(this.$route.params.id);
+        this.loadUserData(this.$route.params.id);
         console.log(this.$route.params.id);
     }
 });
@@ -34496,7 +34584,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ct-chart ct-perfect-fourth"
   })]), _vm._v(" "), _c('div', {
     staticClass: "buttons"
-  }, [(!_vm.referendum.isClosed) ? _c('button', {
+  }, [(!_vm.referendum.isClosed && !_vm.voted) ? _c('button', {
     on: {
       "click": _vm.vote
     }
@@ -35446,7 +35534,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-detail"
     }
-  }, [_c('figure', {
+  }, [_vm._v("\n    <"), _c('router-link', {
+    attrs: {
+      "to": {
+        name: 'elections'
+      }
+    }
+  }, [_c('button', {
+    staticClass: "btn"
+  }, [_vm._v("back")])]), _vm._v(" "), _c('figure', {
     staticClass: "election-image"
   }, [_c('img', {
     attrs: {
@@ -35462,7 +35558,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "candidates-title"
   }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
     return (candidate.pivot.approved) ? _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])]) : _vm._e()
-  }))]), _vm._v(" "), (_vm.status == 'open') ? _c('div', {
+  }))]), _vm._v(" "), (_vm.status == 'open' && !_vm.voted) ? _c('div', {
     staticClass: "button-field"
   }, [_c('router-link', {
     staticClass: "full-width",
@@ -35493,7 +35589,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "results"
   }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
     staticClass: "ct-chart"
-  })]) : _vm._e()])
+  })]) : _vm._e()], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
 }]}
