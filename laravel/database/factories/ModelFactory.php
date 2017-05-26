@@ -218,6 +218,34 @@ $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
         'name' => $faker->word,
     ];
 });
+$factory->define(App\Models\History::class, function (Faker\Generator $faker) {
+
+    if (rand(0,100) <= 50) {
+        $referendum = random_int(
+            \DB::table('referendums')
+                ->min('id'),
+            \DB::table('referendums')
+                ->max('id'));
+        $election = null;
+    }
+    else{
+        $election = random_int(
+            \DB::table('elections')
+                ->min('id'),
+            \DB::table('elections')
+                ->max('id'));
+        $referendum = null;
+    }
+    return [
+        'user_id' => random_int(
+            \DB::table('users')
+                ->min('id'),
+            \DB::table('users')
+                ->max('id')),
+        'referendum_id' => $referendum,
+        'election_id' => $election,
+    ];
+});
 $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence,

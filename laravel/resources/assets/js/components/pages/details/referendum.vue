@@ -27,7 +27,7 @@
             <div class="ct-chart ct-perfect-fourth"></div>
         </div>
         <div class="buttons" >
-            <button v-if="!referendum.isClosed" @click="vote">Stemmen</button>
+            <button v-if="!referendum.isClosed && !voted" @click="vote">Stemmen</button>
             <button @click="nextReferenda">Volgende referenda</button>
         </div>
     </div>
@@ -43,19 +43,32 @@
                 referenda: [],
                 next:[],
                 opinion: 0,
+                user: [],
+                voted: false,
             }
         },
 
         methods: {
-            loadData: function (id) {
-                this.axios.get('/api/referenda/' + id).then((response) => {
-                    this.referendum = response.data;
-                    this.drawGraph();
-                });
+            loadData: function (id, userId) {
+
                 this.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.sort(function(a,b) {
+                    console.log(this.referenda);
+                    this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
+                    this.axios.get('/api/referenda/' + id).then((response) => {
+                        this.referendum = response.data;
+                        this.axios.get('/api/users/' + userId).then((response) => {
+                            this.user = response.data;
+                            this.checkVoted();
+                            this.drawGraph();
+                        });
+                    });
+                });
+            },
+            loadUserData: function (referendumId) {
+                this.axios.get('api/user').then((response) => {
+                    this.loadData(referendumId, response.data.id);
                 });
             },
             drawGraph(){
@@ -104,19 +117,36 @@
                         voteType: 1,
                         agreed: opinion,
                         referendum_id: this.referendum.id,
+                        user_id: this.user.id,
                         CandidateElection_id: null,
                         checksum: password
                     }).then(function (response) {
                         var vote = response.data;
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
                         console.log(response.data);
+                        location.reload();
                     }).catch(function (error) {
                     });
                 }
-            }
+            },
+            checkVoted: function(){
+                let self = this;
+                let history = self.user.history;
+                for(let i = 0; i < history.length;  i++){
+                    let referendumId = self.user.history[i];
+                    console.log(referendumId.referendum_id);
+                    if(referendumId.referendum_id == self.referendum.id){
+                        self.voted = true;
+                        console.log('true mdfkr');
+                        console.log(self.voted);
+                        break;
+                    }
+                }
+
+            },
         },
         mounted() {
-            this.loadData(this.$route.params.id);
+            this.loadUserData(this.$route.params.id);
             console.log(this.$route.params.id);
         }
     }
