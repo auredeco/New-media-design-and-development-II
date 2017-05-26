@@ -35309,9 +35309,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "card-info"
     }, [_c('h1', {
       staticClass: "title"
-    }, [_vm._v(_vm._s(election.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                    " + _vm._s(election.description) + "\n                                ")]), _vm._v(" "), (election.isComing && election.isClosed) ? _c('ul', [_c('li', [_vm._v("Gepland")]), _vm._v(" "), _c('li', [_vm._v("Start op: " + _vm._s(election.startDate))])]) : (!election.isComing && !election.isClosed) ? _c('ul', [_c('li', {
-      staticClass: "is-open"
-    }, [_vm._v(" Lopend")]), _vm._v(" "), _c('li', [_vm._v(" Eindigt op: " + _vm._s(election.endDate))])]) : _c('ul', [_c('li', [_vm._v(" Gesloten")])])])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(election.name))]), _vm._v(" "), _c('p', [_vm._v("\n                                    " + _vm._s(election.description) + "\n                                ")]), _vm._v(" "), (election.isComing && election.isClosed) ? _c('ul', [_c('li', {
+      staticClass: "coming"
+    }, [_vm._v("Gepland")]), _vm._v(" "), _c('li', [_vm._v("Start op: " + _vm._s(election.startDate))])]) : (!election.isComing && !election.isClosed) ? _c('ul', [_c('li', {
+      staticClass: "open"
+    }, [_vm._v(" Lopend")]), _vm._v(" "), _c('li', [_vm._v(" Eindigt op: " + _vm._s(election.endDate))])]) : _c('ul', [_c('li', {
+      staticClass: "closed"
+    }, [_vm._v(" Gesloten")])])])]), _vm._v(" "), _c('div', {
       staticClass: "button-field"
     }, [_c('router-link', {
       staticClass: "to-detail",

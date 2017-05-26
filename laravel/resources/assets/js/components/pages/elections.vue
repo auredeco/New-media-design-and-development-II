@@ -34,15 +34,15 @@
                                         {{ election.description }}
                                     </p>
                                     <ul v-if="election.isComing && election.isClosed">
-                                        <li>Gepland</li>
+                                        <li class="coming">Gepland</li>
                                         <li>Start op: {{ election.startDate }}</li>
                                     </ul>
                                     <ul v-else-if="!election.isComing && !election.isClosed">
-                                        <li class="is-open"> Lopend</li>
+                                        <li class="open"> Lopend</li>
                                         <li  > Eindigt op: {{ election.endDate }}</li>
                                     </ul>
                                     <ul v-else>
-                                        <li> Gesloten</li>
+                                        <li class="closed"> Gesloten</li>
                                     </ul>
 
                                 </div>
