@@ -49,20 +49,21 @@
         },
 
         methods: {
-            loadData: function (id) {
-                this.axios.get('/api/referenda/' + id).then((response) => {
-                    this.referendum = response.data;
-                    this.drawGraph();
-                });
+            loadData: function (id, userId) {
+
                 this.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.sort(function(a,b) {
+                    console.log(this.referenda);
+                    this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                });
-                this.axios.get('/api/users/' + userId).then((response) => {
-                    this.user = response.data;
-                    this.checkVoted();
-
+                    this.axios.get('/api/referenda/' + id).then((response) => {
+                        this.referendum = response.data;
+                        this.axios.get('/api/users/' + userId).then((response) => {
+                            this.user = response.data;
+                            this.checkVoted();
+                            this.drawGraph();
+                        });
+                    });
                 });
             },
             loadUserData: function (referendumId) {
@@ -130,10 +131,11 @@
             },
             checkVoted: function(){
                 let self = this;
-                console.log(self.user.history);
-                for(let i = 0; i <= self.user.history.length;  i++){
-                    let referendumId = self.user.history[i].referendum_id;
-                    if(referendumId === self.referendum.id){
+                let history = self.user.history;
+                for(let i = 0; i < history.length;  i++){
+                    let referendumId = self.user.history[i];
+                    console.log(referendumId.referendum_id);
+                    if(referendumId.referendum_id == self.referendum.id){
                         self.voted = true;
                         console.log('true mdfkr');
                         console.log(self.voted);

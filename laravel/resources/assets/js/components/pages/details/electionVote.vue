@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+        <button @redirect>test</button>
     </div>
 </template>
 
@@ -28,14 +29,13 @@
 
         methods: {
             loadData: function (id, userId) {
-                this.axios.get('/api/elections/' + id).then((response) => {
-                    this.election = response.data;
 
-                });
                 this.axios.get('/api/users/' + userId).then((response) => {
                     this.user = response.data;
-                    this.checkVoted();
-
+                    this.axios.get('/api/elections/' + id).then((response) => {
+                        this.election = response.data;
+                        this.checkVoted();
+                    });
                 });
             },
             loadUserData: function (electionId) {
@@ -66,28 +66,37 @@
                     }).then(function (response) {
                         console.log(response.data);
                         var vote = response.data;
-                        console.log('hallo');
+
+//                        console.log('hallo');
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
-                        console.log('hallo2');
-                        //redirect to the home page
-                        this.redirect();
-//                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
+//                            this.$route.go('/elections/'+ this.election.id);
+//
+//                            console.log('hallo2');
+//                            //redirect to the home page
+////                        this.redirect();
+////                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
+//                            window.location.reload();
+//                        }
+//                        this.$router.push({ name: 'elections'});
+                        console.log('redirect');
                         window.location.reload();
+//
+
                     }).catch(function (error) {
                     });
                 }
             },
             checkVoted(){
                 let self = this;
-                console.log(self.user.history);
-                for(let i = 0; i <= self.user.history.length;  i++){
-                    let electionId = self.user.history[i].election_id;
-                    if(electionId == self.election.id){
+                let history = self.user.history;
+                for(let i = 0; i < history.length;  i++){
+                    let electionId = self.user.history[i];
+                    console.log(electionId.election_id);
+                    if(electionId.election_id == self.election.id){
                         self.voted = true;
                         console.log('true mdfkr');
                         console.log(self.voted);
-                        this.redirect();
-//                        this.$router.push({ name: 'election', params: { id: self.election.id }});
+                        this.$router.push({ name: 'election', params: { id: self.election.id }});
                         break;
                     }
                 }
@@ -95,8 +104,9 @@
             },
             redirect() {
                 console.log('redirecting fuck');
-                window.location.reload();
-                this.$router.push({ name: 'election', params: { id: this.election.id }});
+
+//                window.location.reload();
+//                this.$router.push({ name: 'election', params: { id: this.election.id }});
 
             }
         },

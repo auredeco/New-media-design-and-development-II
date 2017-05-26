@@ -69,17 +69,17 @@
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
-                    this.drawGraph();
-                    this.checkListed();
-                    this.checkReg();
-                    this.checkStatus();
+                    this.axios.get('/api/users/' + userId).then((response) => {
+                        console.log(response.data);
+                        this.user = response.data;
+                        this.checkVoted();
+                        this.drawGraph();
+                        this.checkListed();
+                        this.checkReg();
+                        this.checkStatus();
+                    });
                 });
-                this.axios.get('/api/users/' + userId).then((response) => {
-                    console.log(response.data);
-                    this.user = response.data;
-                    this.checkVoted();
 
-                });
             },
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
@@ -118,12 +118,11 @@
             },
             checkVoted(){
                 let self = this;
-
-                console.log(self.user.history);
-
-                for(let i = 0; i <= self.user.history.length;  i++){
-                    let electionId = self.user.history[i].election_id;
-                    if(electionId === self.election.id){
+                let history = self.user.history;
+                for(let i = 0; i < history.length;  i++){
+                    let electionId = self.user.history[i];
+                    console.log(electionId.election_id);
+                    if(electionId.election_id == self.election.id){
                         self.voted = true;
                         console.log('true mdfkr');
                         console.log(self.voted);

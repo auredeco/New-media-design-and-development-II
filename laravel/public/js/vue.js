@@ -11854,15 +11854,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
-                _this.drawGraph();
-                _this.checkListed();
-                _this.checkReg();
-                _this.checkStatus();
-            });
-            this.axios.get('/api/users/' + userId).then(function (response) {
-                console.log(response.data);
-                _this.user = response.data;
-                _this.checkVoted();
+                _this.axios.get('/api/users/' + userId).then(function (response) {
+                    console.log(response.data);
+                    _this.user = response.data;
+                    _this.checkVoted();
+                    _this.drawGraph();
+                    _this.checkListed();
+                    _this.checkReg();
+                    _this.checkStatus();
+                });
             });
         },
         loadUserData: function loadUserData(electionId) {
@@ -11901,12 +11901,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         checkVoted: function checkVoted() {
             var self = this;
-
-            console.log(self.user.history);
-
-            for (var i = 0; i <= self.user.history.length; i++) {
-                var electionId = self.user.history[i].election_id;
-                if (electionId === self.election.id) {
+            var history = self.user.history;
+            for (var i = 0; i < history.length; i++) {
+                var electionId = self.user.history[i];
+                console.log(electionId.election_id);
+                if (electionId.election_id == self.election.id) {
                     self.voted = true;
                     console.log('true mdfkr');
                     console.log(self.voted);
@@ -11970,6 +11969,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11984,12 +11984,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadData: function loadData(id, userId) {
             var _this = this;
 
-            this.axios.get('/api/elections/' + id).then(function (response) {
-                _this.election = response.data;
-            });
             this.axios.get('/api/users/' + userId).then(function (response) {
                 _this.user = response.data;
-                _this.checkVoted();
+                _this.axios.get('/api/elections/' + id).then(function (response) {
+                    _this.election = response.data;
+                    _this.checkVoted();
+                });
             });
         },
         loadUserData: function loadUserData(electionId) {
@@ -12022,35 +12022,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     console.log(response.data);
                     var vote = response.data;
-                    console.log('hallo');
+
+                    //                        console.log('hallo');
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
-                    console.log('hallo2');
-                    //redirect to the home page
-                    this.redirect();
-                    //                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
+                    //                            this.$route.go('/elections/'+ this.election.id);
+                    //
+                    //                            console.log('hallo2');
+                    //                            //redirect to the home page
+                    ////                        this.redirect();
+                    ////                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
+                    //                            window.location.reload();
+                    //                        }
+                    //                        this.$router.push({ name: 'elections'});
+                    console.log('redirect');
                     window.location.reload();
+                    //
                 }).catch(function (error) {});
             }
         },
         checkVoted: function checkVoted() {
             var self = this;
-            console.log(self.user.history);
-            for (var i = 0; i <= self.user.history.length; i++) {
-                var electionId = self.user.history[i].election_id;
-                if (electionId == self.election.id) {
+            var history = self.user.history;
+            for (var i = 0; i < history.length; i++) {
+                var electionId = self.user.history[i];
+                console.log(electionId.election_id);
+                if (electionId.election_id == self.election.id) {
                     self.voted = true;
                     console.log('true mdfkr');
                     console.log(self.voted);
-                    this.redirect();
-                    //                        this.$router.push({ name: 'election', params: { id: self.election.id }});
+                    this.$router.push({ name: 'election', params: { id: self.election.id } });
                     break;
                 }
             }
         },
         redirect: function redirect() {
             console.log('redirecting fuck');
-            window.location.reload();
-            this.$router.push({ name: 'election', params: { id: this.election.id } });
+
+            //                window.location.reload();
+            //                this.$router.push({ name: 'election', params: { id: this.election.id }});
         }
     },
     mounted: function mounted() {
@@ -12369,21 +12378,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        loadData: function loadData(id) {
+        loadData: function loadData(id, userId) {
             var _this = this;
 
-            this.axios.get('/api/referenda/' + id).then(function (response) {
-                _this.referendum = response.data;
-                _this.drawGraph();
-            });
             this.axios.get('/api/referenda').then(function (response) {
-                _this.referenda = response.data.sort(function (a, b) {
+                console.log(_this.referenda);
+                _this.referenda = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
-            });
-            this.axios.get('/api/users/' + userId).then(function (response) {
-                _this.user = response.data;
-                _this.checkVoted();
+                _this.axios.get('/api/referenda/' + id).then(function (response) {
+                    _this.referendum = response.data;
+                    _this.axios.get('/api/users/' + userId).then(function (response) {
+                        _this.user = response.data;
+                        _this.checkVoted();
+                        _this.drawGraph();
+                    });
+                });
             });
         },
         loadUserData: function loadUserData(referendumId) {
@@ -12451,10 +12461,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         checkVoted: function checkVoted() {
             var self = this;
-            console.log(self.user.history);
-            for (var i = 0; i <= self.user.history.length; i++) {
-                var referendumId = self.user.history[i].referendum_id;
-                if (referendumId === self.referendum.id) {
+            var history = self.user.history;
+            for (var i = 0; i < history.length; i++) {
+                var referendumId = self.user.history[i];
+                console.log(referendumId.referendum_id);
+                if (referendumId.referendum_id == self.referendum.id) {
                     self.voted = true;
                     console.log('true mdfkr');
                     console.log(self.voted);
@@ -34640,7 +34651,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-vote"
     }
-  }, _vm._l((_vm.election.candidates), function(candidate) {
+  }, [_vm._l((_vm.election.candidates), function(candidate) {
     return (candidate.pivot.approved) ? _c('div', {
       staticClass: "candidate"
     }, [_c('div', {
@@ -34664,7 +34675,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "click": _vm.vote
       }
     }, [_vm._v("Stemmen")])])])])]) : _vm._e()
-  }))
+  }), _vm._v(" "), _c('button', {
+    on: {
+      "redirect": function($event) {}
+    }
+  }, [_vm._v("test")])], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
