@@ -1,5 +1,6 @@
 <template>
     <div id="createReferendum" class="container">
+        <div v-if="loading"  class="loader"></div>
         <h1>Nieuw referendum</h1>
         <div class="form-field">
             <form @submit.prevent="placeNew">
@@ -60,6 +61,8 @@
                 user: [],
                 messages: [],
                 status: false,
+                loading: true,
+
             }
         },
         methods: {
@@ -70,7 +73,9 @@
                 this.axios.get('/api/user/').then((response) => {
                     this.user = response.data;
                     console.log(this.user.id);
-                });
+                this.stopLoading();
+
+            });
             },
             placeNew: function () {
                 this.axios.post('api/referenda/',{
@@ -94,6 +99,10 @@
                     this.messages = response.data[0];
                     console.log(this.messages);
                 });
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {

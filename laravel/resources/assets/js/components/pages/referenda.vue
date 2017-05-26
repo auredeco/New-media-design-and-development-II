@@ -1,5 +1,6 @@
 <template>
     <div id="referenda-overview" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <h1>Referenda</h1>
             <div class="button-field">
@@ -48,7 +49,9 @@
                 referenda: [],
                 paginate: ['referenda'],
                 filterQuery: '',
-                checkboxValues: []
+                checkboxValues: [],
+                loading: true,
+
             }
         },
 
@@ -58,8 +61,14 @@
                     this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                });
+                this.stopLoading();
+
+            });
             },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
+            }
         },
         computed: {
             filterByName() {
