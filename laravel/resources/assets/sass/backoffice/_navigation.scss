@@ -22,10 +22,10 @@
     background-color: $main;
   }
   .side-nav {
-    background-color: $main;
+    background-color: white;
     border-right: solid black 1px;
       li a {
-        color: white;
+        color: black;
         font-size: 1rem;
         padding: 1rem;
         padding-left:2rem;
@@ -35,9 +35,9 @@
         }
       }
       li:hover  {
-        background-color: white !important;
+        background-color: $main !important;
         a {
-          color: black;
+          color: white;
         }
       }
   }

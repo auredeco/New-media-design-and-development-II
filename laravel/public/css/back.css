@@ -231,12 +231,12 @@ h3 {
 }
 
 .navbar-inverse .side-nav {
-  background-color: #D7DD35;
+  background-color: white;
   border-right: solid black 1px;
 }
 
 .navbar-inverse .side-nav li a {
-  color: white;
+  color: black;
   font-size: 1rem;
   padding: 1rem;
   padding-left: 2rem;
@@ -248,11 +248,11 @@ h3 {
 }
 
 .navbar-inverse .side-nav li:hover {
-  background-color: white !important;
+  background-color: #D7DD35 !important;
 }
 
 .navbar-inverse .side-nav li:hover a {
-  color: black;
+  color: white;
 }
 
 .detail-page-head-image figure {
