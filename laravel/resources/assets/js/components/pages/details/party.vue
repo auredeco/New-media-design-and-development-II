@@ -1,25 +1,31 @@
 <template>
     <div id="party" class="container">
-        <div class="card-field">
-            <h1>{{party.name}}</h1>
-            <p>{{party.description}}</p>
-            <h2>kandidaten</h2>
-            <paginate
-                    name="users"
-                    :list="userItems"
-                    :per="5"
-            >
-                <div class="standard-card" v-for="candidate in paginated('users')">
-                    <div class="card-wrapper">
-                        <router-link :to="{ name: 'user', params: { id: candidate.user.id }}">
-                            <!--<img :src="candidate.user.pictureUri">-->
-                            <p>{{candidate.user.firstname}} {{candidate.user.lastname}}</p>
-                        </router-link>
-                    </div>
-                </div>
-
-            </paginate>
-            <paginate-links for="users" :limit="5"></paginate-links>
+        <div class="info">
+            <figure>
+                <img :src="party.pictureUri" alt="party image">
+            </figure>
+            <div class="group">
+                <h1>{{party.name}}</h1>
+                <p>{{party.description}}</p>
+                <h2>kandidaten</h2>
+                <table>
+                    <thead>
+                    <th>#</th>
+                    <th>Naam</th>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(candidate, index) in userItems">
+                        <td>{{index + 1}}</td>
+                        <!--<img :src="candidate.user.pictureUri">-->
+                        <td>
+                            <router-link :to="{ name: 'user', params: { id: candidate.user.id }}">
+                                {{candidate.user.firstname}} {{candidate.user.lastname}}
+                            </router-link>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>

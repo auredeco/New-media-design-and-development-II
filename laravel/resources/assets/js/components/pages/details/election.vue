@@ -1,22 +1,28 @@
 <template>
     <div id="election-detail" class="container">
-        <<router-link   :to="{ name: 'elections'}">
+    <router-link   :to="{ name: 'elections'}">
         <button class="btn">back</button>
     </router-link>
-        <figure class="election-image">
-            <img :src="election.pictureUri">
-            <!--<img src="/images/logo-square.svg">-->
-        </figure>
-        <h1>{{election.name}}</h1>
-        <p class="description">{{election.description}}</p>
-        <p v-if="status == 'coming'">Gepland</p>
-        <p v-if="status == 'coming'">Start op: {{ election.startDate }}</p>
-        <p v-if="status == 'open'" class="is-open"> open</p>
-        <p v-if="status == 'open'" > Eindigt op: {{ election.endDate }}</p>
-        <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
+        <div class="group">
+            <div class="group-item">
+                <figure class="election-image">
+                    <img :src="election.pictureUri">
+                </figure>
+            </div>
 
-        <hr />
-        <!--<router-link v-if="!listed && status == 'coming'"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>-->
+            <div class="group-item">
+                <h1>{{election.name}}</h1>
+                <p class="description">{{election.description}}</p>
+                <p v-if="status == 'coming'">Gepland</p>
+                <p v-if="status == 'coming'">Start op: {{ election.startDate }}</p>
+                <p v-if="status == 'open'" class="is-open"> open</p>
+                <p v-if="status == 'open'" > Eindigt op: {{ election.endDate }}</p>
+                <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
+
+                <hr />
+                <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+            </div>
+        </div>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
@@ -31,22 +37,25 @@
             </tr>
             </tbody>
         </table>
+
         <div class="button-field" v-if="status == 'open' && !voted">
             <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
-                                <button class="btn blue">Stemmen</button>
+                <button class="btn blue">Stemmen</button>
             </router-link>
         </div>
-        <div class="button-field" v-if="status == 'coming' && !listed">
-            <router-link   :to="{ name: 'applyElection', params: { id: election.id }}">
-                <button class="btn blue">registreer</button>
-            </router-link>
 
+        <div class="results" v-if="election.isClosed">
+            <div class="button-field" v-if="status == 'coming' && !listed">
+                <router-link   :to="{ name: 'applyElection', params: { id: election.id }}">
+                    <button class="btn blue">registreer</button>
+                </router-link>
+            </div>
         </div>
         <div v-if="status == 'closed'" class="results">
             <h1>Uitslag</h1>
             <div class="ct-chart">
         </div>
-        </div>
+    </div>
     </div>
 </template>
 

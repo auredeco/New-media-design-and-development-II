@@ -1,25 +1,30 @@
 <template>
     <div id="groups" class="container">
-        <div class="card-field">
-
+        <h1>Groepen</h1>
         <paginate-links for="items"></paginate-links>
         <paginate
                 name="groups"
                 :list="items"
-                :per="5"
+                :per="6"
         >
-            <div class="standard-card" v-for="item in paginated('groups')">
-                <div class="card-wrapper">
+            <div class="card-field">
+                <div class="standard-card" v-for="item in paginated('groups')">
                     <router-link :to="{ name: 'group', params: { id: item.id }}">
-                        <img src="/images/logo-square.svg">
-                        <h1>{{item.name}}</h1>
+                        <div class="card-wrapper">
+                            <div class="card">
+                                <figure>
+                                    <img :src="item.pictureUri">
+                                </figure>
+                                <h1>{{item.name}}</h1>
+                            </div>
+                        </div>
                     </router-link>
                 </div>
             </div>
         </paginate>
         <paginate-links for="groups" :limit="5"></paginate-links>
     </div>
-    </div>
+
 </template>
 
 

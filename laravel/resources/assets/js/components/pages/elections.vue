@@ -4,7 +4,7 @@
             <paginate
                     name="elections"
                     :list="filterByName"
-                    :per="5"
+                    :per="6"
             >
                 <div class="filters">
 
@@ -25,23 +25,24 @@
                     <div class="standard-card" v-for="election in paginated('elections')">
                         <div class="card-wrapper">
                             <div class="card">
-                                <img :src="election.pictureUri">
-                                <!--<img src="/images/logo-square.svg">-->
+                                <figure>
+                                    <img :src="election.pictureUri">
+                                </figure>
                                 <div class="card-info">
                                     <h1 class="title">{{ election.name }}</h1>
                                     <p>
                                         {{ election.description }}
                                     </p>
                                     <ul v-if="election.isComing && election.isClosed">
-                                        <li>Gepland</li>
+                                        <li class="coming">Gepland</li>
                                         <li>Start op: {{ election.startDate }}</li>
                                     </ul>
                                     <ul v-else-if="!election.isComing && !election.isClosed">
-                                        <li class="is-open"> Lopend</li>
+                                        <li class="open"> Lopend</li>
                                         <li  > Eindigt op: {{ election.endDate }}</li>
                                     </ul>
                                     <ul v-else>
-                                        <li> Gesloten</li>
+                                        <li class="closed"> Gesloten</li>
                                     </ul>
 
                                 </div>

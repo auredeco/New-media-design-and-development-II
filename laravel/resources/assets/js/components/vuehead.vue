@@ -1,4 +1,5 @@
 <template>
+
     <header class="main-header">
         <figure>
             <p id="hamburger">
@@ -7,6 +8,7 @@
         </figure>
         <h1>{{this.$route.name | capitalize}}</h1>
     </header>
+
 </template>
 <script>
     export default{

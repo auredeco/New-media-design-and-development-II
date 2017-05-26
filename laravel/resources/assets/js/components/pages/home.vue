@@ -8,22 +8,24 @@
            <div class="card-field">
             <tabs>
                 <tab v-if="elections" name="verkiezingen" :selected="true">
-                    <div v-for="election in elections" :key="election.id" >
+                    <div v-for="election in slicedElections" :key="election.id">
                         <router-link :to="{ name: 'election', params: { id: election.id }}">
                             <div class="card-element">
-                                <img src="/images/logo-square.svg">
-                                <p>{{election.name}}</p>
+                                <figure>
+                                    <img v-bind:src="election.pictureUri">
+                                </figure>
+                                <h1 class="election-title">{{election.name}}</h1>
                             </div>
                         </router-link>
                         <!--<item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>-->
                     </div>
                 </tab>
                 <tab v-if="referenda" name="referenda">
-                    <div v-for="referendum in referenda" :key="referendum.id">
+                    <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
                         <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
                             <div class="card-element">
-                                <img src="/images/logo-square.svg">
-                                <p>{{referendum.title}}</p>
+                                <h1 class="referendum-title">{{referendum.title}}</h1>
+                                <p>{{referendum.description}}</p>
                             </div>
                         </router-link>
                         <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
@@ -74,7 +76,7 @@
     });
     Vue.component('tab', {
         template: ` <div v-show="isActive" class="card">
-                    <div><slot></slot></div>
+                    <slot></slot>
                     </div>`,
         props: {
             name: { required: true },
@@ -101,7 +103,7 @@
         template: `
          <router-link :to="propLink">
          <div class="card-element">
-            <img :src="propImage">
+                <img :src="propImage">
             <p>{{propName}}</p>
          </div>
          </router-link>
@@ -117,6 +119,8 @@
             return {
                 elections: [],
                 referenda: [],
+                slicedReferenda: [],
+                slicedElections: []
             };
         },
         methods: {
@@ -125,21 +129,34 @@
                     this.elections = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                    this.elections = this.elections.slice(0,3);
-                })
+                    this.Slice();
+                });
                 Vue.axios.get('/api/referenda').then((response) => {
                     this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                    this.referenda = this.referenda.slice(0,3);
+                    this.Slice();
                 })
+            },
+            Slice: function(){
+               let clientWidth = document.documentElement.clientWidth;
+               if(clientWidth > 1100) {
+                   this.slicedElections = this.elections.slice(0,5);
+                   this.slicedReferenda = this.referenda.slice(0,5);
+               } else {
+                   this.slicedElections = this.elections.slice(0,3);
+                   this.slicedReferenda = this.referenda.slice(0,3);
+               }
             }
-
         },
 
         mounted() {
             this.loadData();
-        }
+            this.$nextTick(function() {
+                window.addEventListener('resize', this.Slice);
+            });
+        },
+
     }
 
 </script>

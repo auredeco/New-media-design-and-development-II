@@ -3,10 +3,14 @@
         <div class="card-field">
             <div class="standard-card" v-for="party in parties">
                 <div class="card-wrapper">
-                        <router-link :to="{ name: 'party', params: { id: party.id }}">
-                            <img src="/images/logo-square.svg">
+                    <router-link :to="{ name: 'party', params: { id: party.id }}">
+                        <div class="card">
+                            <figure>
+                                <img :src="party.pictureUri">
+                            </figure>
                             <h1>{{party.name}}</h1>
-                        </router-link>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>

@@ -27,6 +27,7 @@
     {{--<p v-text="message"></p>--}}
     <navigation></navigation>
     <vuehead ></vuehead>
+    <vueheadDesktop></vueheadDesktop>
     <transition name="slide">
         <router-view ></router-view>
     </transition>

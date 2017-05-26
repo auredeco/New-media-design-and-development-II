@@ -1,6 +1,11 @@
 <template>
     <div id="referenda-overview" class="container">
-
+        <div class="group">
+            <h1>Referenda</h1>
+            <div class="button-field">
+                <router-link :to="{ name: 'newReferenda'}" class="btn blue">nieuw referendum</router-link>
+            </div>
+        </div>
             <paginate
                     name="referenda"
                     :list="filterByName"
@@ -17,7 +22,6 @@
                         <input type="checkbox" id="0" value="0" v-model="checkboxValues"> Lopend
                         <input type="checkbox" id="1" value="1" v-model="checkboxValues"> Gesloten
                     </div>
-                    <router-link :to="{ name: 'newReferenda'}">nieuw</router-link>
                 </div>
                 <div class="referendum" v-for="referendum in paginated('referenda')">
                     <h1>{{referendum.title}}</h1>
@@ -30,8 +34,6 @@
                         <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">Lees meer</router-link>
                     </p>
                 </div>
-
-
             </paginate>
         <paginate-links for="referenda" :limit="5"></paginate-links>
     </div>
