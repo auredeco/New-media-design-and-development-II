@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
          $this->call(VoteTableSeeder::class);
          $this->call(TagTableSeeder::class);
          $this->call(PostTableSeeder::class);
+         $this->call(HistoryTableSeeder::class);
     }
 }

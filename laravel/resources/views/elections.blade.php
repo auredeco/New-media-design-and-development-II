@@ -9,19 +9,21 @@
 @endsection
 @section('content')
     <ul class="list-inline pull-left">
-        <li>status:
+        <li>
             <form action="/backoffice/elections">
+                <label for="keyword">status:</label>
                 <select name="keyword" onchange="this.form.submit()">
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'open') { ?>selected="true" <?php }}; ?> value="open">open</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'closed') { ?>selected="true" <?php }}; ?> value="closed">closed</option>
+                    <option <?php if($_GET){ if ($_GET['keyword'] == 'coming') { ?>selected="true" <?php }}; ?> value="coming">coming</option>
                 </select>
             </form>
         </li>
         <li>
             <form action="/backoffice/elections">
                 <input type="text" name="keyword" id="keyword">
-                <input type="submit" name="submit" value="Search">
+                <input class="btn btn-default" type="submit" name="submit" value="Search">
             </form>
         </li>
         <li><a href="/backoffice/elections">reset filters</a> </li>

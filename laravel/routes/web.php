@@ -17,6 +17,14 @@ Route::group(['prefix' => 'backoffice'], function () {
     Route::resource('referenda', 'ReferendumController');
     Route::resource('elections', 'ElectionController');
     Route::resource('groups', 'GroupController');
+    Route::patch('election/{election}/candidate/{candidate}/approve',[
+        'as' => 'candidate.approve',
+        'uses' => 'CandidateController@approve'
+    ]);
+    Route::patch('election/{election}/candidate/{candidate}/unapprove',[
+        'as' => 'candidate.unapprove',
+        'uses' => 'CandidateController@unapprove'
+    ]);
     Route::get('/settings', function () {
         return view('settings');
     });

@@ -27,6 +27,11 @@ class ElectionController extends Controller
                     $elections->withPath('elections?keyword=open');
 
                 }break;
+                case 'coming':{
+                    $elections = Election::Coming()->latest()->paginate(10);
+                    $elections->withPath('elections?keyword=coming');
+
+                }break;
                 case 'all':{
                     $elections = Election::latest()->paginate(10);
                     $elections->withPath('elections?keyword=all');
@@ -63,9 +68,10 @@ class ElectionController extends Controller
     public function create()
     {
         $groups = Group::all();
-        $datetime = Carbon::now();
+        $datetime = Carbon::now()->addDay(1);
+        $end = Carbon::now()->addMonth();
 
-        return view('crud.createElection', compact('groups', 'datetime'));
+        return view('crud.createElection', compact('groups', 'datetime', 'end'));
 
     }
 
@@ -87,7 +93,7 @@ class ElectionController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
-            'startDate' => 'required|date|after_or_equal:yesterday' ,
+            'startDate' => 'required|date|after_or_equal:tomorrow' ,
             'startTime' => 'required',
             'endDate' => 'required|date|after_or_equal:startDate',
             'endTime' => 'required',
@@ -109,6 +115,7 @@ class ElectionController extends Controller
         $election->endDate = request('endDate') . " " . request('endTime');
         $election->group_id = request('group');
         $election->isClosed = true;
+        $election->isComing = true;
         $election->votemanager_id = 1;
         $election->pictureUri = "";
         $election->save();
@@ -133,11 +140,17 @@ class ElectionController extends Controller
         $election = Election::with('candidates.user')->with('candidates.party')->find($id);
         $group = Group::find($election->group_id);
         $votemanager = Votemanager::find($election->votemanager_id);
+        $unapproved = [];
 
+        foreach ($election->candidates as $candidate){
+            if(!$candidate->pivot->approved){
+                array_push($unapproved, $candidate);
+            };
 
+        }
 
-        return view('detail.election', compact('election','group','votemanager'));
-//        return $election;
+        return view('detail.election', compact('election','group','votemanager', 'unapproved'));
+//        return $results;
 
     }
 
@@ -197,6 +210,7 @@ class ElectionController extends Controller
             'endDate' => request('endDate') . " " . request('endTime'),
             'group_id' => request('group'),
             'isClosed' => $closed,
+            'isComing' => true,
             'votemanager_id' => 1,
             'pictureUri' => url('/').'/storage/election-images/election'.$id.'.jpg'
         ]);
