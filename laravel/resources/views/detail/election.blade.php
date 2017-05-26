@@ -3,18 +3,6 @@
     {{ ucfirst(trans($election->name))}}
 
 @endsection
-@section('navigation')
-    <li  ><a href="/backoffice/">Dashboard</a></li>
-    <li ><a href="/backoffice/users">Users</a></li>
-    <li ><a href="/backoffice/parties">Parties</a></li>
-    <li ><a href="/backoffice/referenda">Referenda</a></li>
-    <li ><a href="/backoffice/groups">Groups</a></li>
-    <li class="active" ><a href="/backoffice/elections">Elections</a></li>
-@endsection
-@section('navigation-right')
-        <li ><a href="/backoffice/settings">Settings</a></li>
-        <li ><a href="/backoffice/login">Login</a></li>
-@endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/elections">Elections</a></li>
@@ -51,7 +39,7 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
                                             <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null" href="javascript:{}">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                <i class="fa fa-times" aria-hidden="true"></i>
                                             </a>
                                         </form>
                                     </td>
@@ -87,7 +75,7 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
                                         <a onclick="return (confirm('Are you sure you want to approve candidate with id {{$candidate->id}}'))?document.getElementById('approve_form{{$candidate->id}}').submit():null" href="javascript:{}">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <i class="fa fa-check" aria-hidden="true"></i>
                                         </a>
                                     </form>
                                 </td>

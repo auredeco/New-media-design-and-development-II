@@ -2,18 +2,6 @@
 @section('title')
     Groups
 @endsection
-@section('navigation')
-    <li  ><a href="/backoffice/">Dashboard</a></li>
-    <li ><a href="/backoffice/users">Users</a></li>
-    <li ><a href="/backoffice/parties">Parties</a></li>
-    <li ><a href="/backoffice/referenda">Referenda</a></li>
-    <li class="active" ><a href="/backoffice/groups">Groups</a></li>
-    <li ><a href="/backoffice/elections">Elections</a></li>
-@endsection
-@section('navigation-right')
-        <li ><a href="/backoffice/settings">Settings</a></li>
-        <li ><a href="/backoffice/login">Login</a></li>
-@endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li class="active" ><a href="/backoffice/groups">Groups</a></li>
@@ -24,7 +12,7 @@
         <li>
             <form action="/backoffice/groups">
                 <input type="text" name="keyword" id="keyword">
-                <input type="submit" name="submit" value="Search">
+                <input class="btn btn-default" type="submit" name="submit" value="Search">
             </form>
         </li>
         <li><a href="/backoffice/groups">reset filters</a> </li>
