@@ -1,10 +1,10 @@
 <template>
-    <div class="container">
+    <div id="referendum-detail" class="container">
         <div class="info">
             <h1>{{referendum.title}}</h1>
             <p>Status:
-                <span v-if="referendum.isClosed">Closed</span>
-                <span v-else>Open</span>
+                <span v-if="referendum.isClosed" class="closed">Closed</span>
+                <span v-else class="open">Open</span>
             </p>
             <p v-if="!referendum.isClosed">
                 eindigd op : {{referendum.endDate}}
@@ -24,11 +24,11 @@
                 <input type="radio" id="disagreed" value="0" v-model="opinion">
                 <label for="disagreed">Niet akkoord</label>
             </div>
+            <div class="button-field">
+                <button v-if="!referendum.isClosed" @click="vote" class="btn green">Stemmen</button>
+                <button @click="nextReferenda" class="btn blue">Volgend referendum</button>
+            </div>
             <div class="ct-chart ct-perfect-fourth"></div>
-        </div>
-        <div class="buttons" >
-            <button v-if="!referendum.isClosed" @click="vote">Stemmen</button>
-            <button @click="nextReferenda">Volgende referenda</button>
         </div>
     </div>
 </template>

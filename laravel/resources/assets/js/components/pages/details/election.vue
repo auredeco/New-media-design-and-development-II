@@ -1,16 +1,22 @@
 <template>
     <div id="election-detail" class="container">
-        <figure class="election-image">
-            <img src="/images/logo-square.svg">
-        </figure>
-        <h1>{{election.name}}</h1>
-        <p class="description">{{election.description}}</p>
-        <p v-if="election.isClosed" class="closed">Gesloten</p>
-        <p v-else class="open">Lopend</p>
-        <p v-if="reg">start op: {{ election.startDate }}</p>
-        <p>loopt af op: {{ election.endDate }}</p>
-        <hr />
-        <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+        <div class="group">
+            <div class="group-item">
+                <figure class="election-image">
+                    <img :src="election.pictureUri">
+                </figure>
+            </div>
+            <div class="group-item">
+                <h1>{{election.name}}</h1>
+                <p class="description">{{election.description}}</p>
+                <p v-if="election.isClosed" class="closed">Gesloten</p>
+                <p v-else class="open">Lopend</p>
+                <p v-if="reg">start op: {{ election.startDate }}</p>
+                <p>loopt af op: {{ election.endDate }}</p>
+                <hr />
+                <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
+            </div>
+        </div>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
@@ -30,7 +36,7 @@
                                 <button class="btn blue">Stemmen</button>
             </router-link>
         </div>
-        <div class="results">
+        <div class="results" v-if="election.isClosed">
             <h1>Uitslag</h1>
             <div class="ct-chart">
         </div>

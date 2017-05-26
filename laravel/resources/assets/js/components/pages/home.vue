@@ -21,7 +21,7 @@
                     </div>
                 </tab>
                 <tab v-if="referenda" name="referenda">
-                    <div v-for="referendum in slicedReferenda" :key="referendum.id">
+                    <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
                         <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
                             <div class="card-element">
                                 <h1 class="referendum-title">{{referendum.title}}</h1>

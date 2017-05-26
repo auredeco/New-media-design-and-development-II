@@ -58,14 +58,67 @@
       margin-top: 20px;
     }
   }
-    @media screen and (min-width: 600px) {
-      .button-field {
-        a {
-          text-decoration: none;
-        }
+  @media screen and (min-width: 600px) {
+    .button-field {
+      a {
+        text-decoration: none;
       }
     }
   }
+}
+
+#referendum-detail {
+  .info {
+    h1 {
+      font-weight: bold;
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-bottom: 3px;
+    }
+    .open {
+      color: $main;
+      font-weight: bold;
+
+    }
+    .closed {
+      color: red;
+      font-weight: bold;
+    }
+  }
+  .ct-chart {
+    max-width: 500px;
+    margin-top: 1rem;
+    .ct-label {
+      color: white;
+      font-weight: bold;
+    }
+  }
+
+  .btn {
+    margin: 5px 0;
+  }
+  @media screen and (min-width: 600px) {
+    .button-field {
+      display: flex;
+      flex-direction: row;
+
+      button {
+        max-width: 250px;
+        margin-right: 10px;
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    margin-top: 7rem;
+  }
+}
 
 #createReferendum {
   margin-top: 7rem;

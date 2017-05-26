@@ -11642,6 +11642,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11783,6 +11789,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12214,6 +12226,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12377,6 +12395,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -34308,7 +34334,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("Home")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-check",
+    staticClass: "fa fa-check-square-o",
     attrs: {
       "aria-hidden": "true"
     }
@@ -34342,7 +34368,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("referenda")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-user",
+    staticClass: "fa fa-users",
     attrs: {
       "aria-hidden": "true"
     }
@@ -34359,7 +34385,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-cog",
+    staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
     }
@@ -34376,7 +34402,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-power-off",
+    staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
     }
@@ -34462,7 +34488,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, _vm._l((_vm.slicedReferenda), function(referendum) {
     return _c('div', {
-      key: referendum.id
+      key: referendum.id,
+      staticClass: "home-referendums"
     }, [_c('router-link', {
       attrs: {
         "to": {
@@ -34503,10 +34530,17 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
+    staticClass: "container",
+    attrs: {
+      "id": "referendum-detail"
+    }
   }, [_c('div', {
     staticClass: "info"
-  }, [_c('h1', [_vm._v(_vm._s(_vm.referendum.title))]), _vm._v(" "), _c('p', [_vm._v("Status:\n            "), (_vm.referendum.isClosed) ? _c('span', [_vm._v("Closed")]) : _c('span', [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
+  }, [_c('h1', [_vm._v(_vm._s(_vm.referendum.title))]), _vm._v(" "), _c('p', [_vm._v("Status:\n            "), (_vm.referendum.isClosed) ? _c('span', {
+    staticClass: "closed"
+  }, [_vm._v("Closed")]) : _c('span', {
+    staticClass: "open"
+  }, [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
     model: {
       value: (_vm.agree),
       callback: function($$v) {
@@ -34571,18 +34605,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "disagreed"
     }
   }, [_vm._v("Niet akkoord")])]), _vm._v(" "), _c('div', {
-    staticClass: "ct-chart ct-perfect-fourth"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "buttons"
+    staticClass: "button-field"
   }, [(!_vm.referendum.isClosed) ? _c('button', {
+    staticClass: "btn green",
     on: {
       "click": _vm.vote
     }
   }, [_vm._v("Stemmen")]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn blue",
     on: {
       "click": _vm.nextReferenda
     }
-  }, [_vm._v("Volgende referenda")])])])
+  }, [_vm._v("Volgend referendum")])]), _vm._v(" "), _c('div', {
+    staticClass: "ct-chart ct-perfect-fourth"
+  })])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -35130,19 +35166,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "party"
     }
   }, [_c('div', {
-    staticClass: "card-field"
-  }, [_c('h1', [_vm._v(_vm._s(_vm.party.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.party.description))]), _vm._v(" "), _c('h2', [_vm._v("kandidaten")]), _vm._v(" "), _c('paginate', {
+    staticClass: "info"
+  }, [_c('figure', [_c('img', {
     attrs: {
-      "name": "users",
-      "list": _vm.userItems,
-      "per": 5
+      "src": _vm.party.pictureUri,
+      "alt": "party image"
     }
-  }, _vm._l((_vm.paginated('users')), function(candidate) {
-    return _c('div', {
-      staticClass: "standard-card"
-    }, [_c('div', {
-      staticClass: "card-wrapper"
-    }, [_c('router-link', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "group"
+  }, [_c('h1', [_vm._v(_vm._s(_vm.party.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.party.description))]), _vm._v(" "), _c('h2', [_vm._v("kandidaten")]), _vm._v(" "), _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.userItems), function(candidate, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_c('router-link', {
       attrs: {
         "to": {
           name: 'user',
@@ -35151,14 +35184,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }, [_c('p', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))])])], 1)])
-  })), _vm._v(" "), _c('paginate-links', {
-    attrs: {
-      "for": "users",
-      "limit": 5
-    }
-  })], 1)])
-},staticRenderFns: []}
+    }, [_vm._v("\n                            " + _vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname) + "\n                        ")])], 1)])
+  }))])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Naam")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -35173,12 +35203,21 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
-  }, [_c('h1', [_vm._v("Welkom " + _vm._s(_vm.user.username))]), _vm._v(" "), _c('h2', [_vm._v("Persoonlijke info")]), _vm._v(" "), _c('img', {
+    staticClass: "container",
+    attrs: {
+      "id": "account"
+    }
+  }, [_c('div', {
+    staticClass: "group"
+  }, [_c('figure', [_c('img', {
     attrs: {
       "src": _vm.user.picture
     }
-  }), _vm._v(" "), _c('table', [_c('tbody', [_c('tr', [_c('th', [_vm._v("naam: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.name))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("email: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.email))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geslacht: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.gender))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geboortedatum: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.birthdate))])])])]), _vm._v(" "), _c('h2', [_vm._v("groepen")]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "info"
+  }, [_c('h1', [_vm._v("Mijn Profiel")]), _vm._v(" "), _c('table', [_c('tbody', [_c('tr', [_c('th', [_vm._v("naam: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.name))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("email: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.email))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geslacht: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.gender))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geboortedatum: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.birthdate))])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "groups"
+  }, [_c('h2', [_vm._v("groepen")]), _vm._v(" "), _c('div', {
     staticClass: "card-field"
   }, _vm._l((_vm.groups), function(group) {
     return _c('div', {
@@ -35194,8 +35233,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }, [_c('p', [_vm._v(_vm._s(group.name))])])], 1)])
-  }))])
+    }, [_c('figure', [_c('img', {
+      attrs: {
+        "src": group.pictureUri,
+        "alt": "group image"
+      }
+    })]), _vm._v(" "), _c('p', [_vm._v(_vm._s(group.name))])])], 1)])
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -35567,7 +35611,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-detail"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.election.name))]), _vm._v(" "), _c('p', {
+  }, [_c('div', {
+    staticClass: "group"
+  }, [_c('div', {
+    staticClass: "group-item"
+  }, [_c('figure', {
+    staticClass: "election-image"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.election.pictureUri
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "group-item"
+  }, [_c('h1', [_vm._v(_vm._s(_vm.election.name))]), _vm._v(" "), _c('p', {
     staticClass: "description"
   }, [_vm._v(_vm._s(_vm.election.description))]), _vm._v(" "), (_vm.election.isClosed) ? _c('p', {
     staticClass: "closed"
@@ -35582,9 +35638,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }
-  }, [_vm._v("registreer")]) : _vm._e(), _vm._v(" "), _c('h1', {
+  }, [_vm._v("registreer")]) : _vm._e()], 1)]), _vm._v(" "), _c('h1', {
     staticClass: "candidates-title"
-  }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
+  }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])])
   }))]), _vm._v(" "), (!_vm.election.isClosed) ? _c('div', {
     staticClass: "button-field"
@@ -35600,23 +35656,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('button', {
     staticClass: "btn blue"
-  }, [_vm._v("Stemmen")])])], 1) : _vm._e(), _vm._v(" "), _vm._m(2)], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('figure', {
-    staticClass: "election-image"
-  }, [_c('img', {
-    attrs: {
-      "src": "/images/logo-square.svg"
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_vm._v("Stemmen")])])], 1) : _vm._e(), _vm._v(" "), (_vm.election.isClosed) ? _c('div', {
     staticClass: "results"
   }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
     staticClass: "ct-chart"
-  })])
+  })]) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -35654,7 +35700,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("Home")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-check",
+    staticClass: "fa fa-check-square-o",
     attrs: {
       "aria-hidden": "true"
     }
@@ -35688,7 +35734,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("referenda")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-user",
+    staticClass: "fa fa-users",
     attrs: {
       "aria-hidden": "true"
     }
@@ -35705,7 +35751,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-cog",
+    staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
     }
@@ -35722,7 +35768,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-power-off",
+    staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
     }
@@ -35767,12 +35813,21 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
-  }, [_c('img', {
+    staticClass: "container",
+    attrs: {
+      "id": "account"
+    }
+  }, [_c('div', {
+    staticClass: "group"
+  }, [_c('figure', [_c('img', {
     attrs: {
       "src": _vm.user.picture
     }
-  }), _vm._v(" "), _c('h2', [_vm._v("Persoonlijke info")]), _vm._v(" "), _c('table', [_c('tbody', [_c('tr', [_c('th', [_vm._v("naam: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.name))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("email: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.email))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geslacht: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.gender))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geboortedatum: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.birthdate))])])])]), _vm._v(" "), _c('h2', [_vm._v("groepen")]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "info"
+  }, [_c('h1', [_vm._v("Mijn Profiel")]), _vm._v(" "), _c('table', [_c('tbody', [_c('tr', [_c('th', [_vm._v("naam: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.name))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("email: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.email))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geslacht: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.gender))])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("geboortedatum: ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.user.birthdate))])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "groups"
+  }, [_c('h2', [_vm._v("groepen")]), _vm._v(" "), _c('div', {
     staticClass: "card-field"
   }, _vm._l((_vm.groups), function(group) {
     return _c('div', {
@@ -35788,8 +35843,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }, [_c('p', [_vm._v(_vm._s(group.name))])])], 1)])
-  }))])
+    }, [_c('figure', [_c('img', {
+      attrs: {
+        "src": group.pictureUri,
+        "alt": "group image"
+      }
+    })]), _vm._v(" "), _c('p', [_vm._v(_vm._s(group.name))])])], 1)])
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

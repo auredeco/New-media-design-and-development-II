@@ -9,6 +9,7 @@
 @import 'components/errors';
 @import 'components/lists';
 @import 'components/filters';
+@import 'components/tables';
 
 @import 'layout/grid';
 @import 'layout/header';
@@ -19,3 +20,5 @@
 @import 'pages/referenda';
 @import 'pages/groups';
 @import 'pages/parties';
+@import 'pages/account';
+@import 'pages/login';

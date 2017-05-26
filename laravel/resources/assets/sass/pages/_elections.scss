@@ -1,4 +1,5 @@
 #election-detail {
+  margin-top: 7rem;
 
   .election-image {
     width: 100%;
@@ -53,6 +54,35 @@
         border-bottom: 1px solid lightgray;
         td {
           padding: 1rem 0;
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .group {
+      display: flex;
+      flex-direction: row;
+
+
+      .group-item {
+        width: 500px;
+        margin-right: 20px;
+
+        .election-image {
+          padding-top: 100%;
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            position: absolute;
+            top: 0;
+          }
+        }
+
+        hr {
+          display: none;
         }
       }
     }

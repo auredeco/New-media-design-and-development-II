@@ -1,12 +1,12 @@
 #mobile-nav {
     position: fixed;
     height: 100%;
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background: $main;
-    margin-left: 0%;
-    z-index: 99;
+    margin-left: 0;
+    z-index: 100;
 
     header {
         background: white;
@@ -16,6 +16,11 @@
 
         img {
             width: 200px;
+        }
+
+        i {
+            align-self: center;
+            margin-right: 10px;
         }
     }
 
