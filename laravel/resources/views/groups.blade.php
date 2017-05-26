@@ -12,7 +12,7 @@
         <li>
             <form action="/backoffice/groups">
                 <input type="text" name="keyword" id="keyword">
-                <input type="submit" name="submit" value="Search">
+                <input class="btn btn-default" type="submit" name="submit" value="Search">
             </form>
         </li>
         <li><a href="/backoffice/groups">reset filters</a> </li>

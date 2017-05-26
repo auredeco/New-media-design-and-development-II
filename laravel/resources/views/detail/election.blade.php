@@ -39,7 +39,7 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
                                             <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null" href="javascript:{}">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                <i class="fa fa-times" aria-hidden="true"></i>
                                             </a>
                                         </form>
                                     </td>
@@ -75,7 +75,7 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
                                         <a onclick="return (confirm('Are you sure you want to approve candidate with id {{$candidate->id}}'))?document.getElementById('approve_form{{$candidate->id}}').submit():null" href="javascript:{}">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <i class="fa fa-check" aria-hidden="true"></i>
                                         </a>
                                     </form>
                                 </td>

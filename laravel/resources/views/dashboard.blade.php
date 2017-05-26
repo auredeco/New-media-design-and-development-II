@@ -221,7 +221,7 @@
         </div>
     </div>
     {{-- Graphic centered content--}}
-    <h4>Graphics</h4>
+    <h4>User registration count</h4>
     <div class="row">
         <div class="col-xs-12 col-md-6">
             <div id="chart-users">

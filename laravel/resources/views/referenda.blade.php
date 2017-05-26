@@ -10,8 +10,9 @@
 @endsection
 @section('content')
     <ul class="list-inline pull-left">
-        <li>status:
+        <li>
             <form action="/backoffice/referenda">
+                <label for="keyword">Status:</label>
                 <select name="keyword" onchange="this.form.submit()">
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'open') { ?>selected="true" <?php }}; ?> value="open">open</option>
@@ -19,8 +20,9 @@
                 </select>
             </form>
         </li>
-        <li>published:
+        <li>
             <form action="/backoffice/referenda">
+                <label for="keyword">Published:</label>
                 <select name="keyword" onchange="this.form.submit()">
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'all') { ?>selected="true" <?php }}; ?> value="all">all</option>
                     <option <?php if($_GET){ if ($_GET['keyword'] == 'published') { ?>selected="true" <?php }}; ?> value="published">published</option>
@@ -31,7 +33,7 @@
         <li>
             <form action="/backoffice/referenda">
                 <input type="text" name="keyword" id="keyword">
-                <input type="submit" name="submit" value="Search">
+                <input  class="btn btn-default" type="submit" name="submit" value="Search">
             </form>
         </li>
         <li><a href="/backoffice/referenda">reset filters</a> </li>

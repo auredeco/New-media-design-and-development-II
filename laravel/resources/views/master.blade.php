@@ -51,7 +51,7 @@
                 {{--<span class="icon-bar"></span>--}}
                 {{--<span class="icon-bar"></span>--}}
             {{--</button>--}}
-            <a class="navbar-brand" href="/backoffice/">
+            <a class="navbar-brand" href="/">
                 <img height="100%" src="{{ URL::asset('images/logo.svg') }}">
             </a>
         </div>
