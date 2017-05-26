@@ -24,8 +24,11 @@
                 <input type="radio" id="disagreed" value="0" v-model="opinion">
                 <label for="disagreed">Niet akkoord</label>
             </div>
-            <div class="button-field">
-                <button v-if="!referendum.isClosed" @click="vote" class="btn green">Stemmen</button>
+            <div v-if="!referendum.isClosed" class="button-field">
+                <button v-if="!voted" @click="vote" class="btn green">Stemmen</button>
+                <button @click="nextReferenda" class="btn blue">Volgend referendum</button>
+            </div>
+            <div v-if="referendum.isClosed" class="button-field">
                 <button @click="nextReferenda" class="btn blue">Volgend referendum</button>
             </div>
             <div class="ct-chart ct-perfect-fourth"></div>
