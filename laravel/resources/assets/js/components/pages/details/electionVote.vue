@@ -1,5 +1,6 @@
 <template>
     <div id="election-vote" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="candidate" v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
             <div class="candidate-wrapper">
                 <figure class="user-image">
@@ -14,7 +15,6 @@
                 </div>
             </div>
         </div>
-        <button @redirect>test</button>
     </div>
 </template>
 
@@ -24,6 +24,7 @@
             return {
                 election: [],
                 user: [],
+                loading: true,
             }
         },
 
@@ -34,7 +35,11 @@
                     this.user = response.data;
                     this.axios.get('/api/elections/' + id).then((response) => {
                         this.election = response.data;
-                        this.checkVoted();
+                        if(this.election.candidates.length == 0){
+                            this.$router.push({ name: 'elections'});
+                        }else {
+                            this.checkVoted();
+                        }
                     });
                 });
             },
@@ -66,18 +71,7 @@
                     }).then(function (response) {
                         console.log(response.data);
                         var vote = response.data;
-
-//                        console.log('hallo');
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
-//                            this.$route.go('/elections/'+ this.election.id);
-//
-//                            console.log('hallo2');
-//                            //redirect to the home page
-////                        this.redirect();
-////                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
-//                            window.location.reload();
-//                        }
-//                        this.$router.push({ name: 'elections'});
                         console.log('redirect');
                         window.location.reload();
 //
@@ -96,11 +90,11 @@
                         self.voted = true;
                         console.log('true mdfkr');
                         console.log(self.voted);
-                        this.$router.push({ name: 'election', params: { id: self.election.id }});
+                        this.$router.push({ name: 'elections'});
                         break;
                     }
                 }
-
+                this.stopLoading();
             },
             redirect() {
                 console.log('redirecting fuck');
@@ -108,6 +102,10 @@
 //                window.location.reload();
 //                this.$router.push({ name: 'election', params: { id: this.election.id }});
 
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {

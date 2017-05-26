@@ -1,5 +1,8 @@
 <template>
     <div id="home" class="container">
+        <div v-if="loading"  class="loader">
+            <!--<img src="images/logo-square.gif">-->
+        </div>
         <figure id="logo">
             <img src="images/logo-square.svg">
         </figure>
@@ -58,7 +61,9 @@
                 <slot></slot>
             </div>`,
         data() {
-            return { tabs: [] };
+            return {
+                tabs: [],
+            };
         },
 
         created() {
@@ -85,7 +90,8 @@
 
         data() {
             return {
-                isActive: false
+                isActive: false,
+
             };
         },
 
@@ -120,7 +126,9 @@
                 elections: [],
                 referenda: [],
                 slicedReferenda: [],
-                slicedElections: []
+                slicedElections: [],
+                loading: true,
+
             };
         },
         methods: {
@@ -143,10 +151,16 @@
                if(clientWidth > 1100) {
                    this.slicedElections = this.elections.slice(0,5);
                    this.slicedReferenda = this.referenda.slice(0,5);
+                   this.stopLoading();
                } else {
                    this.slicedElections = this.elections.slice(0,3);
                    this.slicedReferenda = this.referenda.slice(0,3);
+                   this.stopLoading();
                }
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 3000);
             }
         },
 

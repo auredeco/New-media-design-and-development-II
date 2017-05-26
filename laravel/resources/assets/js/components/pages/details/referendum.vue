@@ -1,5 +1,6 @@
 <template>
     <div id="referendum-detail" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="info">
             <h1>{{referendum.title}}</h1>
             <p>Status:
@@ -48,6 +49,8 @@
                 opinion: 0,
                 user: [],
                 voted: false,
+                loading: true,
+
             }
         },
 
@@ -95,6 +98,7 @@
                     };
 
                     new Chartist.Pie('.ct-chart', Chartdata);
+                    this.stopLoading();
                 }
             },
             nextReferenda: function ()  {
@@ -145,8 +149,13 @@
                         break;
                     }
                 }
+                this.stopLoading();
 
             },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
+            }
         },
         mounted() {
             this.loadUserData(this.$route.params.id);

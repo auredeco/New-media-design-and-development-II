@@ -1,5 +1,6 @@
 <template>
     <div id="party" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="info">
             <figure>
                 <img :src="party.pictureUri" alt="party image">
@@ -37,6 +38,8 @@
                 userItems:[],
                 paginate: ['users'],
                 party: [],
+                loading: true,
+
             }
         },
         methods: {
@@ -45,9 +48,14 @@
                     console.log(response.data);
                     this.party = response.data;
                     this.userItems = this.party.candidates;
+                this.stopLoading();
 
                 });
             },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
+            }
         },
         mounted() {
             this.loadData(this.$route.params.id);

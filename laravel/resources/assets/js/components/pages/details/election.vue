@@ -1,8 +1,6 @@
 <template>
     <div id="election-detail" class="container">
-    <router-link   :to="{ name: 'elections'}">
-        <button class="btn">back</button>
-    </router-link>
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure class="election-image">
@@ -20,7 +18,6 @@
                 <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
 
                 <hr />
-                <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
             </div>
         </div>
 
@@ -38,7 +35,7 @@
             </tbody>
         </table>
 
-        <div class="button-field" v-if="status == 'open' && !voted">
+        <div class="button-field" v-if="status == 'open' && !voted && !empty">
             <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
                 <button class="btn blue">Stemmen</button>
             </router-link>
@@ -71,6 +68,8 @@
                 reg: false,
                 status: 'closed',
                 voted: false,
+                loading: true,
+                empty: false,
             }
         },
 
@@ -78,14 +77,16 @@
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
+                    if(this.election.candidates.length == 0){
+                        this.empty = true;
+                    }
                     this.axios.get('/api/users/' + userId).then((response) => {
                         console.log(response.data);
                         this.user = response.data;
-                        this.checkVoted();
-                        this.drawGraph();
-                        this.checkListed();
                         this.checkReg();
                         this.checkStatus();
+                        console.log(this.empty);
+
                     });
                 });
 
@@ -104,6 +105,7 @@
                         this.listed = true
                     }
                 }
+                this.stopLoading();
 
             },
             checkReg(){
@@ -117,11 +119,14 @@
 
                 if(new Date() < new Date(this.election.startDate)){
                     this.status = 'coming';
+                    this.checkListed();
                 }
                 else if ((new Date() > new Date(this.election.startDate))&& (new Date() < new Date(this.election.endDate))){
                     this.status = 'open';
+                    this.checkVoted();
                 }else{
                     this.status = 'closed';
+                    this.drawGraph();
                 }
 
             },
@@ -138,10 +143,14 @@
                         break;
                     }
                 }
-
+                this.stopLoading();
             },
             back() {
                 this.$router.go(-2)
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             },
             drawGraph() {
                 if(this.election.isClosed) {
@@ -160,6 +169,7 @@
                         labels: this.candidates,
                         series: [this.scores]
                     }, options);
+                    this.stopLoading();
                 }
             },
         },

@@ -1,5 +1,6 @@
 <template>
     <div id="group-detail" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure>
@@ -46,6 +47,8 @@
                 user : [],
                 group: [],
                 listed: false,
+                loading: true,
+
 
             }
         },
@@ -82,9 +85,14 @@
             checkListed() {
                 let filtered = _.filter(this.userItems, { 'id': this.user.id});
                 (filtered.length === 0)?this.listed = false : this.listed = true;
-                console.log(this.listed);
+                console.log(this.listed)
+                this.stopLoading();
 
 
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {
