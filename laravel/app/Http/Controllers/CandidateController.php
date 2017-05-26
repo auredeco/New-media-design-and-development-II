@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Election;
-use App\Models\Group;
-use App\Models\Party;
-use App\Models\Referendum;
-use App\User;
 use Illuminate\Http\Request;
+use App\Models\Candidate_election;
 
-class DashboardController extends Controller
+class CandidateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $all = [
-            User::count(),
-            Group::count(),
-            Party::count(),
-            Referendum::WhereOpenInit()->count(),
-            Referendum::WhereClosedInit()->count(),
-            Election::WhereOpenInit()->count(),
-            Election::WhereClosedInit()->count(),
-            Referendum::count(),
-            Referendum::WhereUnpublished()->count(),
-            User::getRegisteredMonth(),
-            Election::Coming()->count(),
-        ];
-
-        return view('dashboard', compact('all'));
+        //
     }
 
     /**
@@ -99,5 +81,24 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function approve($election, $candidate) {
+
+        $candidateElection = Candidate_election::where('candidate_id', $candidate)
+            ->where('election_id', $election)->first();
+        $candidateElection->approved = true;
+        $candidateElection->save();
+
+        return redirect('/backoffice/elections/'.$election);
+    }
+    public function unapprove($election, $candidate) {
+
+        $candidateElection = Candidate_election::where('candidate_id', $candidate)
+            ->where('election_id', $election)->first();
+        $candidateElection->approved = false;
+        $candidateElection->save();
+
+        return redirect('/backoffice/elections/'.$election);
     }
 }

@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Models\{
-    Post, Voter, Candidate, Group
+    History, Post, Voter, Candidate, Group
 };
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -67,6 +67,15 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     *
+     * relates a user with history
+     */
+    public function history() {
+        return $this->hasMany(History::class);
     }
 
     /**

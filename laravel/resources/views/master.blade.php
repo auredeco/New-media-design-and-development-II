@@ -26,6 +26,7 @@
 
     <!-- Custom Backoffice CSS -->
     <link href="{{ URL::asset('css/backoffice.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/back.css') }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,13 +45,15 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/backoffice/">Votebox</a>
+            {{--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">--}}
+                {{--<span class="sr-only">Toggle navigation</span>--}}
+                {{--<span class="icon-bar"></span>--}}
+                {{--<span class="icon-bar"></span>--}}
+                {{--<span class="icon-bar"></span>--}}
+            {{--</button>--}}
+            <a class="navbar-brand" href="/">
+                <img height="100%" src="{{ URL::asset('images/logo.svg') }}">
+            </a>
         </div>
         <!-- Top Menu Items -->
         @include('partials.navRight')

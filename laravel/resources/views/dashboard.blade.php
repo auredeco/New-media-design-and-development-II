@@ -7,7 +7,7 @@
     <h4>User centered content</h4>
     <div class="row">
         {{--users--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -30,7 +30,7 @@
             </div>
         </div>
         {{--groups--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -53,7 +53,7 @@
             </div>
         </div>
         {{--parties--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -80,7 +80,7 @@
     <h4>Referenda centered content</h4>
     <div class="row">
         {{--active--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
@@ -103,7 +103,7 @@
             </div>
         </div>
         {{--non active--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <div class="row">
@@ -126,7 +126,7 @@
             </div>
         </div>
         {{--requests--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-yellow">
                 <div class="panel-heading">
                     <div class="row">
@@ -153,7 +153,7 @@
     <h4>Election centered content</h4>
     <div class="row">
         {{--active--}}
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
@@ -175,7 +175,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <div class="row">
@@ -197,9 +197,31 @@
                 </a>
             </div>
         </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-pencil fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{$all[10]}}</div>
+                            <div>Coming elections</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/backoffice/elections?keyword=coming">
+                    <div class="panel-footer">
+                        <span class="pull-left">View all coming ellections</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
     {{-- Graphic centered content--}}
-    <h4>Graphics</h4>
+    <h4>User registration count</h4>
     <div class="row">
         <div class="col-xs-12 col-md-6">
             <div id="chart-users">

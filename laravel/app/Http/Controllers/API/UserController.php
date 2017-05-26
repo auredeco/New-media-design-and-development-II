@@ -62,6 +62,7 @@ class UserController extends Controller
             ->with('candidate.elections')
             ->with('voter')
             ->with('groups')
+            ->with('history')
             ->find($id);
 
          return $user ?: response()
@@ -105,7 +106,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = User::with('history')->find($id);
 
         if ($user) {
             if ($user->delete()) {

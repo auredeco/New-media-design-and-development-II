@@ -97,6 +97,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
         'startDate' => $startDate,
         'endDate' => $endDate,
         'isClosed' => true,
+        'isComing' => false,
         'pictureUri' => $faker->imageUrl(640, 840, 'business'),
         'group_id' => random_int(
             \DB::table('groups')
@@ -114,6 +115,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
     return [
         'score' =>  mt_rand(200.00, 5000.00),
+        'approved' => true,
 
         //todo proper foreign keys
         'election_id' => random_int(
@@ -214,6 +216,34 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
+    ];
+});
+$factory->define(App\Models\History::class, function (Faker\Generator $faker) {
+
+    if (rand(0,100) <= 50) {
+        $referendum = random_int(
+            \DB::table('referendums')
+                ->min('id'),
+            \DB::table('referendums')
+                ->max('id'));
+        $election = null;
+    }
+    else{
+        $election = random_int(
+            \DB::table('elections')
+                ->min('id'),
+            \DB::table('elections')
+                ->max('id'));
+        $referendum = null;
+    }
+    return [
+        'user_id' => random_int(
+            \DB::table('users')
+                ->min('id'),
+            \DB::table('users')
+                ->max('id')),
+        'referendum_id' => $referendum,
+        'election_id' => $election,
     ];
 });
 $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\History;
 use App\Models\Vote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,6 +33,8 @@ class VoteController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request;
+
         $vote = new Vote();
         // Create Universally Unique Identifier.
         do {
@@ -46,16 +49,22 @@ class VoteController extends Controller
 
         $vote->checksum = $request->input('checksum');
         $vote->voteType = $request->input('voteType');
+//        $vote->agreed = intval($request->input('agreed'));
+//        $vote->referendum_id = $request->input('referendum_id');
+//        $vote->CandidateElection_id = $request->input('CandidateElection_id');
 
-        if($vote->voteTye === 0)
+
+        if(intval($vote->voteTye) === 0)
         {
             $vote->agreed = null;
             $vote->referendum_id = null;
             $vote->CandidateElection_id = $request->input('CandidateElection_id');
+
         } else {
             $vote->agreed = intval($request->input('agreed'));
             $vote->referendum_id = $request->input('referendum_id');
             $vote->CandidateElection_id = null;
+
         }
 
         // Create Checksum, assume password
@@ -65,9 +74,21 @@ class VoteController extends Controller
         $value = hash('sha512', (json_encode($data)).$vote->checksum);
         // \Log::debug([$data, $value]);
         $vote->checksum = $value;
+//        dd($history);
 
         $vote->save();
+        $history = new History();
+        $history->user_id = $request->input('user_id');
+        $history->election_id = $request->input('election_id');
+        $history->referendum_id = $request->input('referendum_id');
+        $history->save();
 
+
+//        $object = (object) [
+//            'all' => $data,
+//            'open' => $history,
+//        ];
+//        return response()->json($object);
         return $data;
     }
 

@@ -20,7 +20,7 @@ class Election extends Model
 
     public function candidates()
     {
-        return $this->belongsToMany(Candidate::class, 'candidate_elections')->withPivot('score', 'id');
+        return $this->belongsToMany(Candidate::class, 'candidate_elections')->withPivot('score', 'id', 'approved');
     }
 
     public function scopeSearchByKeyword($query, $keyword)
@@ -89,6 +89,15 @@ class Election extends Model
         }
         return $closed;
 
+    }
+    public function scopeComing($query){
+        $coming = $query->with('candidates')->where('startDate', '>', Carbon::now());
+        foreach ($coming->get() as $election) {
+            $election->isClosed = true;
+            $election->isComing = true;
+            $election->save();
+        }
+        return $coming;
     }
     public function scopeWhereClosed($query)
     {

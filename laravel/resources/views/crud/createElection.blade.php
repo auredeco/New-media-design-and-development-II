@@ -4,18 +4,6 @@
 {{--    {{ ucfirst(trans($election->name))}}--}}
 
 @endsection
-@section('navigation')
-    <li  ><a href="/backoffice/">Dashboard</a></li>
-    <li ><a href="/backoffice/users">Users</a></li>
-    <li ><a href="/backoffice/parties">Parties</a></li>
-    <li ><a href="/backoffice/referenda">Referenda</a></li>
-    <li ><a href="/backoffice/groups">Groups</a></li>
-    <li class="active" ><a href="/backoffice/elections">Elections</a></li>
-@endsection
-@section('navigation-right')
-    <li ><a href="/backoffice/settings">Settings</a></li>
-    <li ><a href="/backoffice/login">Login</a></li>
-@endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/elections">Elections</a></li>
@@ -54,11 +42,11 @@
                     <label for="description">End time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="date" class="form-control col-xs-5" id="endDate" name="endDate">
+                            <input type="date" class="form-control col-xs-5" id="endDate" value="{{$end->toDateString()}}"name="endDate">
                         </div>
 
                         <div class="col-xs-6">
-                            <input type="time" class="form-control col-xs-5" id="endTime" name="endTime">
+                            <input type="time" class="form-control col-xs-5" id="endTime" value="{{$end->toTimeString()}}" name="endTime">
                         </div>
                     </div>
                 </div>
