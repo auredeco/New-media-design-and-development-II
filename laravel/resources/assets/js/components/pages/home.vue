@@ -27,8 +27,10 @@
                     <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
                         <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
                             <div class="card-element">
-                                <h1 class="referendum-title">{{referendum.title}}</h1>
-                                <p>{{referendum.description}}</p>
+                                <figure>
+                                    <img src="images/logo-square.svg">
+                                </figure>
+                                <h1 class="election-title">{{referendum.title}}</h1>
                             </div>
                         </router-link>
                         <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->

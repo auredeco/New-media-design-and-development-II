@@ -12978,6 +12978,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -34817,9 +34819,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "card-element"
-    }, [_c('h1', {
-      staticClass: "referendum-title"
-    }, [_vm._v(_vm._s(referendum.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(referendum.description))])])])], 1)
+    }, [_c('figure', [_c('img', {
+      attrs: {
+        "src": "images/logo-square.svg"
+      }
+    })]), _vm._v(" "), _c('h1', {
+      staticClass: "election-title"
+    }, [_vm._v(_vm._s(referendum.title))])])])], 1)
   })) : _vm._e()], 1)], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
