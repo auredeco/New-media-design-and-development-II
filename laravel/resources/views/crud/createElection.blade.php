@@ -1,13 +1,13 @@
 @extends('master')
 @section('title')
     Create new election
-    {{--    {{ ucfirst(trans($election->name))}}--}}
+{{--    {{ ucfirst(trans($election->name))}}--}}
 
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/elections">Elections</a></li>
-        <li class="active">New</li>
+        <li class="active" >New</li>
     </ol>
 @endsection
 @section('content')
@@ -22,7 +22,7 @@
                 <label for="group">Group</label>
                 <select id="group" name="group" class="form-control">
                     @foreach($groups as $group)
-                        <option value="{{$group->id}}">{{$group->name}}</option>
+                    <option value="{{$group->id}}">{{$group->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -31,12 +31,10 @@
                     <label for="description">Start time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="date" class="form-control col-xs-5" value="{{$datetime->toDateString()}}"
-                                   id="startDate" name="startDate">
+                            <input type="date" class="form-control col-xs-5" value="{{$datetime->toDateString()}}" id="startDate" name="startDate">
                         </div>
                         <div class="col-xs-6">
-                            <input type="time" class="form-control col-xs-5" value="{{$datetime->toTimeString()}}"
-                                   id="startTime" name="startTime">
+                            <input type="time" class="form-control col-xs-5" value="{{$datetime->toTimeString()}}" id="startTime" name="startTime">
                         </div>
                     </div>
                 </div>
@@ -44,13 +42,11 @@
                     <label for="description">End time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input type="date" class="form-control col-xs-5" id="endDate"
-                                   value="{{$end->toDateString()}}" name="endDate">
+                            <input type="date" class="form-control col-xs-5" id="endDate" value="{{$end->toDateString()}}"name="endDate">
                         </div>
 
                         <div class="col-xs-6">
-                            <input type="time" class="form-control col-xs-5" id="endTime"
-                                   value="{{$end->toTimeString()}}" name="endTime">
+                            <input type="time" class="form-control col-xs-5" id="endTime" value="{{$end->toTimeString()}}" name="endTime">
                         </div>
                     </div>
                 </div>

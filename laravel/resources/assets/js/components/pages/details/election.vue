@@ -1,6 +1,6 @@
 <template>
     <div id="election-detail" class="container">
-        <div v-if="loading" class="loader"></div>
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure class="election-image">
@@ -14,23 +14,23 @@
                 <p v-if="status == 'coming'">Gepland</p>
                 <p v-if="status == 'coming'">Start op: {{ election.startDate }}</p>
                 <p v-if="status == 'open'" class="is-open"> open</p>
-                <p v-if="status == 'open'"> Eindigt op: {{ election.endDate }}</p>
+                <p v-if="status == 'open'" > Eindigt op: {{ election.endDate }}</p>
                 <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
 
-                <hr/>
+                <hr />
             </div>
         </div>
 
         <h1 class="candidates-title">Kandidaten</h1>
         <table>
             <thead>
-            <th>Kandidaat</th>
-            <th>Partij</th>
+                <th>Kandidaat</th>
+                <th>Partij</th>
             </thead>
             <tbody>
             <tr v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
-                <td>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</td>
-                <td>{{ candidate.party.name }}</td>
+                <td >{{ candidate.user.firstname }} {{ candidate.user.lastname }}</td>
+                <td >{{ candidate.party.name }}</td>
             </tr>
             </tbody>
         </table>
@@ -43,7 +43,7 @@
 
         <div class="results" v-if="election.isClosed">
             <div class="button-field" v-if="status == 'coming' && !listed">
-                <router-link :to="{ name: 'applyElection', params: { id: election.id }}">
+                <router-link   :to="{ name: 'applyElection', params: { id: election.id }}">
                     <button class="btn blue">registreer</button>
                 </router-link>
             </div>
@@ -51,8 +51,8 @@
         <div v-if="status == 'closed'" class="results">
             <h1>Uitslag</h1>
             <div class="ct-chart">
-            </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -74,93 +74,94 @@
         },
 
         methods: {
-            /** loads current election and user*/
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
-                    if (this.election.candidates.length == 0) {
+                    if(this.election.candidates.length == 0){
                         this.empty = true;
                     }
                     this.axios.get('/api/users/' + userId).then((response) => {
+                        console.log(response.data);
                         this.user = response.data;
                         this.checkReg();
                         this.checkStatus();
+                        console.log(this.empty);
+
                     });
                 });
 
             },
-            /** function that loads current user*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
+//                    this.user = response.data;
+                    console.log(response.data);
                     this.loadData(electionId, response.data.id);
                 });
             },
-            /** function that checks if current user is registered as a candidate*/
             checkListed() {
                 let candidates = this.election.candidates;
                 for (let i = 0; i < candidates.length; i++) {
-                    if (this.user.id === candidates[i].user_id) {
+                    if(this.user.id === candidates[i].user_id){
                         this.listed = true
                     }
                 }
                 this.stopLoading();
 
             },
-            /** function that checks if registration is open*/
             checkReg(){
-                if (new Date() < new Date(this.election.startDate)) {
+                if(new Date() < new Date(this.election.startDate)){
                     this.reg = true;
-                } else {
+                }else {
                     this.reg = false;
                 }
             },
-            /** function that checks the status of the election*/
             checkStatus(){
 
-                if (new Date() < new Date(this.election.startDate)) {
+                if(new Date() < new Date(this.election.startDate)){
                     this.status = 'coming';
                     this.checkListed();
                 }
-                else if ((new Date() > new Date(this.election.startDate)) && (new Date() < new Date(this.election.endDate))) {
+                else if ((new Date() > new Date(this.election.startDate))&& (new Date() < new Date(this.election.endDate))){
                     this.status = 'open';
                     this.checkVoted();
-                } else {
+                }else{
                     this.status = 'closed';
                     this.drawGraph();
                 }
 
             },
-            /** function that checks if the usere has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
-                for (let i = 0; i < history.length; i++) {
+                for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    if (electionId.election_id == self.election.id) {
+                    console.log(electionId.election_id);
+                    if(electionId.election_id == self.election.id){
                         self.voted = true;
+                        console.log('true mdfkr');
+                        console.log(self.voted);
                         break;
                     }
                 }
                 this.stopLoading();
-            }
-            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
+            },
+            back() {
+                this.$router.go(-2)
+            },
             stopLoading: function () {
                 let self = this;
-                setTimeout(function () {
-                    self.loading = false;
-                }, 1500);
+                setTimeout(function(){ self.loading = false; }, 1500);
             },
-            /** function that draws a graph when the election is closed*/
             drawGraph() {
-                if (this.election.isClosed) {
-                    for (let i = 0; i < this.election.candidates.length; i++) {
-                        if (this.election.candidates[i].pivot.approved) {
+                if(this.election.isClosed) {
+                    for(let i = 0; i < this.election.candidates.length; i++){
+                        if(this.election.candidates[i].pivot.approved){
                             this.candidates.push(this.election.candidates[i].user.firstname + " " + this.election.candidates[i].user.lastname);
                             this.scores.push(this.election.candidates[i].pivot.score)
                         }
                     }
                     var options = {
-                        labelInterpolationFnc: function (value) {
+                        labelInterpolationFnc: function(value) {
                             return value[0]
                         }
                     };
@@ -174,6 +175,9 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
+            console.log('Election mounted.');
+
+            console.log(this.$route.params.id);
         }
     }
 </script>

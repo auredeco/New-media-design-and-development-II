@@ -17,26 +17,15 @@ class Party extends Model
      */
     protected $dates = ['deleted_at'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function candidates()
     {
         return $this->hasMany(Candidate::class);
     }
-
-    /**
-     * @param $query
-     * @param $keyword
-     * @return mixed
-     *
-     * Filter function that returns query from database by given keyword
-     */
     public function scopeSearchByKeyword($query, $keyword)
     {
-        if ($keyword != '') {
+        if ($keyword!='') {
             $query->where(function ($query) use ($keyword) {
-                $query->where("name", "LIKE", "%$keyword%")
+                $query->where("name", "LIKE","%$keyword%")
                     ->orWhere("description", "LIKE", "%$keyword%");
             });
         }

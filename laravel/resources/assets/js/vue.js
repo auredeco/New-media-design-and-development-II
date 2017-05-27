@@ -1,4 +1,3 @@
-/** Imports  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
@@ -25,26 +24,25 @@ import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
 import electionVote from './components/pages/details/electionVote.vue'
 
-/** plugins  */
 Vue.use(VeeValidate)
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(VuePaginate)
 Vue.use(VueLodash, lodash)
+
 window.axios = require('axios');
 
-//** set default axios header*/
+
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
     'Authorization': 'Bearer ' + window.Laravel.api_token,
 };
 
-//* Define routes */
 const routes = [
     {
         path: '/',
-        component: home,
+        component: home ,
         name: 'home',
     },
     {
@@ -119,10 +117,9 @@ const routes = [
         name: 'user',
     },
 ]
-//* Declare router */
 const router = new VueRouter({
     // mode: 'history',
-    routes
+    routes // short for routes: routes
 })
 new Vue({
     router,

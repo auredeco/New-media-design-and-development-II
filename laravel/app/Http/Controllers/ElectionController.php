@@ -14,8 +14,6 @@ class ElectionController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     *
-     * function returns $query depending on the given keyword
      */
     public function index(Request $request)
     {
@@ -23,38 +21,36 @@ class ElectionController extends Controller
 
         if ($keyword != '') {
 
-            switch (strtolower($keyword)) {
-                case 'open': {
+            switch (strtolower($keyword)){
+                case 'open':{
                     $elections = Election::WhereOpen()->latest()->paginate(10);
                     $elections->withPath('elections?keyword=open');
 
-                }
-                    break;
-                case 'coming': {
+                }break;
+                case 'coming':{
                     $elections = Election::Coming()->latest()->paginate(10);
                     $elections->withPath('elections?keyword=coming');
 
-                }
-                    break;
-                case 'all': {
+                }break;
+                case 'all':{
                     $elections = Election::latest()->paginate(10);
                     $elections->withPath('elections?keyword=all');
 
-                }
-                    break;
-                case 'closed': {
+                }break;
+                case 'closed':{
                     $elections = Election::WhereClosed()->latest()->paginate(10);
                     $elections->withPath('elections?keyword=closed');
 
-                }
-                    break;
+                }break;
 
                 default : {
                     $elections = Election::SearchByKeyword($keyword)->latest()->paginate(10);
                     $elections->withPath('elections?keyword=' . strtolower($keyword));
                 }
             }
-        } else {
+        }
+        else
+        {
             $elections = Election::latest()->paginate(10);
             $elections->withPath('elections?keyword=all');
 
@@ -82,22 +78,22 @@ class ElectionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $closed = true;
         $time = strtotime(Carbon::now());
-        $startTime = strtotime(request('startDate') . " " . request('startTime'));
-        if ($startTime <= $time) {
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
             $closed = false;
         }
 
         $this->validate(request(), [
             'name' => 'required',
             'description' => 'required',
-            'startDate' => 'required|date|after_or_equal:tomorrow',
+            'startDate' => 'required|date|after_or_equal:tomorrow' ,
             'startTime' => 'required',
             'endDate' => 'required|date|after_or_equal:startDate',
             'endTime' => 'required',
@@ -106,12 +102,16 @@ class ElectionController extends Controller
 
         ]);
 
+
+
+
         //TODO votemanager_id = huidige votemanger
+
 
         $election = New Election();
         $election->name = request('name');
         $election->description = request('description');
-        $election->startDate = request('startDate') . " " . request('startTime');
+        $election->startDate = request('startDate') . " " .request('startTime');
         $election->endDate = request('endDate') . " " . request('endTime');
         $election->group_id = request('group');
         $election->isClosed = true;
@@ -119,10 +119,11 @@ class ElectionController extends Controller
         $election->votemanager_id = 1;
         $election->pictureUri = "";
         $election->save();
-        if ($request->hasFile('imgUpload')) {
-            $request->file('imgUpload')->storeAs('election-images', 'election' . $election->id . '.jpg');
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('election-images', 'election'.$election->id.'.jpg');
         }
-        $election->pictureUri = url('/') . '/storage/election-images/election' . $election->id . '.jpg';
+        $election->pictureUri = url('/').'/storage/election-images/election'.$election->id.'.jpg';
         $election->save();
         return redirect('/backoffice/elections');
 
@@ -131,7 +132,7 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -141,15 +142,14 @@ class ElectionController extends Controller
         $votemanager = Votemanager::find($election->votemanager_id);
         $unapproved = [];
 
-//        store unapproved candidates in their own array
-        foreach ($election->candidates as $candidate) {
-            if (!$candidate->pivot->approved) {
+        foreach ($election->candidates as $candidate){
+            if(!$candidate->pivot->approved){
                 array_push($unapproved, $candidate);
             };
 
         }
 
-        return view('detail.election', compact('election', 'group', 'votemanager', 'unapproved'));
+        return view('detail.election', compact('election','group','votemanager', 'unapproved'));
 //        return $results;
 
     }
@@ -157,7 +157,7 @@ class ElectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -165,14 +165,14 @@ class ElectionController extends Controller
         $election = Election::with('candidates.user')->with('candidates.party')->find($id);
         $group = Group::find($election->group_id);
         $groups = Group::all();
-        return view('crud.editElection', compact('election', 'group', 'groups'));
+        return view('crud.editElection', compact('election',  'group', 'groups'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -191,13 +191,14 @@ class ElectionController extends Controller
             'group' => 'required',
             'pictureUri' => 'image'
         ]);
-        $startTime = strtotime(request('startDate') . " " . request('startTime'));
-        if ($startTime <= $time) {
+        $startTime = strtotime(request('startDate'). " " .request('startTime'));
+        if( $startTime <= $time){
             $closed = false;
         }
 
-        if ($request->hasFile('imgUpload')) {
-            $request->file('imgUpload')->storeAs('election-images', 'election' . $id . '.jpg');
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('election-images', 'election'.$id.'.jpg');
         }
 
 
@@ -205,13 +206,13 @@ class ElectionController extends Controller
         Election::find($id)->update([
             'name' => request('name'),
             'description' => request('description'),
-            'startDate' => request('startDate') . " " . request('startTime'),
+            'startDate' => request('startDate') . " " .request('startTime'),
             'endDate' => request('endDate') . " " . request('endTime'),
             'group_id' => request('group'),
             'isClosed' => $closed,
             'isComing' => true,
             'votemanager_id' => 1,
-            'pictureUri' => url('/') . '/storage/election-images/election' . $id . '.jpg'
+            'pictureUri' => url('/').'/storage/election-images/election'.$id.'.jpg'
         ]);
         return redirect('/backoffice/elections/' . $id);
     }
@@ -219,12 +220,12 @@ class ElectionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $election = Election::findOrFail($id);
+        $election= Election::findOrFail($id);
         $election->delete();
         return redirect('/backoffice/elections/');
     }

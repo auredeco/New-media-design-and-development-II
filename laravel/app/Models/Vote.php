@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
 
-    public $timestamps = false;
     protected $primaryKey = 'uuid';
     /**
      * @var array
@@ -15,11 +14,8 @@ class Vote extends Model
     protected $fillable = [
         'voteType', 'agreed', 'referendum_id', 'CandidateElection_id', 'checksum'
     ];
-    /**
-     * @var array
-     * allow everything
-     */
-    protected $guarded = [];
+
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -30,5 +26,11 @@ class Vote extends Model
     {
         return $this->belongsTo(Referendum::class);
     }
+
+    /**
+     * @var array
+     * allow everything
+     */
+    protected $guarded = [];
 
 }

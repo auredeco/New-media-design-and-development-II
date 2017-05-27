@@ -7,8 +7,7 @@
             <label for="uuid" class="col-md-4 control-label">Stemcode:</label>
 
             <div class="col-md-6">
-                <input id="uuid" type="text" class="form-control" name="uuid" value="{{ old('uuid') }}" required
-                       autofocus>
+                <input id="uuid" type="text" class="form-control" name="uuid" value="{{ old('uuid') }}" required autofocus>
 
                 @if ($errors->has('uuid'))
                     <span class="help-block">
@@ -21,8 +20,7 @@
             <label for="password" class="col-md-4 control-label">Opgegeven wachtwoord:</label>
 
             <div class="col-md-6">
-                <input id="password" type="text" class="form-control" name="password" value="{{ old('password') }}"
-                       autofocus>
+                <input id="password" type="text" class="form-control" name="password" value="{{ old('password') }}" autofocus>
 
                 @if ($errors->has('password'))
                     <span class="help-block">

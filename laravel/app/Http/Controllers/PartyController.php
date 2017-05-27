@@ -12,7 +12,6 @@ class PartyController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * function returns $query depending on the given keyword
      */
 
     public function index(Request $request)
@@ -23,13 +22,12 @@ class PartyController extends Controller
         if ($keyword != '') {
 
 
-            switch (strtolower($keyword)) {
-                case 'all': {
+            switch (strtolower($keyword)){
+                case 'all':{
                     $parties = Party::latest()->paginate(10);
                     $parties->withPath('parties?keyword=all');
 
-                }
-                    break;
+                }break;
 
 
                 default : {
@@ -37,7 +35,9 @@ class PartyController extends Controller
                     $parties->withPath('parties?keyword=' . strtolower($keyword));
                 }
             }
-        } else {
+        }
+        else
+        {
             $parties = Party::latest()->paginate(10);
             $parties->withPath('parties?keyword=all');
 
@@ -60,7 +60,7 @@ class PartyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -78,10 +78,11 @@ class PartyController extends Controller
         $party->description = request('description');
         $party->pictureUri = "";
         $party->save();
-        if ($request->hasFile('imgUpload')) {
-            $request->file('imgUpload')->storeAs('party-images', 'party' . $party->id . '.jpg');
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('party-images', 'party'.$party->id.'.jpg');
         }
-        $party->pictureUri = url('/') . '/storage/party-images/party' . $party->id . '.jpg';
+        $party->pictureUri = url('/').'/storage/party-images/party'.$party->id.'.jpg';
         $party->save();
         return redirect('/backoffice/parties');
     }
@@ -90,7 +91,7 @@ class PartyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -107,7 +108,7 @@ class PartyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -120,8 +121,8 @@ class PartyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -132,22 +133,23 @@ class PartyController extends Controller
             'pictureUri' => 'image'
         ]);
 
-        if ($request->hasFile('imgUpload')) {
-            $request->file('imgUpload')->storeAs('party-images', 'party' . $id . '.jpg');
+        if($request->hasFile('imgUpload'))
+        {
+            $request->file('imgUpload')->storeAs('party-images', 'party'.$id.'.jpg');
         }
 
         Party::find($id)->update([
             'name' => request('name'),
             'description' => request('description'),
-            'pictureUri' => url('/') . '/storage/party-images/party' . $id . '.jpg'
+            'pictureUri' => url('/').'/storage/party-images/party'.$id.'.jpg'
         ]);
-        return redirect('/backoffice/parties/' . $id);
+        return redirect('/backoffice/parties/'.$id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

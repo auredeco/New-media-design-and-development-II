@@ -1,6 +1,6 @@
 <template>
     <div id="party" class="container">
-        <div v-if="loading" class="loader"></div>
+        <div v-if="loading"  class="loader"></div>
         <div class="info">
             <figure>
                 <img :src="party.pictureUri" alt="party image">
@@ -35,7 +35,7 @@
     export default {
         data() {
             return {
-                userItems: [],
+                userItems:[],
                 paginate: ['users'],
                 party: [],
                 loading: true,
@@ -43,26 +43,23 @@
             }
         },
         methods: {
-            /** function that loads current party*/
             loadData: function (id) {
-                this.axios.get('/api/parties/' + id).then((response) = > {
+                this.axios.get('/api/parties/' + id).then((response) => {
+                    console.log(response.data);
                     this.party = response.data;
-                this.userItems = this.party.candidates;
+                    this.userItems = this.party.candidates;
                 this.stopLoading();
 
-            })
-                ;
+                });
             },
-            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function () {
-                    self.loading = false;
-                }, 1500);
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {
             this.loadData(this.$route.params.id);
+            console.log('Party mounted.')
         }
     }
 </script>

@@ -24,8 +24,6 @@ class VerifyController extends Controller
      *
      * @param Request $request
      * @return $this|\Illuminate\Contracts\View\Factory|View
-     *
-     * validates user input with vote information from db
      */
     public function check(Request $request)
     {
@@ -45,7 +43,7 @@ class VerifyController extends Controller
 
             $data = $vote->getAttributes();
             ksort($data);
-            $value = hash('sha512', (json_encode($data)) . $vote->checksum);
+            $value = hash('sha512', (json_encode($data)).$vote->checksum);
 
             if ($value === $hashedValue) {
                 return view('verify.succes');
@@ -65,7 +63,7 @@ class VerifyController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param  array  $data
      * @return Validator
      */
     protected function validator(array $data): Validator
