@@ -83,6 +83,13 @@ class CandidateController extends Controller
         //
     }
 
+    /**
+     * @param $election
+     * @param $candidate
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
+     * Function that approves a candidate
+     */
     public function approve($election, $candidate) {
 
         $candidateElection = Candidate_election::where('candidate_id', $candidate)
@@ -92,6 +99,14 @@ class CandidateController extends Controller
 
         return redirect('/backoffice/elections/'.$election);
     }
+
+    /**
+     * @param $election
+     * @param $candidate
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
+     * Function that unapproves a candidate
+     */
     public function unapprove($election, $candidate) {
 
         $candidateElection = Candidate_election::where('candidate_id', $candidate)

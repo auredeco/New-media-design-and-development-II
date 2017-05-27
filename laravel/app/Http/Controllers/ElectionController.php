@@ -14,6 +14,8 @@ class ElectionController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * function returns $query depending on the given keyword
      */
     public function index(Request $request)
     {
@@ -102,11 +104,7 @@ class ElectionController extends Controller
 
         ]);
 
-
-
-
         //TODO votemanager_id = huidige votemanger
-
 
         $election = New Election();
         $election->name = request('name');
@@ -142,6 +140,7 @@ class ElectionController extends Controller
         $votemanager = Votemanager::find($election->votemanager_id);
         $unapproved = [];
 
+//        store unapproved candidates in their own array
         foreach ($election->candidates as $candidate){
             if(!$candidate->pivot->approved){
                 array_push($unapproved, $candidate);

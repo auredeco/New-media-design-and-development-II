@@ -24,6 +24,8 @@ class VerifyController extends Controller
      *
      * @param Request $request
      * @return $this|\Illuminate\Contracts\View\Factory|View
+     *
+     * validates user input with vote information from db
      */
     public function check(Request $request)
     {

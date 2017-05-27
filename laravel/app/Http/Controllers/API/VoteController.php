@@ -49,10 +49,6 @@ class VoteController extends Controller
 
         $vote->checksum = $request->input('checksum');
         $vote->voteType = $request->input('voteType');
-//        $vote->agreed = intval($request->input('agreed'));
-//        $vote->referendum_id = $request->input('referendum_id');
-//        $vote->CandidateElection_id = $request->input('CandidateElection_id');
-
 
         if(intval($vote->voteTye) === 0)
         {
@@ -72,9 +68,7 @@ class VoteController extends Controller
         ksort($data);
 
         $value = hash('sha512', (json_encode($data)).$vote->checksum);
-        // \Log::debug([$data, $value]);
         $vote->checksum = $value;
-//        dd($history);
 
         $vote->save();
         $history = new History();
@@ -83,12 +77,6 @@ class VoteController extends Controller
         $history->referendum_id = $request->input('referendum_id');
         $history->save();
 
-
-//        $object = (object) [
-//            'all' => $data,
-//            'open' => $history,
-//        ];
-//        return response()->json($object);
         return $data;
     }
 

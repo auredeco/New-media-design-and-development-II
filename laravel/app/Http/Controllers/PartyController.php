@@ -12,6 +12,7 @@ class PartyController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * function returns $query depending on the given keyword
      */
 
     public function index(Request $request)

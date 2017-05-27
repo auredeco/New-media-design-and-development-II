@@ -44,7 +44,6 @@ class ReferendumController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
-//            'startDate' => 'required|date' ,
             'startDate' => 'required|date|after_or_equal:yesterday' ,
             'endDate' => 'required|date|after_or_equal:startDate',
             'group_id' => 'required',
