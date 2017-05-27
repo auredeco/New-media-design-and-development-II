@@ -53,11 +53,9 @@
             vote(e) {
                 if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                     var password = prompt('Geef een wachtwoord op om later je stem te valideren');
-                    console.log(e);
                     // get the event and take the id from the element that is clicked
                     // Store it in the candidateElection_id variable
                     let candidateElection_id = e.srcElement.id;
-                    console.log(candidateElection_id);
                     let _self = this;
 
                     this.axios.post('api/votes/',{
@@ -69,10 +67,8 @@
                         referendum_id: null,
                         CandidateElection_id: candidateElection_id
                     }).then(function (response) {
-                        console.log(response.data);
                         var vote = response.data;
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
-                        console.log('redirect');
                         window.location.reload();
                     }).catch(function (error) {
                     });
@@ -84,11 +80,8 @@
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    console.log(electionId.election_id);
                     if(electionId.election_id == self.election.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         this.$router.push({ name: 'elections'});
                         break;
                     }

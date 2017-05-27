@@ -73,7 +73,6 @@
                 });
                 this.axios.get('/api/user/').then((response) => {
                     this.user = response.data;
-                    console.log(this.user.id);
                 this.stopLoading();
 
             });
@@ -88,7 +87,6 @@
                     group_id: this.group,
                     user_id: this.user.id
                 }).then((response) => {
-                    console.log(response);
                     if(response.status === 200){
                         this.status = true;
                         if(confirm("uw referendum werd doorgestuurd")){
@@ -99,7 +97,6 @@
                         this.status = false;
                     }
                     this.messages = response.data[0];
-                    console.log(this.messages);
                 });
             },
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/

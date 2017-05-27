@@ -57,7 +57,6 @@
 
         mounted() {
             this.loadData();
-            console.log('Elections mounted.');
         }
     }
 

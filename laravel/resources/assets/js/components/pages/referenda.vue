@@ -87,7 +87,6 @@
         },
         mounted() {
             this.loadData();
-            console.log('Referenda mounted.');
         }
     }
 </script>

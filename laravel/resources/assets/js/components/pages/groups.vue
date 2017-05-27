@@ -46,7 +46,6 @@
             loadData: function () {
                 this.axios.get('/api/groups').then((response) => {
                     this.items = response.data;
-                    console.log(this.items);
                 this.stopLoading();
 
             });
@@ -60,7 +59,6 @@
 
         mounted() {
             this.loadData();
-            console.log('Referenda mounted.');
         }
     }
 </script>

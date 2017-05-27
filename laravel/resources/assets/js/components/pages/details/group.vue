@@ -56,11 +56,8 @@
             /** function to get current group*/
             loadData: function (id) {
                 this.axios.get('/api/groups/' + id).then((response) => {
-                    console.log(response.data);
                     this.userItems = response.data.users;
                     this.group = response.data.group;
-                    console.log(this.user);
-                    console.log(this.group);
                     this.checkListed();
                 });
             },
@@ -87,7 +84,6 @@
             checkListed() {
                 let filtered = _.filter(this.userItems, { 'id': this.user.id});
                 (filtered.length === 0)?this.listed = false : this.listed = true;
-                console.log(this.listed)
                 this.stopLoading();
 
 
@@ -100,7 +96,6 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Group mounted.')
         }
     }
 </script>

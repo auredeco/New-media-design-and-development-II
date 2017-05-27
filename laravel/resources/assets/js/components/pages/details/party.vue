@@ -46,7 +46,6 @@
             /** function that loads current party*/
             loadData: function (id) {
                 this.axios.get('/api/parties/' + id).then((response) => {
-                    console.log(response.data);
                     this.party = response.data;
                     this.userItems = this.party.candidates;
                 this.stopLoading();
@@ -61,7 +60,6 @@
         },
         mounted() {
             this.loadData(this.$route.params.id);
-            console.log('Party mounted.')
         }
     }
 </script>

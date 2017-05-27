@@ -59,7 +59,6 @@
             loadData: function (id, userId) {
 
                 this.axios.get('/api/referenda').then((response) => {
-                    console.log(this.referenda);
                     this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
@@ -92,8 +91,6 @@
                             this.disagree++
                         }
                     }
-                    console.log(this.agree);
-                    console.log(this.disagree);
 
                     let Chartdata = {
                         labels: ['Akkoord', 'Niet Akkoord'],
@@ -109,9 +106,7 @@
                 var referendum = this.referendum;
                 var index = _.findIndex(this.referenda, function(o) { return o.id == referendum.id; });
                 this.next = this.referenda[index + 1];
-                console.log(this.next.id);
                 this.$router.push({ name: 'referendum', params: { id: this.next.id }});
-                //pagina laad niet vanzelf
                 window.location.reload()
             },
             /** function to vote on a referendum user gets a response with the uuid*/
@@ -147,11 +142,8 @@
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let referendumId = self.user.history[i];
-                    console.log(referendumId.referendum_id);
                     if(referendumId.referendum_id == self.referendum.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         break;
                     }
                 }
@@ -166,7 +158,6 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log(this.$route.params.id);
         }
     }
 </script>

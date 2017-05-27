@@ -72,9 +72,6 @@
                         email: user.email,
                         picture: user.pictureUri,
                     };
-                    console.log(this.groups);
-                    console.log(this.user);
-                    console.log(response.data);
                 this.stopLoading();
 
             });

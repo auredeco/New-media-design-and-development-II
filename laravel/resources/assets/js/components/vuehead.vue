@@ -23,7 +23,6 @@
         methods: {
             /** funcion that gives dutch name for a given route name */
             dutchify: function (value) {
-                console.log('dutchify');
                 switch (value){
                     case 'home': {
                         return 'Home';

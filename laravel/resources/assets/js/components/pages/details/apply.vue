@@ -50,16 +50,12 @@
             },
             /** function for registering a new candidate*/
             register: function() {
-                console.log(this.election.id);
-                console.log(this.party);
-                console.log(this.user.id);
                 this.axios.post('api/candidates/',{
                     election_id: this.election.id,
                     user_id: this.user.id,
                     party_id:  this.party,
 
                 }).then((response) => {
-                    console.log(response.data);
                     this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
                 });
             },
@@ -71,7 +67,6 @@
                 for (let i = 0; i < candidates.length; i++) {
 
                     if(self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)){
-                            console.log("nope");
                         self.$router.push({ name: 'election', params: { id: self.$route.params.id }});
                     }
                 }

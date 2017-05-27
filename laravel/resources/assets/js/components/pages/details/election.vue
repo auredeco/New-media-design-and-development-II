@@ -82,12 +82,9 @@
                         this.empty = true;
                     }
                     this.axios.get('/api/users/' + userId).then((response) => {
-                        console.log(response.data);
                         this.user = response.data;
                         this.checkReg();
                         this.checkStatus();
-                        console.log(this.empty);
-
                     });
                 });
 
@@ -95,8 +92,6 @@
             /** function that loads current user*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
-//                    this.user = response.data;
-                    console.log(response.data);
                     this.loadData(electionId, response.data.id);
                 });
             },
@@ -141,11 +136,8 @@
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    console.log(electionId.election_id);
                     if(electionId.election_id == self.election.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         break;
                     }
                 }
@@ -180,9 +172,6 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Election mounted.');
-
-            console.log(this.$route.params.id);
         }
     }
 </script>
