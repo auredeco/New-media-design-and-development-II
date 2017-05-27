@@ -88,6 +88,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class, 'group_users');
     }
 
+
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     *
+     * Filter function that returns query from database by given keyword
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
@@ -103,29 +111,52 @@ class User extends Authenticatable
         return $query;
     }
 
+    /**
+     * @param $birthDate
+     * @return int
+     *
+     * Function that returns the age when given the birthDate
+     */
     public static function getAge($birthDate) {
+//        cut dates in year, month, day
         $birthDate = explode("-", $birthDate);
         $currentDate = explode("-", date('Y-m-d'));
         $age = 0;
+
+//        if birthdate month is smalle than current month
         if($birthDate[1]<$currentDate[1]){
 
+//            subtract birth year from current year
             $age = $currentDate[0]-$birthDate[0];
         }
+//        if birth month is equal to current month
         elseif ($birthDate[1]==$currentDate[1]){
+//            if birth day is smaller than  current day
             if($birthDate[2]<=$currentDate[2]){
+//                subtract birth year from current year
                 $age = $currentDate[0]-$birthDate[0];
             }
+//            else subtract birth year from current year and subtract 1
             else $age =$currentDate[0]-$birthDate[0]-1;
         }
+//        if birth month is higher than current month
         else{
+//            if birth day is smaller or equal to current day
             if($birthDate[2]<=$currentDate[2]){
+//                subtract birth year from current year
                 $age = $currentDate[0]-$birthDate[0];
             }
+//            else subtract birth year from current year and subtract 1
             else $age =$currentDate[0]-$birthDate[0]-1;
         }
         return $age;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     *
+     * Function that returns the amount of users created per month
+     */
     public static function getRegisteredMonth(){
         return User::select(\DB::raw('count(id) as `total`'),
                             \DB::raw('YEAR(created_at) year, MONTH(created_at) month'))

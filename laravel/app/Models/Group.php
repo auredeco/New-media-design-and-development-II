@@ -47,6 +47,13 @@ class Group extends Model
         return $this->hasMany(Post::class);
     }
 
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     *
+     * Filter function that returns query from database by given keyword
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
