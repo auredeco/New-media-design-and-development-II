@@ -3,7 +3,7 @@
         <div class="container-item">
             <figure class="header-logo">
                 <a href="/">
-                    <img src="/images/logo.svg" alt="">
+                <img src="/images/logo.svg" alt="">
                 </a>
             </figure>
             <ul class="desktop-nav">
@@ -41,7 +41,6 @@
 <script>
     export default{
 
-        /** Filter to capitalize*/
         filters: {
             capitalize: function (value) {
                 if (!value) return ''

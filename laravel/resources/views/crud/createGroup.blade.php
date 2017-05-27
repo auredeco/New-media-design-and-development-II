@@ -1,13 +1,13 @@
 @extends('master')
 @section('title')
     Create new group
-    {{--    {{ ucfirst(trans($election->name))}}--}}
+{{--    {{ ucfirst(trans($election->name))}}--}}
 
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/groups">Groups</a></li>
-        <li class="active">New</li>
+        <li class="active" >New</li>
     </ol>
 @endsection
 @section('content')

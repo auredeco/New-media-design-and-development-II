@@ -26,16 +26,16 @@
 <div id="app">
     {{--<p v-text="message"></p>--}}
     <navigation></navigation>
-    <vuehead></vuehead>
+    <vuehead ></vuehead>
     <vueheadDesktop></vueheadDesktop>
     <transition name="slide">
-        <router-view></router-view>
+        <router-view ></router-view>
     </transition>
 </div>
 
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-<script src="{{ URL::asset('js/vue.js') }}"></script>
-<script src="{{ URL::asset('js/main.js') }}"></script>
+<script src="{{ URL::asset('js/vue.js') }}" ></script>
+<script src="{{ URL::asset('js/main.js') }}" ></script>
 
 
 </body>

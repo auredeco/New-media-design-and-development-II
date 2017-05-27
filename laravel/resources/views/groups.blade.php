@@ -4,7 +4,7 @@
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li class="active"><a href="/backoffice/groups">Groups</a></li>
+        <li class="active" ><a href="/backoffice/groups">Groups</a></li>
     </ol>
 @endsection
 @section('content')
@@ -15,7 +15,7 @@
                 <input class="btn btn-default" type="submit" name="submit" value="Search">
             </form>
         </li>
-        <li><a href="/backoffice/groups">reset filters</a></li>
+        <li><a href="/backoffice/groups">reset filters</a> </li>
     </ul>
     <ul class="pull-right">
         <l1>
@@ -35,17 +35,14 @@
             <tr>
                 <td><a href="/backoffice/groups/{{$item->id}}">{{$item->name}}</a></td>
                 <td><a href="/backoffice/groups/{{$item->id}}">{{$item->description}}</a></td>
-                <td><a href="/backoffice/groups/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                </td>
+                <td><a href="/backoffice/groups/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                 <td><a href="/backoffice/groups/{{$item->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
                 <td>
-                    <form id="delete_form{{$item->id}}" action="{{ URL::route('groups.destroy',$item->id) }}"
-                          method="POST">
+                    <form id="delete_form{{$item->id}}" action="{{ URL::route('groups.destroy',$item->id) }}" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" id="id" name="id" value="{{ $item->id}}">
-                        <a onclick="return (confirm('Are you sure you want to delete group with id {{$item->id}}'))?document.getElementById('delete_form{{$item->id}}').submit():null"
-                           href="javascript:{}">
+                        <a onclick="return (confirm('Are you sure you want to delete group with id {{$item->id}}'))?document.getElementById('delete_form{{$item->id}}').submit():null" href="javascript:{}">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </form>

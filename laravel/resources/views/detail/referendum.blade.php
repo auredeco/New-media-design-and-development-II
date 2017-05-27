@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="../referenda">Referenda</a></li>
-        <li class="active"><a href="/referenda/{{$referendum->id}}">{{$referendum->title}}</a></li>
+        <li class="active" ><a href="/referenda/{{$referendum->id}}">{{$referendum->title}}</a></li>
     </ol>
 
 @endsection
@@ -65,15 +65,13 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <a class="btn btn-default" href="/backoffice/referenda/{{$referendum->id}}/edit">Edit</a>
-            <button onclick="return confirm('Are you sure you want to delete this referendum')" class="btn btn-danger">
-                Delete
-            </button>
+            <button onclick="return confirm('Are you sure you want to delete this referendum')" class="btn btn-danger">Delete</button>
         </form>
     </div>
 @endsection
 @section('scripts')
     <script>
-        var morris = new Morris.Donut({
+       var morris = new Morris.Donut({
             element: 'results-chart',
 
             data: [
@@ -81,7 +79,7 @@
                 {label: "disagreed", value:{{$disagree}}}
             ],
 
-            colors: ["#347C90", "#C34F33"]
+           colors: ["#347C90", "#C34F33"]
         });
     </script>
 @endsection

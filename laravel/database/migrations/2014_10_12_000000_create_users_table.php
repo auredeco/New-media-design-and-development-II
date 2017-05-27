@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('lastLogin');
             $table->string('firstname');
             $table->string('lastname');
-            $table->enum('gender', ['male', 'female', 'not applicable']);
+            $table->enum('gender',['male','female', 'not applicable']);
             $table->date('birthdate');
             $table->string('pictureUri');
             $table->rememberToken();

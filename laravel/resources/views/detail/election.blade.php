@@ -6,7 +6,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/elections">Elections</a></li>
-        <li class="active"><a href="/backoffice/elections/{{$election->id}}">{{$election->name}}</a></li>
+        <li class="active" ><a href="/backoffice/elections/{{$election->id}}">{{$election->name}}</a></li>
     </ol>
 @endsection
 @section('content')
@@ -14,8 +14,8 @@
     <div class="col-xs-12 col-sm-9">
         @if($election->startDate > \Carbon\Carbon::now())
             <h4>Status: <span class="status-closed">Closed</span></h4>
-            @if(count($election->candidates) !=0 )
-                @if($election->candidates[0]->pivot->approved)
+        @if(count($election->candidates) !=0 )
+            @if($election->candidates[0]->pivot->approved)
                     <h3>Candidates</h3>
                     <table class="table">
                         <thead>
@@ -31,21 +31,14 @@
                             @if($candidate->pivot->approved)
                                 <tr>
                                     <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
+                                    <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                                    <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
                                     <td>
-                                        <a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a>
-                                    </td>
-                                    <td>
-                                        <a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a>
-                                    </td>
-                                    <td>
-                                        <form id="unapprove_form{{$candidate->id}}"
-                                              action="{{ URL::route('candidate.unapprove',['election' => $election->id, 'candidate' => $candidate->id ] ) }}"
-                                              method="POST">
+                                        <form id="unapprove_form{{$candidate->id}}" action="{{ URL::route('candidate.unapprove',['election' => $election->id, 'candidate' => $candidate->id ] ) }}" method="POST">
                                             <input type="hidden" name="_method" value="PATCH">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
-                                            <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null"
-                                               href="javascript:{}">
+                                            <a onclick="return (confirm('Are you sure you want to unapprove candidate with id {{$candidate->id}}'))?document.getElementById('unapprove_form{{$candidate->id}}').submit():null" href="javascript:{}">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </a>
                                         </form>
@@ -74,21 +67,14 @@
                         @foreach($unapproved as $candidate)
                             <tr>
                                 <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
+                                <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                                <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
                                 <td>
-                                    <a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a>
-                                </td>
-                                <td>
-                                    <a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a>
-                                </td>
-                                <td>
-                                    <form id="approve_form{{$candidate->id}}"
-                                          action="{{ URL::route('candidate.approve',['election' => $election->id, 'candidate' => $candidate->id ] ) }}"
-                                          method="POST">
+                                    <form id="approve_form{{$candidate->id}}" action="{{ URL::route('candidate.approve',['election' => $election->id, 'candidate' => $candidate->id ] ) }}" method="POST">
                                         <input type="hidden" name="_method" value="PATCH">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" id="id" name="id" value="{{ $candidate->id}}">
-                                        <a onclick="return (confirm('Are you sure you want to approve candidate with id {{$candidate->id}}'))?document.getElementById('approve_form{{$candidate->id}}').submit():null"
-                                           href="javascript:{}">
+                                        <a onclick="return (confirm('Are you sure you want to approve candidate with id {{$candidate->id}}'))?document.getElementById('approve_form{{$candidate->id}}').submit():null" href="javascript:{}">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                         </a>
                                     </form>
@@ -116,15 +102,12 @@
                 <tbody>
                 @foreach($election->candidates as $candidate)
                     @if($candidate->pivot->approved)
-                        <tr>
-                            <td><a href="/backoffice/users/{{$candidate->user->id}}">{{$candidate->id}}</a></td>
-                            <td>
-                                <a href="/backoffice/users/{{$candidate->user->id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a>
-                            </td>
-                            <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a>
-                            </td>
-                            <td>{{$candidate->pivot->score}}</td>
-                        </tr>
+                    <tr>
+                        <td><a href="/backoffice/users/{{$candidate->user->id}}">{{$candidate->id}}</a></td>
+                        <td><a href="/backoffice/users/{{$candidate->user->id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                        <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
+                        <td>{{$candidate->pivot->score}}</td>
+                    </tr>
                     @endif
                 @endforeach
                 </tbody>
@@ -145,14 +128,11 @@
                 <tbody>
                 @foreach($election->candidates as $candidate)
                     @if($candidate->pivot->approved)
-                        <tr>
-                            <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
-                            <td>
-                                <a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a>
-                            </td>
-                            <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->id}}</a></td>
+                        <td><a href="/backoffice/users/{{$candidate->user_id}}">{{$candidate->user->firstname}} {{$candidate->user->lastname}}</a></td>
+                        <td><a href="/backoffice/parties/{{$candidate->party->id}}">{{$candidate->party->name}}</a></td>
+                    </tr>
                     @endif
                 @endforeach
                 </tbody>
@@ -206,32 +186,30 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <a class="btn btn-default" href="/backoffice/elections/{{$election->id}}/edit">Edit</a>
-            <button onclick="return confirm('Are you sure you want to delete this election')" class="btn btn-danger">
-                Delete
-            </button>
+            <button onclick="return confirm('Are you sure you want to delete this election')" class="btn btn-danger">Delete</button>
         </form>
     </div>
 @endsection
 @section('scripts')
-    <script>
-        var $candidates = [
-                @foreach ($election->candidates as $candidate)
-                @if($candidate->pivot->approved)
+<script>
+    var $candidates = [
+            @foreach ($election->candidates as $candidate)
+            @if($candidate->pivot->approved)
             {
                 firstname: "{{ $candidate->user->firstname }}" + " " + "{{ $candidate->user->lastname }}",
                 lastname: "",
                 score: "{{$candidate->pivot->score}}"
             },
             @endif
-            @endforeach
-        ];
+        @endforeach
+    ];
 
-        Morris.Bar({
-            element: 'results-chart',
-            data: $candidates,
-            xkey: 'firstname',
-            ykeys: ['score'],
-            labels: ['Score']
-        });
-    </script>
+    Morris.Bar({
+        element: 'results-chart',
+        data: $candidates,
+        xkey: 'firstname',
+        ykeys: ['score'],
+        labels: ['Score']
+    });
+</script>
 @endsection

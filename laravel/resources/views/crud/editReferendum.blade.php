@@ -1,13 +1,13 @@
 @extends('master')
 @section('title')
-    Edit {{ ucfirst(trans($referendum->title))}}
+   Edit {{ ucfirst(trans($referendum->title))}}
 
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/referenda">Referenda</a></li>
         <li><a href="/backoffice/referenda/{{$referendum->id}}">{{$referendum->title}}</a></li>
-        <li class="active">edit</li>
+        <li class="active" >edit</li>
     </ol>
 @endsection
 @section('content')
@@ -25,7 +25,7 @@
                     @foreach($groups as $group2)
                         @if($group2->id === $group->id)
                             <option selected value="{{$group2->id}}">{{$group2->name}}</option>
-                        @else
+                            @else
                             <option value="{{$group2->id}}">{{$group2->name}}</option>
                         @endif
                     @endforeach
@@ -36,12 +36,10 @@
                     <label for="startDate">Start time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input value="{{date("Y-m-d", strtotime($referendum->startDate))}}" type="date"
-                                   class="form-control col-xs-5" id="startDate" name="startDate">
+                            <input value="{{date("Y-m-d", strtotime($referendum->startDate))}}" type="date" class="form-control col-xs-5" id="startDate" name="startDate">
                         </div>
                         <div class="col-xs-6">
-                            <input value="{{date("H:i", strtotime($referendum->startDate))}}" type="time"
-                                   class="form-control col-xs-5" id="startTime" name="startTime">
+                            <input value="{{date("H:i", strtotime($referendum->startDate))}}" type="time" class="form-control col-xs-5" id="startTime" name="startTime">
                         </div>
                     </div>
                 </div>
@@ -49,21 +47,18 @@
                     <label for="endDate">End time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input value="{{date("Y-m-d", strtotime($referendum->endDate))}}" type="date"
-                                   class="form-control col-xs-5" id="endDate" name="endDate">
+                            <input value="{{date("Y-m-d", strtotime($referendum->endDate))}}" type="date" class="form-control col-xs-5" id="endDate" name="endDate">
                         </div>
 
                         <div class="col-xs-6">
-                            <input value="{{date("H:i", strtotime($referendum->endDate))}}" type="time"
-                                   class="form-control col-xs-5" id="endTime" name="endTime">
+                            <input value="{{date("H:i", strtotime($referendum->endDate))}}" type="time" class="form-control col-xs-5" id="endTime" name="endTime">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" id="description"
-                          name="description">{{$referendum->description}}</textarea>
+                <textarea class="form-control" id="description" name="description">{{$referendum->description}}</textarea>
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -76,7 +71,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">edit</button>
-                <button type="reset" class="btn btn-danger">reset</button>
+                <button type="reset"  class="btn btn-danger">reset</button>
             </div>
         </form>
 

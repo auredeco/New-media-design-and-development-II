@@ -1,20 +1,19 @@
 @extends('master')
 @section('title')
     Create new election
-    {{--    {{ ucfirst(trans($election->name))}}--}}
+{{--    {{ ucfirst(trans($election->name))}}--}}
 
 @endsection
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/elections">Elections</a></li>
-        <li class="active"><a href="/backoffice/elections/{{$election->id}}">{{$election->name}}</a></li>
-        <li class="active">edit</li>
+        <li class="active" ><a href="/backoffice/elections/{{$election->id}}">{{$election->name}}</a></li>
+        <li class="active" >edit</li>
     </ol>
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <form action="{{action('ElectionController@update',['id'=>$election->id])}}" method="post"
-              enctype="multipart/form-data">
+        <form action="{{action('ElectionController@update',['id'=>$election->id])}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
             {{csrf_field()}}
             <div class="form-group">
@@ -38,12 +37,10 @@
                     <label for="startDate">Start time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input value="{{date("Y-m-d", strtotime($election->startDate))}}" type="date"
-                                   class="form-control col-xs-5" id="startDate" name="startDate">
+                            <input value="{{date("Y-m-d", strtotime($election->startDate))}}" type="date" class="form-control col-xs-5" id="startDate" name="startDate">
                         </div>
                         <div class="col-xs-6">
-                            <input value="{{date("H:i", strtotime($election->startDate))}}" type="time"
-                                   class="form-control col-xs-5" id="startTime" name="startTime">
+                            <input value="{{date("H:i", strtotime($election->startDate))}}" type="time" class="form-control col-xs-5" id="startTime" name="startTime">
                         </div>
                     </div>
                 </div>
@@ -51,13 +48,11 @@
                     <label for="endDate">End time</label>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input value="{{date("Y-m-d", strtotime($election->endDate))}}" type="date"
-                                   class="form-control col-xs-5" id="endDate" name="endDate">
+                            <input value="{{date("Y-m-d", strtotime($election->endDate))}}" type="date" class="form-control col-xs-5" id="endDate" name="endDate">
                         </div>
 
                         <div class="col-xs-6">
-                            <input value="{{date("H:i", strtotime($election->endDate))}}" type="time"
-                                   class="form-control col-xs-5" id="endTime" name="endTime">
+                            <input value="{{date("H:i", strtotime($election->endDate))}}" type="time" class="form-control col-xs-5" id="endTime" name="endTime">
                         </div>
                     </div>
                 </div>
@@ -71,17 +66,17 @@
                 <input type="file" class="form-control" id="imgUpload" name="imgUpload" accept="image/*"/>
             </div>
             {{--<div class="form-group">--}}
-            {{--<div class="checkbox">--}}
-            {{--@if($election->published!= false)--}}
-            {{--<label><input type="checkbox" id="published" name="published" checked>published</label>--}}
-            {{--@else--}}
-            {{--<label><input type="checkbox" id="published" name="published">published</label>--}}
-            {{--@endif--}}
-            {{--</div>--}}
+                {{--<div class="checkbox">--}}
+                    {{--@if($election->published!= false)--}}
+                        {{--<label><input type="checkbox" id="published" name="published" checked>published</label>--}}
+                    {{--@else--}}
+                        {{--<label><input type="checkbox" id="published" name="published">published</label>--}}
+                    {{--@endif--}}
+                {{--</div>--}}
             {{--</div>--}}
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">edit</button>
-                <button type="reset" class="btn btn-danger">reset</button>
+                <button type="reset"  class="btn btn-danger">reset</button>
             </div>
         </form>
     </div>

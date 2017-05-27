@@ -5,7 +5,6 @@ use App\Models\Election;
 use \App\Models\Candidate_election;
 use App\Models\Vote;
 use Carbon\Carbon;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -54,8 +53,8 @@ Route::group([
             'edit',
         ]
     ];
-    Route::get('user', function (Request $request) {
-        return Auth::guard('api')->user();
+    Route::get('user', function(Request $request) {
+        return 	Auth::guard('api')->user();
     });
 //    Route::resource('votes', 'VoteController', $options);
 });
