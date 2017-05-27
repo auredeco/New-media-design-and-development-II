@@ -13347,12 +13347,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            dutch: ''
-        };
-    },
-
     filters: {
         capitalize: function capitalize(value) {
             if (!value) return '';
@@ -13423,17 +13417,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }
     },
-    mounted: function mounted() {
-        this.dutch = this.dutchify(this.$route.name);
-    },
-
-    watch: {
-        '$route.params.name': function $routeParamsName(newName, oldName) {
-            this.dutch = this.dutchify(newName);
-            console.log(newName);
-            console.log(oldName);
-        }
-    }
+    mounted: function mounted() {}
 });
 
 /***/ }),

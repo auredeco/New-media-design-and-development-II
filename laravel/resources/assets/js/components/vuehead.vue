@@ -12,12 +12,6 @@
 </template>
 <script>
     export default{
-
-        data(){
-            return{
-                dutch: '',
-            }
-        },
         filters: {
             capitalize: function (value) {
                 if (!value) return ''
@@ -76,14 +70,7 @@
             }
         },
         mounted() {
-            this.dutch = this.dutchify(this.$route.name);
-        },
-        watch: {
-            '$route.params.name'(newName, oldName) {
-               this.dutch =  this.dutchify(newName)
-                console.log(newName);
-                console.log(oldName);
         }
-    }
+
     }
 </script>
