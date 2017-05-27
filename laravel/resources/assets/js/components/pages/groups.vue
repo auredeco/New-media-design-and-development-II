@@ -42,14 +42,15 @@
         },
 
         methods: {
+            /**get all groups*/
             loadData: function () {
                 this.axios.get('/api/groups').then((response) => {
                     this.items = response.data;
-                    console.log(this.items);
                 this.stopLoading();
 
             });
             },
+            /**stop the loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

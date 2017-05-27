@@ -10623,6 +10623,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_23_vue
 
 window.axios = __webpack_require__(2);
 
+/**set default header of axios with authorization api token*/
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
@@ -11662,6 +11663,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /**load current user and groups*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -11676,12 +11678,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     email: user.email,
                     picture: user.pictureUri
                 };
-                console.log(_this.groups);
-                console.log(_this.user);
-                console.log(response.data);
+
                 _this.stopLoading();
             });
         },
+        /**load authenticated user*/
         loadUserData: function loadUserData() {
             var _this2 = this;
 
@@ -11689,6 +11690,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(response.data.id);
             });
         },
+        /** stop the loadin animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -11741,6 +11743,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /** get elections and parties*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -11753,6 +11756,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.parties = response.data;
             });
         },
+        /** get current userdata*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
@@ -11761,22 +11765,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(electionId);
             });
         },
+        /** register a new candidate*/
         register: function register() {
             var _this3 = this;
 
-            console.log(this.election.id);
-            console.log(this.party);
-            console.log(this.user.id);
             this.axios.post('api/candidates/', {
                 election_id: this.election.id,
                 user_id: this.user.id,
                 party_id: this.party
 
             }).then(function (response) {
-                console.log(response.data);
                 _this3.$router.push({ name: 'election', params: { id: _this3.$route.params.id } });
             });
         },
+        /**check if user is registerd already*/
         checkReg: function checkReg() {
             var candidates = this.election.candidates;
 
@@ -11784,12 +11786,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (var i = 0; i < candidates.length; i++) {
 
                 if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
-                    console.log("nope");
                     self.$router.push({ name: 'election', params: { id: self.$route.params.id } });
                 }
             }
         },
 
+        /** stop the loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -11885,6 +11887,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /** get current election and userdata*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
@@ -11894,23 +11897,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.empty = true;
                 }
                 _this.axios.get('/api/users/' + userId).then(function (response) {
-                    console.log(response.data);
                     _this.user = response.data;
                     _this.checkReg();
                     _this.checkStatus();
-                    console.log(_this.empty);
                 });
             });
         },
+        /** get authenticated user data*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
             this.axios.get('api/user').then(function (response) {
                 //                    this.user = response.data;
-                console.log(response.data);
                 _this2.loadData(electionId, response.data.id);
             });
         },
+        /**check if user is listed as candidate*/
         checkListed: function checkListed() {
             var candidates = this.election.candidates;
             for (var i = 0; i < candidates.length; i++) {
@@ -11920,6 +11922,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.stopLoading();
         },
+
+        /**check if registration is allowed*/
         checkReg: function checkReg() {
             if (new Date() < new Date(this.election.startDate)) {
                 this.reg = true;
@@ -11927,8 +11931,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.reg = false;
             }
         },
-        checkStatus: function checkStatus() {
 
+        /**check elecions status*/
+        checkStatus: function checkStatus() {
             if (new Date() < new Date(this.election.startDate)) {
                 this.status = 'coming';
                 this.checkListed();
@@ -11940,31 +11945,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.drawGraph();
             }
         },
+
+        /** check if user has voted already*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var electionId = self.user.history[i];
-                console.log(electionId.election_id);
                 if (electionId.election_id == self.election.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
                     break;
                 }
             }
             this.stopLoading();
         },
-        back: function back() {
-            this.$router.go(-2);
-        },
 
+        /**stop the loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
                 self.loading = false;
             }, 1500);
         },
+        /**draw result graph*/
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
                 for (var i = 0; i < this.election.candidates.length; i++) {
@@ -11988,9 +11991,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log('Election mounted.');
-
-        console.log(this.$route.params.id);
     }
 });
 
@@ -12032,6 +12032,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /**load current user and election if there are no candidates return to overview*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
@@ -12047,6 +12048,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
+        /**load authenticated user data*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
@@ -12054,16 +12056,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(electionId, response.data.id);
             });
         },
+        /**vote for a candidate the user gets a uuid for verification*/
         vote: function vote(e) {
-            //                console.log(this.election.id);
-            //                console.log(this.user.id);
             if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                 var password = prompt('Geef een wachtwoord op om later je stem te valideren');
-                console.log(e);
                 // get the event and take the id from the element that is clicked
                 // Store it in the candidateElection_id variable
                 var candidateElection_id = e.srcElement.id;
-                console.log(candidateElection_id);
                 var _self = this;
 
                 this.axios.post('api/votes/', {
@@ -12075,38 +12074,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     referendum_id: null,
                     CandidateElection_id: candidateElection_id
                 }).then(function (response) {
-                    console.log(response.data);
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
-                    console.log('redirect');
                     window.location.reload();
                     //
                 }).catch(function (error) {});
             }
         },
+
+        /**check if the user has voted already*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var electionId = self.user.history[i];
-                console.log(electionId.election_id);
                 if (electionId.election_id == self.election.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
                     this.$router.push({ name: 'elections' });
                     break;
                 }
             }
             this.stopLoading();
         },
-        redirect: function redirect() {
-            console.log('redirecting fuck');
 
-            //                window.location.reload();
-            //                this.$router.push({ name: 'election', params: { id: this.election.id }});
-        },
-
+        /**stop the loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12180,18 +12171,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /** get groups*/
         loadData: function loadData(id) {
             var _this = this;
 
             this.axios.get('/api/groups/' + id).then(function (response) {
-                console.log(response.data);
                 _this.userItems = response.data.users;
                 _this.group = response.data.group;
-                console.log(_this.user);
-                console.log(_this.group);
                 _this.checkListed();
             });
         },
+        /**get authenticated user*/
         loadUserData: function loadUserData(groupId) {
             var _this2 = this;
 
@@ -12200,6 +12190,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(groupId);
             });
         },
+        /** join new group*/
         join: function join() {
             self = this;
             self.axios.post('/api/groups/join', {
@@ -12212,7 +12203,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         checkListed: function checkListed() {
             var filtered = _.filter(this.userItems, { 'id': this.user.id });
             filtered.length === 0 ? this.listed = false : this.listed = true;
-            console.log(this.listed);
             this.stopLoading();
         },
 
@@ -12225,7 +12215,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log('Group mounted.');
     }
 });
 
@@ -12304,6 +12293,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /** get groups + current user*/
         loadData: function loadData() {
             var _this = this;
 
@@ -12312,10 +12302,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.axios.get('/api/user/').then(function (response) {
                 _this.user = response.data;
-                console.log(_this.user.id);
                 _this.stopLoading();
             });
         },
+        /**suggest a new referendum*/
         placeNew: function placeNew() {
             var _this2 = this;
 
@@ -12327,7 +12317,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 group_id: this.group,
                 user_id: this.user.id
             }).then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     _this2.status = true;
                     if (confirm("uw referendum werd doorgestuurd")) {
@@ -12337,9 +12326,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.status = false;
                 }
                 _this2.messages = response.data[0];
-                console.log(_this2.messages);
             });
         },
+        /**stop loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12404,6 +12393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /**get parties*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -12414,6 +12404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.stopLoading();
             });
         },
+        /**stop loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12491,11 +12482,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /**get referenda, current referendum and userdata*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
             this.axios.get('/api/referenda').then(function (response) {
-                console.log(_this.referenda);
                 _this.referenda = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
@@ -12509,6 +12500,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
+        /**get authenticated user*/
         loadUserData: function loadUserData(referendumId) {
             var _this2 = this;
 
@@ -12516,6 +12508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(referendumId, response.data.id);
             });
         },
+        /**draw graph on closed referendum*/
         drawGraph: function drawGraph() {
             if (this.referendum.isClosed) {
                 var votes = this.referendum.votes;
@@ -12527,8 +12520,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         this.disagree++;
                     }
                 }
-                console.log(this.agree);
-                console.log(this.disagree);
 
                 var Chartdata = {
                     labels: ['Akkoord', 'Niet Akkoord'],
@@ -12540,17 +12531,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
 
+        /**navigate to the next referendum sorted by enddate*/
         nextReferenda: function nextReferenda() {
             var referendum = this.referendum;
             var index = _.findIndex(this.referenda, function (o) {
                 return o.id == referendum.id;
             });
             this.next = this.referenda[index + 1];
-            console.log(this.next.id);
             this.$router.push({ name: 'referendum', params: { id: this.next.id } });
             //pagina laad niet vanzelf
             window.location.reload();
         },
+        /**vote on the referendum*/
         vote: function vote() {
             var opinion = parseInt(this.opinion);
             var question = "Bent u zeker dat u ";
@@ -12568,26 +12560,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
-                    console.log(response.data);
                     location.reload();
                 }).catch(function (error) {});
             }
         },
+        /**check if user has voted before/*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var referendumId = self.user.history[i];
-                console.log(referendumId.referendum_id);
                 if (referendumId.referendum_id == self.referendum.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
                     break;
                 }
             }
             this.stopLoading();
         },
+        /**stop the loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12597,7 +12587,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log(this.$route.params.id);
     }
 });
 
@@ -12669,6 +12658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /**load current user*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -12683,12 +12673,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     email: user.email,
                     picture: user.pictureUri
                 };
-                console.log(_this.groups);
-                console.log(_this.user);
-                console.log(response.data);
                 _this.stopLoading();
             });
         },
+        /**stop loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12788,6 +12776,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {},
 
     methods: {
+        /**load all elections sorted by enddate*/
         loadData: function loadData() {
             var _this = this;
 
@@ -12799,6 +12788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
+        /**stop teh loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -12808,6 +12798,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
+        /**filter paginated list by keyword or status*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -12815,7 +12806,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.elections.filter(function (election) {
                 if (value == 3) {
                     return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1;
-                    //                        }
                 } else {
                     switch (parseInt(value)) {
                         case 0:
@@ -12843,7 +12833,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.loadData();
-        console.log('Elections mounted.');
     }
 });
 
@@ -12897,15 +12886,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /**get all groups*/
         loadData: function loadData() {
             var _this = this;
 
             this.axios.get('/api/groups').then(function (response) {
                 _this.items = response.data;
-                console.log(_this.items);
                 _this.stopLoading();
             });
         },
+        /**stop the loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -13051,6 +13041,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
     },
 
     methods: {
+        /**load all elections and referenda then slice them*/
         loadData: function loadData() {
             var _this = this;
 
@@ -13067,6 +13058,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
                 _this.Slice();
             });
         },
+        /**slice depending on client width*/
         Slice: function Slice() {
             var clientWidth = document.documentElement.clientWidth;
             if (clientWidth > 1100) {
@@ -13135,6 +13127,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /**load all parties*/
         loadData: function loadData() {
             var _this = this;
 
@@ -13144,6 +13137,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
+        /**stop loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -13153,6 +13147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     computed: {
+        /**filter parites by keyword*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -13232,6 +13227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
+        /**load all referenda sort by enddate*/
         loadData: function loadData() {
             var _this = this;
 
@@ -13242,6 +13238,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.stopLoading();
             });
         },
+        /**stop loading animation*/
         stopLoading: function stopLoading() {
             var self = this;
             setTimeout(function () {
@@ -13250,6 +13247,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     computed: {
+        /**filter referenda by keyword or status*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -13265,7 +13263,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.loadData();
-        console.log('Referenda mounted.');
     }
 });
 
@@ -13355,8 +13352,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        /**genereate dutch name for each routename*/
         dutchify: function dutchify(value) {
-            console.log('dutchify');
             switch (value) {
                 case 'home':
                     {

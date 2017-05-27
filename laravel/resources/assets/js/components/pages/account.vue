@@ -58,8 +58,8 @@
             }
         },
         methods: {
+            /**load current user and groups*/
             loadData: function (id) {
-
                 this.axios.get('/api/users/' + id).then((response) => {
                     let user = response.data;
                     this.groups = user.groups;
@@ -71,18 +71,18 @@
                         email: user.email,
                         picture: user.pictureUri,
                     };
-                    console.log(this.groups);
-                    console.log(this.user);
-                    console.log(response.data);
+
                 this.stopLoading();
 
             });
             },
+            /**load authenticated user*/
             loadUserData: function () {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(response.data.id);
                 });
             },
+            /** stop the loadin animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

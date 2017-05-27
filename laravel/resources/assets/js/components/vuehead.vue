@@ -20,8 +20,8 @@
             }
         },
         methods: {
+            /**genereate dutch name for each routename*/
             dutchify: function (value) {
-                console.log('dutchify');
                 switch (value){
                     case 'home': {
                         return 'Home';

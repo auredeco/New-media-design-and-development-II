@@ -31,6 +31,7 @@
         },
 
         methods: {
+            /**load all parties*/
             loadData() {
                 this.axios.get('/api/parties').then((response) => {
                     this.parties = response.data;
@@ -38,6 +39,7 @@
 
             });
             },
+            /**stop loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
@@ -45,6 +47,7 @@
         },
 
         computed: {
+            /**filter parites by keyword*/
             filterByName() {
                 return this.parties.filter( party => {
                     return party.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && party.isClosed == value;

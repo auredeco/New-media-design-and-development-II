@@ -55,10 +55,10 @@
         },
 
         methods: {
+            /**get referenda, current referendum and userdata*/
             loadData: function (id, userId) {
 
                 this.axios.get('/api/referenda').then((response) => {
-                    console.log(this.referenda);
                     this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
@@ -72,11 +72,13 @@
                     });
                 });
             },
+            /**get authenticated user*/
             loadUserData: function (referendumId) {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(referendumId, response.data.id);
                 });
             },
+            /**draw graph on closed referendum*/
             drawGraph(){
                 if(this.referendum.isClosed)
                 {
@@ -89,8 +91,6 @@
                             this.disagree++
                         }
                     }
-                    console.log(this.agree);
-                    console.log(this.disagree);
 
                     let Chartdata = {
                         labels: ['Akkoord', 'Niet Akkoord'],
@@ -101,15 +101,16 @@
                     this.stopLoading();
                 }
             },
+            /**navigate to the next referendum sorted by enddate*/
             nextReferenda: function ()  {
                 var referendum = this.referendum;
                 var index = _.findIndex(this.referenda, function(o) { return o.id == referendum.id; });
                 this.next = this.referenda[index + 1];
-                console.log(this.next.id);
                 this.$router.push({ name: 'referendum', params: { id: this.next.id }});
                 //pagina laad niet vanzelf
                 window.location.reload()
             },
+            /**vote on the referendum*/
             vote: function () {
                 var opinion = parseInt(this.opinion);
                 var question = "Bent u zeker dat u ";
@@ -130,28 +131,26 @@
                     }).then(function (response) {
                         var vote = response.data;
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
-                        console.log(response.data);
                         location.reload();
                     }).catch(function (error) {
                     });
                 }
             },
+            /**check if user has voted before/*/
             checkVoted: function(){
                 let self = this;
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let referendumId = self.user.history[i];
-                    console.log(referendumId.referendum_id);
                     if(referendumId.referendum_id == self.referendum.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         break;
                     }
                 }
                 this.stopLoading();
 
             },
+            /**stop the loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
@@ -159,7 +158,6 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log(this.$route.params.id);
         }
     }
 </script>
