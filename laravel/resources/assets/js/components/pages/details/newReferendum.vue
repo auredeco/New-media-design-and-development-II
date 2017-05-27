@@ -5,31 +5,31 @@
         <div class="form-field">
             <form @submit.prevent="placeNew">
                 <div class="form-item">
-                    <label for="title">Title</label>
+                    <label for="title">Titel</label>
                     <input  type="text" id="title" name="title" v-model="title" required>
                 </div>
                 <div class="form-item">
-                    <label for="group">Group</label>
+                    <label for="group">Groep</label>
                     <select id="group" name="group" v-model="group" required>
                         <option v-for="group in groups" :value="group.id">{{group.name}}</option>
                     </select>
                 </div>
                 <div class="form-item">
-                    <label for="startTime">Start time</label>
+                    <label for="startTime">Start tijd</label>
                     <div class="group">
                         <input  type="date" id="startDate" name="startDate" v-model="startDate" required>
                         <input  type="time" id="startTime" name="startTime" v-model="startTime" required>
                     </div>
                 </div>
                 <div class="form-item">
-                    <label for="endTime">End time</label>
+                    <label for="endTime">End tijd</label>
                     <div class="group">
                         <input  type="date" id="endDate" name="endDate" v-model="endDate" required>
                         <input  type="time" id="endTime" name="endTime" v-model="endTime" required>
                     </div>
                 </div>
                 <div class="form-item description">
-                    <label for="description">Description</label>
+                    <label for="description">Beschrijving</label>
                     <textarea  type="text" id="description" name="description" v-model="description" required></textarea>
 
                 </div>

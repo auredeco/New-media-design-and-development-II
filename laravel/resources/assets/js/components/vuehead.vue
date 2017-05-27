@@ -6,13 +6,18 @@
                 <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
             </p>
         </figure>
-        <h1>{{this.$route.name | capitalize}}</h1>
+        <h1>{{dutchify(this.$route.name)}}</h1>
     </header>
 
 </template>
 <script>
     export default{
 
+        data(){
+            return{
+                dutch: '',
+            }
+        },
         filters: {
             capitalize: function (value) {
                 if (!value) return ''
@@ -20,5 +25,65 @@
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
         },
+        methods: {
+            dutchify: function (value) {
+                console.log('dutchify');
+                switch (value){
+                    case 'home': {
+                        return 'Home';
+                    }break;
+                    case 'elections': {
+                        return 'Verkiezingen';
+                    }break;
+                    case 'election': {
+                        return 'Verkiezing';
+                    }break;
+                    case 'electionVote': {
+                        return 'Verkiezings stem';
+                    }break;
+                    case 'applyElection': {
+                        return 'Registreer';
+                    }break;
+                    case 'referenda': {
+                        return 'Referenda';
+                    }break;
+                    case 'Referendum': {
+                        return 'Referendum';
+                    }break;
+                    case 'newReferenda': {
+                        return 'Nieuw Referendum';
+                    }break;
+                    case 'groups': {
+                        return 'Groupen';
+                    }break;
+                    case 'group': {
+                        return 'Group';
+                    }break;
+                    case 'parties': {
+                        return 'Partijen';
+                    }break;
+                    case 'party': {
+                        return 'Partij';
+                    }break;
+                    case 'account': {
+                        return 'Account';
+                    }break;
+                    case 'user': {
+                        return 'Gebruiker';
+                    }break;
+                }
+
+            }
+        },
+        mounted() {
+            this.dutch = this.dutchify(this.$route.name);
+        },
+        watch: {
+            '$route.params.name'(newName, oldName) {
+               this.dutch =  this.dutchify(newName)
+                console.log(newName);
+                console.log(oldName);
+        }
+    }
     }
 </script>
