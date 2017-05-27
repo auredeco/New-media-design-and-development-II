@@ -41,6 +41,7 @@
             }
         },
         methods: {
+            /** function that hides nav (pure js)*/
             hideNav(){
                 document.getElementById('mobile-nav').className= "is-closed";
             }

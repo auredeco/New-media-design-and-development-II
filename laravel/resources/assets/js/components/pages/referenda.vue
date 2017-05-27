@@ -56,6 +56,7 @@
         },
 
         methods: {
+            /** function that loads all referenda and sorts by end date */
             loadData: function () {
                 this.axios.get('/api/referenda').then((response) => {
                     this.referenda = response.data.all.sort(function(a,b) {
@@ -65,12 +66,14 @@
 
             });
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         computed: {
+            /** function that filters the paginated list with keyword and/or status*/
             filterByName() {
                 return this.referenda.filter( referendum => {
                     if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){

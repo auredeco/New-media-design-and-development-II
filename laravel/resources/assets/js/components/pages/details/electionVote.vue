@@ -29,8 +29,8 @@
         },
 
         methods: {
+            /** function that loads current election and user*/
             loadData: function (id, userId) {
-
                 this.axios.get('/api/users/' + userId).then((response) => {
                     this.user = response.data;
                     this.axios.get('/api/elections/' + id).then((response) => {
@@ -43,14 +43,14 @@
                     });
                 });
             },
+            /** function that loads current user*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(electionId, response.data.id);
                 });
             },
+            /** function for voting on a candidate as response the user gets the uuid to check his vote*/
             vote(e) {
-//                console.log(this.election.id);
-//                console.log(this.user.id);
                 if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                     var password = prompt('Geef een wachtwoord op om later je stem te valideren');
                     console.log(e);
@@ -74,12 +74,11 @@
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
                         console.log('redirect');
                         window.location.reload();
-//
-
                     }).catch(function (error) {
                     });
                 }
             },
+            /** function to check if the current user has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
@@ -96,13 +95,7 @@
                 }
                 this.stopLoading();
             },
-            redirect() {
-                console.log('redirecting fuck');
-
-//                window.location.reload();
-//                this.$router.push({ name: 'election', params: { id: this.election.id }});
-
-            },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

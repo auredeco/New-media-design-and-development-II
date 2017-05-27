@@ -134,6 +134,7 @@
             };
         },
         methods: {
+            /** function that loads all elections and referenda sorts by endDate and slices to get 3 or 5 */
             loadData: function () {
                 Vue.axios.get('/api/elections').then((response) => {
                     this.elections = response.data.all.sort(function(a,b) {
@@ -148,6 +149,7 @@
                     this.Slice();
                 })
             },
+            /** function that slices array of elements in 3 or 5 depending on screensize*/
             Slice: function(){
                let clientWidth = document.documentElement.clientWidth;
                if(clientWidth > 1100) {
@@ -160,6 +162,7 @@
                    this.stopLoading();
                }
             },
+            /** function that sets the variable loading to false after 3 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 3000);

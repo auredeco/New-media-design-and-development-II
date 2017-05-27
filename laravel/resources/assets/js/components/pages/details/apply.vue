@@ -30,6 +30,7 @@
             }
         },
         methods: {
+            /** function that loads election with specific id  and all parties */
             loadData: function (id) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
@@ -40,12 +41,14 @@
                     this.parties = response.data;
                 });
             },
+            /** function loads current user information */
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
                     this.user = response.data;
                     this.loadData(electionId);
                 });
             },
+            /** function for registering a new candidate*/
             register: function() {
                 console.log(this.election.id);
                 console.log(this.party);
@@ -60,6 +63,7 @@
                     this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
                 });
             },
+            /** function that chekcks if current user is registerd already*/
             checkReg(){
                 let candidates = this.election.candidates;
 
@@ -73,6 +77,7 @@
                 }
 
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

@@ -74,6 +74,7 @@
         },
 
         methods: {
+            /** loads current election and user*/
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
@@ -91,6 +92,7 @@
                 });
 
             },
+            /** function that loads current user*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
 //                    this.user = response.data;
@@ -98,6 +100,7 @@
                     this.loadData(electionId, response.data.id);
                 });
             },
+            /** function that checks if current user is registered as a candidate*/
             checkListed() {
                 let candidates = this.election.candidates;
                 for (let i = 0; i < candidates.length; i++) {
@@ -108,6 +111,7 @@
                 this.stopLoading();
 
             },
+            /** function that checks if registration is open*/
             checkReg(){
                 if(new Date() < new Date(this.election.startDate)){
                     this.reg = true;
@@ -115,6 +119,7 @@
                     this.reg = false;
                 }
             },
+            /** function that checks the status of the election*/
             checkStatus(){
 
                 if(new Date() < new Date(this.election.startDate)){
@@ -130,6 +135,7 @@
                 }
 
             },
+            /** function that checks if the usere has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
@@ -144,14 +150,13 @@
                     }
                 }
                 this.stopLoading();
-            },
-            back() {
-                this.$router.go(-2)
-            },
+            }
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
             },
+            /** function that draws a graph when the election is closed*/
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){

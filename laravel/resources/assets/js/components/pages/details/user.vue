@@ -59,6 +59,7 @@
             }
         },
         methods: {
+            /** function  that loads current user and put's it in a more accessible object*/
             loadData: function (id) {
                 this.axios.get('/api/users/' + id).then((response) => {
                     let user = response.data;
@@ -78,6 +79,7 @@
 
             });
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

@@ -53,6 +53,7 @@
             }
         },
         methods: {
+            /** function to get current group*/
             loadData: function (id) {
                 this.axios.get('/api/groups/' + id).then((response) => {
                     console.log(response.data);
@@ -63,25 +64,26 @@
                     this.checkListed();
                 });
             },
+            /** function to get current user*/
             loadUserData: function (groupId) {
                 this.axios.get('/api/user').then((response) => {
                     this.user = response.data;
                     this.loadData(groupId);
                 });
             },
+            /** function to join group*/
             join: function() {
                 self = this;
                 self.axios.post('/api/groups/join',{
                     group_id: self.group.id,
                     user_id: self.user.id,
-
-
                 }).then((response) => {
 
             });
                 window.location.reload()
 
             },
+            /** function to check if current user is listed*/
             checkListed() {
                 let filtered = _.filter(this.userItems, { 'id': this.user.id});
                 (filtered.length === 0)?this.listed = false : this.listed = true;
@@ -90,6 +92,7 @@
 
 
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

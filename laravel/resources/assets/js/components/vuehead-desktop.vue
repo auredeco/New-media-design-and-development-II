@@ -41,6 +41,7 @@
 <script>
     export default{
 
+        /** Filter to capitalize*/
         filters: {
             capitalize: function (value) {
                 if (!value) return ''

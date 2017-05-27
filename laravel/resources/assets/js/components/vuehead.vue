@@ -13,6 +13,7 @@
 <script>
     export default{
         filters: {
+            /** Filter to capitalize*/
             capitalize: function (value) {
                 if (!value) return ''
                 value = value.toString()
@@ -20,6 +21,7 @@
             }
         },
         methods: {
+            /** funcion that gives dutch name for a given route name */
             dutchify: function (value) {
                 console.log('dutchify');
                 switch (value){

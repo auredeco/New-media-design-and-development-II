@@ -55,6 +55,7 @@
         },
 
         methods: {
+            /** function that loads current referendum, all referenda and current user */
             loadData: function (id, userId) {
 
                 this.axios.get('/api/referenda').then((response) => {
@@ -72,11 +73,13 @@
                     });
                 });
             },
+            /** function to load current user data*/
             loadUserData: function (referendumId) {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(referendumId, response.data.id);
                 });
             },
+            /** function that draws graph if referendum is closed*/
             drawGraph(){
                 if(this.referendum.isClosed)
                 {
@@ -101,6 +104,7 @@
                     this.stopLoading();
                 }
             },
+            /** function that goes to next referenda (sorted by endDate in load function */
             nextReferenda: function ()  {
                 var referendum = this.referendum;
                 var index = _.findIndex(this.referenda, function(o) { return o.id == referendum.id; });
@@ -110,6 +114,7 @@
                 //pagina laad niet vanzelf
                 window.location.reload()
             },
+            /** function to vote on a referendum user gets a response with the uuid*/
             vote: function () {
                 var opinion = parseInt(this.opinion);
                 var question = "Bent u zeker dat u ";
@@ -136,6 +141,7 @@
                     });
                 }
             },
+            /** function to check if user has voted*/
             checkVoted: function(){
                 let self = this;
                 let history = self.user.history;
@@ -152,6 +158,7 @@
                 this.stopLoading();
 
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
