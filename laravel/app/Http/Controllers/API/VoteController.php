@@ -28,7 +28,7 @@ class VoteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,13 +49,8 @@ class VoteController extends Controller
 
         $vote->checksum = $request->input('checksum');
         $vote->voteType = $request->input('voteType');
-//        $vote->agreed = intval($request->input('agreed'));
-//        $vote->referendum_id = $request->input('referendum_id');
-//        $vote->CandidateElection_id = $request->input('CandidateElection_id');
 
-
-        if(intval($vote->voteTye) === 0)
-        {
+        if (intval($vote->voteTye) === 0) {
             $vote->agreed = null;
             $vote->referendum_id = null;
             $vote->CandidateElection_id = $request->input('CandidateElection_id');
@@ -71,10 +66,8 @@ class VoteController extends Controller
         $data = $vote->getAttributes();
         ksort($data);
 
-        $value = hash('sha512', (json_encode($data)).$vote->checksum);
-        // \Log::debug([$data, $value]);
+        $value = hash('sha512', (json_encode($data)) . $vote->checksum);
         $vote->checksum = $value;
-//        dd($history);
 
         $vote->save();
         $history = new History();
@@ -83,19 +76,13 @@ class VoteController extends Controller
         $history->referendum_id = $request->input('referendum_id');
         $history->save();
 
-
-//        $object = (object) [
-//            'all' => $data,
-//            'open' => $history,
-//        ];
-//        return response()->json($object);
         return $data;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -106,8 +93,8 @@ class VoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -118,7 +105,7 @@ class VoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

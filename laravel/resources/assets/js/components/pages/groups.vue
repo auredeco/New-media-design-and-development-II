@@ -1,6 +1,6 @@
 <template>
     <div id="groups" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <h1>Groepen</h1>
         <paginate-links for="items"></paginate-links>
         <paginate
@@ -42,23 +42,26 @@
         },
 
         methods: {
+            /** function loads all grops*/
             loadData: function () {
-                this.axios.get('/api/groups').then((response) => {
+                this.axios.get('/api/groups').then((response) = > {
                     this.items = response.data;
-                    console.log(this.items);
                 this.stopLoading();
 
-            });
+            })
+                ;
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
 
         mounted() {
             this.loadData();
-            console.log('Referenda mounted.');
         }
     }
 </script>

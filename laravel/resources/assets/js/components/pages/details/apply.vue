@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="form-field">
             <form @submit.prevent="register">
                 <div class="form-item">
                     <h1>Kandidatuur</h1>
                     <label for="party">partij:</label>
-                    <select id="party" name="party" v-model="party" required >
+                    <select id="party" name="party" v-model="party" required>
                         <option v-for="party in parties" :value="party.id">{{party.name}}</option>
                     </select>
                     <div class="button-field">
@@ -25,11 +25,12 @@
                 election: [],
                 party: null,
                 parties: [],
-                user : [],
+                user: [],
                 loading: true,
             }
         },
         methods: {
+            /** function that loads election with specific id  and all parties */
             loadData: function (id) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
@@ -40,42 +41,43 @@
                     this.parties = response.data;
                 });
             },
+            /** function loads current user information */
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
                     this.user = response.data;
                     this.loadData(electionId);
                 });
             },
-            register: function() {
-                console.log(this.election.id);
-                console.log(this.party);
-                console.log(this.user.id);
-                this.axios.post('api/candidates/',{
+            /** function for registering a new candidate*/
+            register: function () {
+                this.axios.post('api/candidates/', {
                     election_id: this.election.id,
                     user_id: this.user.id,
-                    party_id:  this.party,
+                    party_id: this.party,
 
                 }).then((response) => {
-                    console.log(response.data);
-                    this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
+                    this.$router.push({name: 'election', params: {id: this.$route.params.id}});
                 });
             },
+            /** function that chekcks if current user is registerd already*/
             checkReg(){
                 let candidates = this.election.candidates;
 
                 self = this;
                 for (let i = 0; i < candidates.length; i++) {
 
-                    if(self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)){
-                            console.log("nope");
-                        self.$router.push({ name: 'election', params: { id: self.$route.params.id }});
+                    if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
+                        self.$router.push({name: 'election', params: {id: self.$route.params.id}});
                     }
                 }
 
             },
+            /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

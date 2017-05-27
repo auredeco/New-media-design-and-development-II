@@ -1,13 +1,13 @@
 @extends('master')
 @section('title')
-        {{ ucfirst(trans($user->username))}}
+    {{ ucfirst(trans($user->username))}}
 @endsection
 
 @section('breadcrumb')
-        <ol class="breadcrumb">
-                <li><a href="/backoffice/users">Users</a></li>
-                <li class="active" ><a href="/backoffice/users/{{$user->id}}">{{$user->name}}</a></li>
-        </ol>
+    <ol class="breadcrumb">
+        <li><a href="/backoffice/users">Users</a></li>
+        <li class="active"><a href="/backoffice/users/{{$user->id}}">{{$user->name}}</a></li>
+    </ol>
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-3">

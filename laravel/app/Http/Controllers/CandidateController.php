@@ -30,7 +30,7 @@ class CandidateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +41,7 @@ class CandidateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,7 +52,7 @@ class CandidateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -63,8 +63,8 @@ class CandidateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +75,7 @@ class CandidateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -83,22 +83,39 @@ class CandidateController extends Controller
         //
     }
 
-    public function approve($election, $candidate) {
+    /**
+     * @param $election
+     * @param $candidate
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
+     * Function that approves a candidate
+     */
+    public function approve($election, $candidate)
+    {
 
         $candidateElection = Candidate_election::where('candidate_id', $candidate)
             ->where('election_id', $election)->first();
         $candidateElection->approved = true;
         $candidateElection->save();
 
-        return redirect('/backoffice/elections/'.$election);
+        return redirect('/backoffice/elections/' . $election);
     }
-    public function unapprove($election, $candidate) {
+
+    /**
+     * @param $election
+     * @param $candidate
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
+     * Function that unapproves a candidate
+     */
+    public function unapprove($election, $candidate)
+    {
 
         $candidateElection = Candidate_election::where('candidate_id', $candidate)
             ->where('election_id', $election)->first();
         $candidateElection->approved = false;
         $candidateElection->save();
 
-        return redirect('/backoffice/elections/'.$election);
+        return redirect('/backoffice/elections/' . $election);
     }
 }

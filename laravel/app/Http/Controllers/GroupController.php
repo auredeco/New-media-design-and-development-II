@@ -12,6 +12,7 @@ class GroupController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * function returns $query depending on the given keyword
      */
     public function index(Request $request)
     {
@@ -21,12 +22,13 @@ class GroupController extends Controller
         if ($keyword != '') {
 
 
-            switch (strtolower($keyword)){
-                case 'all':{
+            switch (strtolower($keyword)) {
+                case 'all': {
                     $groups = Group::latest()->paginate(10);
                     $groups->withPath('groups?keyword=all');
 
-                }break;
+                }
+                    break;
 
 
                 default : {
@@ -34,9 +36,7 @@ class GroupController extends Controller
                     $groups->withPath('groups?keyword=' . strtolower($keyword));
                 }
             }
-        }
-        else
-        {
+        } else {
             $groups = Group::latest()->paginate(10);
             $groups->withPath('groups?keyword=all');
 
@@ -59,7 +59,7 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -77,11 +77,10 @@ class GroupController extends Controller
         $group->description = request('description');
         $group->pictureUri = "";
         $group->save();
-        if($request->hasFile('imgUpload'))
-        {
-            $request->file('imgUpload')->storeAs('group-images', 'group'.$group->id.'.jpg');
+        if ($request->hasFile('imgUpload')) {
+            $request->file('imgUpload')->storeAs('group-images', 'group' . $group->id . '.jpg');
         }
-        $group->pictureUri = url('/').'/storage/group-images/group'.$group->id.'.jpg';
+        $group->pictureUri = url('/') . '/storage/group-images/group' . $group->id . '.jpg';
         $group->save();
         return redirect('/backoffice/groups');
     }
@@ -89,7 +88,7 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -107,7 +106,7 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -120,8 +119,8 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -132,23 +131,22 @@ class GroupController extends Controller
             'pictureUri' => 'image'
         ]);
 
-        if($request->hasFile('imgUpload'))
-        {
-            $request->file('imgUpload')->storeAs('group-images', 'group'.$id.'.jpg');
+        if ($request->hasFile('imgUpload')) {
+            $request->file('imgUpload')->storeAs('group-images', 'group' . $id . '.jpg');
         }
 
         Group::find($id)->update([
             'name' => request('name'),
             'description' => request('description'),
-            'pictureUri' => url('/').'/storage/group-images/group'.$id.'.jpg'
+            'pictureUri' => url('/') . '/storage/group-images/group' . $id . '.jpg'
         ]);
-        return redirect('/backoffice/groups/'.$id);
+        return redirect('/backoffice/groups/' . $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

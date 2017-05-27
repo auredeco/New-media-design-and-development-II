@@ -56,18 +56,57 @@ class Referendum extends Model
     {
         return $this->hasMany(Vote::class);
     }
+
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     *
+     * Filter function that returns query from database by given keyword
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
-        if ($keyword!='') {
+        if ($keyword != '') {
             $query->where(function ($query) use ($keyword) {
-                $query->where("title", "LIKE","%$keyword%")
+                $query->where("title", "LIKE", "%$keyword%")
                     ->orWhere("description", "LIKE", "%$keyword%");
             });
         }
         return $query;
     }
 
-    public function scopeWhereOpen($query){
+    /**
+     * @param $query
+     *
+     * Function that returns every referendum that has a start date lower and a end date higer than today
+     * and changes its status to not closed when the original is closed
+     */
+    public function scopeWhereOpen($query)
+    {
+        $open = $query
+            ->where('startDate', '<', Carbon::now())
+            ->where('endDate', '>', Carbon::now());
+
+        foreach ($open->get() as $referendum) {
+            $original = $referendum->isClosed;
+
+            if ($original) {
+                $referendum->isClosed = false;
+                $referendum->save();
+            }
+
+        }
+        return $open;
+    }
+
+    /**
+     * @param $query
+     *
+     * Function that returns every election that has a start date lower and a end date higher than today
+     * and changes its status to not closed
+     */
+    public function scopeWhereOpenInit($query)
+    {
         $open = $query
             ->where('startDate', '<', Carbon::now())
             ->where('endDate', '>', Carbon::now());
@@ -75,22 +114,42 @@ class Referendum extends Model
         foreach ($open->get() as $referendum) {
             $referendum->isClosed = false;
             $referendum->save();
-        }
-        return $open;
-    }
-    public function scopeWhereOpenInit($query){
-        $open = $query
-            ->where('startDate', '<', Carbon::now())
-            ->where('endDate', '>', Carbon::now());
-
-        foreach ($open->get() as $referendum) {
-            $referendum->isClosed = false;
-            $referendum->save();
 
         }
         return $open;
     }
-    public function scopeWhereClosed($query){
+
+    /**
+     * @param $query
+     *
+     * Function that returns every referendum that has an end date lower than today
+     * and changes its status to to closed if original is not closed
+     *
+     */
+    public function scopeWhereClosed($query)
+    {
+        $closed = $query
+            ->where('endDate', '<', Carbon::now());
+
+        foreach ($closed->get() as $referendum) {
+            $original = $referendum->isClosed;
+            if (!$original) {
+                $referendum->isClosed = true;
+                $referendum->save();
+            }
+        }
+        return $closed;
+    }
+
+    /**
+     * @param $query
+     *
+     * Function that returns every referendum that has an end date lower than today
+     * and changes its status to to closed
+     *
+     */
+    public function scopeWhereClosedInit($query)
+    {
         $closed = $query
             ->where('endDate', '<', Carbon::now());
 
@@ -100,20 +159,26 @@ class Referendum extends Model
         }
         return $closed;
     }
-    public function scopeWhereClosedInit($query){
-        $closed = $query
-            ->where('endDate', '<', Carbon::now());
 
-        foreach ($closed->get() as $referendum) {
-            $referendum->isClosed = true;
-            $referendum->save();
-        }
-        return $closed;
-    }
-    public function scopeWherePublished($query){
+    /**
+     * @param $query
+     *
+     * Function that returns every referendum that has a published date
+     *
+     */
+    public function scopeWherePublished($query)
+    {
         return $query->whereNotNull('published');
     }
-    public function scopeWhereUnpublished($query){
+
+    /**
+     * @param $query
+     *
+     * Function that returns every referendum that doesn't have a published date
+     *
+     */
+    public function scopeWhereUnpublished($query)
+    {
         return $query->whereNull('published');
     }
 }

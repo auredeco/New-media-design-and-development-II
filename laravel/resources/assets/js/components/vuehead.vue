@@ -13,6 +13,7 @@
 <script>
     export default{
         filters: {
+            /** Filter to capitalize*/
             capitalize: function (value) {
                 if (!value) return ''
                 value = value.toString()
@@ -20,51 +21,65 @@
             }
         },
         methods: {
+            /** funcion that gives dutch name for a given route name */
             dutchify: function (value) {
-                console.log('dutchify');
-                switch (value){
+                switch (value) {
                     case 'home': {
                         return 'Home';
-                    }break;
+                    }
+                        break;
                     case 'elections': {
                         return 'Verkiezingen';
-                    }break;
+                    }
+                        break;
                     case 'election': {
                         return 'Verkiezing';
-                    }break;
+                    }
+                        break;
                     case 'electionVote': {
                         return 'Verkiezings stem';
-                    }break;
+                    }
+                        break;
                     case 'applyElection': {
                         return 'Registreer';
-                    }break;
+                    }
+                        break;
                     case 'referenda': {
                         return 'Referenda';
-                    }break;
+                    }
+                        break;
                     case 'Referendum': {
                         return 'Referendum';
-                    }break;
+                    }
+                        break;
                     case 'newReferenda': {
                         return 'Nieuw Referendum';
-                    }break;
+                    }
+                        break;
                     case 'groups': {
                         return 'Groupen';
-                    }break;
+                    }
+                        break;
                     case 'group': {
                         return 'Group';
-                    }break;
+                    }
+                        break;
                     case 'parties': {
                         return 'Partijen';
-                    }break;
+                    }
+                        break;
                     case 'party': {
                         return 'Partij';
-                    }break;
+                    }
+                        break;
                     case 'account': {
                         return 'Account';
-                    }break;
+                    }
+                        break;
                     case 'user': {
                         return 'Gebruiker';
-                    }break;
+                    }
+                        break;
                 }
 
             }
