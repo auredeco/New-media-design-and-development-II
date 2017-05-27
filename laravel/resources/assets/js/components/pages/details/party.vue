@@ -43,6 +43,7 @@
             }
         },
         methods: {
+            /**get parties*/
             loadData: function (id) {
                 this.axios.get('/api/parties/' + id).then((response) => {
                     console.log(response.data);
@@ -52,6 +53,7 @@
 
                 });
             },
+            /**stop loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);

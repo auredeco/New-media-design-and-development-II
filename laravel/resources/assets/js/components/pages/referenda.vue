@@ -56,6 +56,7 @@
         },
 
         methods: {
+            /**load all referenda sort by enddate*/
             loadData: function () {
                 this.axios.get('/api/referenda').then((response) => {
                     this.referenda = response.data.all.sort(function(a,b) {
@@ -65,12 +66,14 @@
 
             });
             },
+            /**stop loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         computed: {
+            /**filter referenda by keyword or status*/
             filterByName() {
                 return this.referenda.filter( referendum => {
                     if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){
@@ -84,7 +87,6 @@
         },
         mounted() {
             this.loadData();
-            console.log('Referenda mounted.');
         }
     }
 </script>

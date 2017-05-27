@@ -33,6 +33,7 @@ Vue.use(VueLodash, lodash)
 window.axios = require('axios');
 
 
+/**set default header of axios with authorization api token*/
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',

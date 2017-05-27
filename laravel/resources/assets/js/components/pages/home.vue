@@ -134,6 +134,7 @@
             };
         },
         methods: {
+            /**load all elections and referenda then slice them*/
             loadData: function () {
                 Vue.axios.get('/api/elections').then((response) => {
                     this.elections = response.data.all.sort(function(a,b) {
@@ -148,6 +149,7 @@
                     this.Slice();
                 })
             },
+            /**slice depending on client width*/
             Slice: function(){
                let clientWidth = document.documentElement.clientWidth;
                if(clientWidth > 1100) {

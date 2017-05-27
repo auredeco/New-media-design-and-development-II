@@ -74,6 +74,7 @@
         },
 
         methods: {
+            /** get current election and userdata*/
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
@@ -81,23 +82,22 @@
                         this.empty = true;
                     }
                     this.axios.get('/api/users/' + userId).then((response) => {
-                        console.log(response.data);
                         this.user = response.data;
                         this.checkReg();
                         this.checkStatus();
-                        console.log(this.empty);
 
                     });
                 });
 
             },
+            /** get authenticated user data*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
 //                    this.user = response.data;
-                    console.log(response.data);
                     this.loadData(electionId, response.data.id);
                 });
             },
+            /**check if user is listed as candidate*/
             checkListed() {
                 let candidates = this.election.candidates;
                 for (let i = 0; i < candidates.length; i++) {
@@ -108,6 +108,7 @@
                 this.stopLoading();
 
             },
+            /**check if registration is allowed*/
             checkReg(){
                 if(new Date() < new Date(this.election.startDate)){
                     this.reg = true;
@@ -115,8 +116,8 @@
                     this.reg = false;
                 }
             },
+            /**check elecions status*/
             checkStatus(){
-
                 if(new Date() < new Date(this.election.startDate)){
                     this.status = 'coming';
                     this.checkListed();
@@ -130,28 +131,25 @@
                 }
 
             },
+            /** check if user has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    console.log(electionId.election_id);
                     if(electionId.election_id == self.election.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         break;
                     }
                 }
                 this.stopLoading();
             },
-            back() {
-                this.$router.go(-2)
-            },
+            /**stop the loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
             },
+            /**draw result graph*/
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){
@@ -175,9 +173,6 @@
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Election mounted.');
-
-            console.log(this.$route.params.id);
         }
     }
 </script>

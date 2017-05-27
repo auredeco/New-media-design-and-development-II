@@ -17,10 +17,21 @@ class Party extends Model
      */
     protected $dates = ['deleted_at'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function candidates()
     {
         return $this->hasMany(Candidate::class);
     }
+
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     *
+     * return query from keyword search in db
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {

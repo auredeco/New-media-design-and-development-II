@@ -66,17 +66,18 @@
             }
         },
         methods: {
+            /** get groups + current user*/
             loadData: function () {
                 this.axios.get('/api/groups/').then((response) => {
                     this.groups = response.data;
                 });
                 this.axios.get('/api/user/').then((response) => {
                     this.user = response.data;
-                    console.log(this.user.id);
                 this.stopLoading();
 
             });
             },
+            /**suggest a new referendum*/
             placeNew: function () {
                 this.axios.post('api/referenda/',{
                     title: this.title,
@@ -86,7 +87,6 @@
                     group_id: this.group,
                     user_id: this.user.id
                 }).then((response) => {
-                    console.log(response);
                     if(response.status === 200){
                         this.status = true;
                         if(confirm("uw referendum werd doorgestuurd")){
@@ -97,9 +97,9 @@
                         this.status = false;
                     }
                     this.messages = response.data[0];
-                    console.log(this.messages);
                 });
             },
+            /**stop loading animation*/
             stopLoading: function () {
                 let self = this;
                 setTimeout(function(){ self.loading = false; }, 1500);
