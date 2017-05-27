@@ -28,7 +28,7 @@
                     <h1>{{referendum.title}}</h1>
                     <p>{{referendum.description}}</p>
                     <p>Status:
-                        <span class="closed"v-if="referendum.isClosed">Closed</span>
+                        <span class="closed"v-if="referendum.isClosed">Gesloten</span>
                         <span class="open"v-else >Open</span>
                     </p>
                     <p class="read-more">

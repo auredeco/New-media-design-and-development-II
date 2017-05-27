@@ -10,7 +10,7 @@
             <p v-if="!referendum.isClosed">
                 eindigd op : {{referendum.endDate}}
             </p>
-            <h2>Description:</h2>
+            <h2>Beschrijving:</h2>
             <p>{{referendum.description}}</p>
             <div v-if="referendum.isClosed">
                 <h2>Resultaat</h2>

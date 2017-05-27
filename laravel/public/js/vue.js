@@ -13347,14 +13347,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
     filters: {
         capitalize: function capitalize(value) {
             if (!value) return '';
             value = value.toString();
             return value.charAt(0).toUpperCase() + value.slice(1);
         }
-    }
+    },
+    methods: {
+        dutchify: function dutchify(value) {
+            console.log('dutchify');
+            switch (value) {
+                case 'home':
+                    {
+                        return 'Home';
+                    }break;
+                case 'elections':
+                    {
+                        return 'Verkiezingen';
+                    }break;
+                case 'election':
+                    {
+                        return 'Verkiezing';
+                    }break;
+                case 'electionVote':
+                    {
+                        return 'Verkiezings stem';
+                    }break;
+                case 'applyElection':
+                    {
+                        return 'Registreer';
+                    }break;
+                case 'referenda':
+                    {
+                        return 'Referenda';
+                    }break;
+                case 'Referendum':
+                    {
+                        return 'Referendum';
+                    }break;
+                case 'newReferenda':
+                    {
+                        return 'Nieuw Referendum';
+                    }break;
+                case 'groups':
+                    {
+                        return 'Groupen';
+                    }break;
+                case 'group':
+                    {
+                        return 'Group';
+                    }break;
+                case 'parties':
+                    {
+                        return 'Partijen';
+                    }break;
+                case 'party':
+                    {
+                        return 'Partij';
+                    }break;
+                case 'account':
+                    {
+                        return 'Account';
+                    }break;
+                case 'user':
+                    {
+                        return 'Gebruiker';
+                    }break;
+            }
+        }
+    },
+    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -34666,7 +34729,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("elections")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Verkiezing")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-comments",
     attrs: {
       "aria-hidden": "true"
@@ -34700,7 +34763,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Groepen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
@@ -34717,7 +34780,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Partijen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
@@ -34734,7 +34797,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("account")])], 1)])])
+  }, [_vm._v("Account")])], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('header', [_c('img', {
     attrs: {
@@ -34864,7 +34927,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "closed"
   }, [_vm._v("Closed")]) : _c('span', {
     staticClass: "open"
-  }, [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
+  }, [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Beschrijving:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
     model: {
       value: (_vm.agree),
       callback: function($$v) {
@@ -34966,7 +35029,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('header', {
     staticClass: "main-header"
-  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
+  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.dutchify(this.$route.name)))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', [_c('p', {
     attrs: {
@@ -35295,7 +35358,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "referendum"
     }, [_c('h1', [_vm._v(_vm._s(referendum.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(referendum.description))]), _vm._v(" "), _c('p', [_vm._v("Status:\n                    "), (referendum.isClosed) ? _c('span', {
       staticClass: "closed"
-    }, [_vm._v("Closed")]) : _c('span', {
+    }, [_vm._v("Gesloten")]) : _c('span', {
       staticClass: "open"
     }, [_vm._v("Open")])]), _vm._v(" "), _c('p', {
       staticClass: "read-more"
@@ -35756,7 +35819,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "title"
     }
-  }, [_vm._v("Title")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Titel")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35784,7 +35847,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "group"
     }
-  }, [_vm._v("Group")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Groep")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35819,7 +35882,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "startTime"
     }
-  }, [_vm._v("Start time")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Start tijd")]), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('input', {
     directives: [{
@@ -35871,7 +35934,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "endTime"
     }
-  }, [_vm._v("End time")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("End tijd")]), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('input', {
     directives: [{
@@ -35923,7 +35986,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "description"
     }
-  }, [_vm._v("Description")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Beschrijving")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -36099,7 +36162,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("elections")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Verkiezingen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-comments",
     attrs: {
       "aria-hidden": "true"
@@ -36133,7 +36196,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Groepen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
@@ -36150,7 +36213,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Partijen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
@@ -36167,7 +36230,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("account")])], 1)])])])
+  }, [_vm._v("Account")])], 1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
     staticClass: "header-logo"
