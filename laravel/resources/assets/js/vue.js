@@ -44,7 +44,7 @@ window.axios.defaults.headers.common = {
 const routes = [
     {
         path: '/',
-        component: home ,
+        component: home,
         name: 'home',
     },
     {

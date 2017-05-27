@@ -1,12 +1,12 @@
 <template>
     <div id="createReferendum" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <h1>Nieuw referendum</h1>
         <div class="form-field">
             <form @submit.prevent="placeNew">
                 <div class="form-item">
                     <label for="title">Titel</label>
-                    <input  type="text" id="title" name="title" v-model="title" required>
+                    <input type="text" id="title" name="title" v-model="title" required>
                 </div>
                 <div class="form-item">
                     <label for="group">Groep</label>
@@ -17,25 +17,25 @@
                 <div class="form-item">
                     <label for="startTime">Start tijd</label>
                     <div class="group">
-                        <input  type="date" id="startDate" name="startDate" v-model="startDate" required>
-                        <input  type="time" id="startTime" name="startTime" v-model="startTime" required>
+                        <input type="date" id="startDate" name="startDate" v-model="startDate" required>
+                        <input type="time" id="startTime" name="startTime" v-model="startTime" required>
                     </div>
                 </div>
                 <div class="form-item">
                     <label for="endTime">End tijd</label>
                     <div class="group">
-                        <input  type="date" id="endDate" name="endDate" v-model="endDate" required>
-                        <input  type="time" id="endTime" name="endTime" v-model="endTime" required>
+                        <input type="date" id="endDate" name="endDate" v-model="endDate" required>
+                        <input type="time" id="endTime" name="endTime" v-model="endTime" required>
                     </div>
                 </div>
                 <div class="form-item description">
                     <label for="description">Beschrijving</label>
-                    <textarea  type="text" id="description" name="description" v-model="description" required></textarea>
+                    <textarea type="text" id="description" name="description" v-model="description" required></textarea>
 
                 </div>
-                    <div class="button-field">
-                        <input type="submit" value="Referendum aanmaken" class="btn green">
-                    </div>
+                <div class="button-field">
+                    <input type="submit" value="Referendum aanmaken" class="btn green">
+                </div>
                 <div class="errors">
                     <p v-for="message in messages" class="error">
                         <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{message}}
@@ -73,24 +73,24 @@
                 });
                 this.axios.get('/api/user/').then((response) => {
                     this.user = response.data;
-                this.stopLoading();
+                    this.stopLoading();
 
-            });
+                });
             },
             /** function to suggest a new referendum*/
             placeNew: function () {
-                this.axios.post('api/referenda/',{
+                this.axios.post('api/referenda/', {
                     title: this.title,
                     description: this.description,
-                    startDate:  this.startDate + " " + this.startTime,
-                    endDate:  this.endDate + " " + this.endTime,
+                    startDate: this.startDate + " " + this.startTime,
+                    endDate: this.endDate + " " + this.endTime,
                     group_id: this.group,
                     user_id: this.user.id
                 }).then((response) => {
-                    if(response.status === 200){
+                    if (response.status === 200) {
                         this.status = true;
-                        if(confirm("uw referendum werd doorgestuurd")){
-                           this.$router.push({ name: 'referenda' });
+                        if (confirm("uw referendum werd doorgestuurd")) {
+                            this.$router.push({name: 'referenda'});
                         }
                     }
                     else {
@@ -102,7 +102,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

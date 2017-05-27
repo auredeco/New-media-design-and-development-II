@@ -1,6 +1,6 @@
 <template>
     <div id="account" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="group">
             <figure>
                 <img :src="user.picture">
@@ -10,19 +10,19 @@
                 <table>
                     <tbody>
                     <tr>
-                        <th>naam: </th>
+                        <th>naam:</th>
                         <td>{{user.name}}</td>
                     </tr>
                     <tr>
-                        <th>email: </th>
+                        <th>email:</th>
                         <td>{{user.email}}</td>
                     </tr>
                     <tr>
-                        <th>geslacht: </th>
+                        <th>geslacht:</th>
                         <td>{{user.gender}}</td>
                     </tr>
                     <tr>
-                        <th>geboortedatum: </th>
+                        <th>geboortedatum:</th>
                         <td>{{user.birthdate}}</td>
                     </tr>
                     </tbody>
@@ -52,7 +52,7 @@
         data() {
             return {
                 groups: [],
-                user : [],
+                user: [],
                 loading: true,
 
             }
@@ -61,20 +61,21 @@
             /** function that loads the user and puts the relevant data in a new user object*/
             loadData: function (id) {
 
-                this.axios.get('/api/users/' + id).then((response) => {
+                this.axios.get('/api/users/' + id).then((response) = > {
                     let user = response.data;
-                    this.groups = user.groups;
-                    this.user = {
-                        username: user.username,
-                        name: user.firstname + " " + user.lastname,
-                        gender: user.gender,
-                        birthdate: user.birthdate,
-                        email: user.email,
-                        picture: user.pictureUri,
-                    };
+                this.groups = user.groups;
+                this.user = {
+                    username: user.username,
+                    name: user.firstname + " " + user.lastname,
+                    gender: user.gender,
+                    birthdate: user.birthdate,
+                    email: user.email,
+                    picture: user.pictureUri,
+                };
                 this.stopLoading();
 
-            });
+            })
+                ;
             },
             /** function that loads current users data*/
             loadUserData: function () {
@@ -85,7 +86,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
 
         },

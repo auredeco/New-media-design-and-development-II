@@ -8,12 +8,13 @@
     <ol class="breadcrumb">
         <li><a href="/backoffice/parties">Parties</a></li>
         <li><a href="/backoffice/parties/{{$party->id}}">{{$party->name}}</a></li>
-        <li class="active" >edit</li>
+        <li class="active">edit</li>
     </ol>
 @endsection
 @section('content')
     <div class="col-xs-12 col-sm-9">
-        <form action="{{action('PartyController@update',['id'=>$party->id])}}" method="post" enctype="multipart/form-data">
+        <form action="{{action('PartyController@update',['id'=>$party->id])}}" method="post"
+              enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
             {{csrf_field()}}
             <div class="form-group">

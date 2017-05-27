@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="form-field">
             <form @submit.prevent="register">
                 <div class="form-item">
                     <h1>Kandidatuur</h1>
                     <label for="party">partij:</label>
-                    <select id="party" name="party" v-model="party" required >
+                    <select id="party" name="party" v-model="party" required>
                         <option v-for="party in parties" :value="party.id">{{party.name}}</option>
                     </select>
                     <div class="button-field">
@@ -25,7 +25,7 @@
                 election: [],
                 party: null,
                 parties: [],
-                user : [],
+                user: [],
                 loading: true,
             }
         },
@@ -49,14 +49,14 @@
                 });
             },
             /** function for registering a new candidate*/
-            register: function() {
-                this.axios.post('api/candidates/',{
+            register: function () {
+                this.axios.post('api/candidates/', {
                     election_id: this.election.id,
                     user_id: this.user.id,
-                    party_id:  this.party,
+                    party_id: this.party,
 
                 }).then((response) => {
-                    this.$router.push({ name: 'election', params: { id: this.$route.params.id }});
+                    this.$router.push({name: 'election', params: {id: this.$route.params.id}});
                 });
             },
             /** function that chekcks if current user is registerd already*/
@@ -66,8 +66,8 @@
                 self = this;
                 for (let i = 0; i < candidates.length; i++) {
 
-                    if(self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)){
-                        self.$router.push({ name: 'election', params: { id: self.$route.params.id }});
+                    if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
+                        self.$router.push({name: 'election', params: {id: self.$route.params.id}});
                     }
                 }
 
@@ -75,7 +75,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

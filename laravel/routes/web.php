@@ -1,5 +1,6 @@
 <?php
 use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +18,11 @@ Route::group(['prefix' => 'backoffice'], function () {
     Route::resource('referenda', 'ReferendumController');
     Route::resource('elections', 'ElectionController');
     Route::resource('groups', 'GroupController');
-    Route::patch('election/{election}/candidate/{candidate}/approve',[
+    Route::patch('election/{election}/candidate/{candidate}/approve', [
         'as' => 'candidate.approve',
         'uses' => 'CandidateController@approve'
     ]);
-    Route::patch('election/{election}/candidate/{candidate}/unapprove',[
+    Route::patch('election/{election}/candidate/{candidate}/unapprove', [
         'as' => 'candidate.unapprove',
         'uses' => 'CandidateController@unapprove'
     ]);
@@ -41,17 +42,5 @@ Route::group([
     Route::get('/verify', 'VerifyController@index')->name('index');
     Route::post('/verify', 'VerifyController@check')->name('check');
 });
-
-//Auth::routes();
-
-//Route::get('/', 'DashboardController@index')->middleware('auth');
-//Route::resource('users', 'UserController');
-//Route::resource('parties', 'PartyController');
-//Route::resource('referenda', 'ReferendumController');
-//Route::resource('elections', 'ElectionController');
-//Route::resource('groups', 'GroupController');
-
-
-
 
 Route::get('/', 'HomeController@index')->middleware('auth');

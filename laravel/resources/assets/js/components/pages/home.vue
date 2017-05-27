@@ -1,6 +1,6 @@
 <template>
     <div id="home" class="container">
-        <div v-if="loading"  class="loader">
+        <div v-if="loading" class="loader">
             <!--<img src="images/logo-square.gif">-->
         </div>
         <figure id="logo">
@@ -8,40 +8,39 @@
         </figure>
 
         <div id="cards">
-           <div class="card-field">
-            <tabs>
-                <tab v-if="elections" name="verkiezingen" :selected="true">
-                    <div v-for="election in slicedElections" :key="election.id">
-                        <router-link :to="{ name: 'election', params: { id: election.id }}">
-                            <div class="card-element">
-                                <figure>
-                                    <img v-bind:src="election.pictureUri">
-                                </figure>
-                                <h1 class="election-title">{{election.name}}</h1>
-                            </div>
-                        </router-link>
-                        <!--<item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>-->
-                    </div>
-                </tab>
-                <tab v-if="referenda" name="referenda">
-                    <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
-                        <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
-                            <div class="card-element">
-                                <figure>
-                                    <img src="images/logo-square.svg">
-                                </figure>
-                                <h1 class="election-title">{{referendum.title}}</h1>
-                            </div>
-                        </router-link>
-                        <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
-                    </div>
-                </tab>
+            <div class="card-field">
+                <tabs>
+                    <tab v-if="elections" name="verkiezingen" :selected="true">
+                        <div v-for="election in slicedElections" :key="election.id">
+                            <router-link :to="{ name: 'election', params: { id: election.id }}">
+                                <div class="card-element">
+                                    <figure>
+                                        <img v-bind:src="election.pictureUri">
+                                    </figure>
+                                    <h1 class="election-title">{{election.name}}</h1>
+                                </div>
+                            </router-link>
+                            <!--<item v-for="election in elections" :key="election.id" propImage="/images/logo-square.svg"  propLink="/elections/#" :propName="election.name"></item>-->
+                        </div>
+                    </tab>
+                    <tab v-if="referenda" name="referenda">
+                        <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
+                            <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
+                                <div class="card-element">
+                                    <figure>
+                                        <img src="images/logo-square.svg">
+                                    </figure>
+                                    <h1 class="election-title">{{referendum.title}}</h1>
+                                </div>
+                            </router-link>
+                            <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
+                        </div>
+                    </tab>
 
-            </tabs>
-        </div>
+                </tabs>
+            </div>
         </div>
     </div>
-
 
 
 </template>
@@ -86,8 +85,8 @@
                     <slot></slot>
                     </div>`,
         props: {
-            name: { required: true },
-            selected: { default: false }
+            name: {required: true},
+            selected: {default: false}
         },
 
         data() {
@@ -121,7 +120,6 @@
     })
 
 
-
     export default {
         data() {
             return {
@@ -137,41 +135,43 @@
             /** function that loads all elections and referenda sorts by endDate and slices to get 3 or 5 */
             loadData: function () {
                 Vue.axios.get('/api/elections').then((response) => {
-                    this.elections = response.data.all.sort(function(a,b) {
+                    this.elections = response.data.all.sort(function (a, b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                     this.Slice();
                 });
                 Vue.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.all.sort(function(a,b) {
+                    this.referenda = response.data.all.sort(function (a, b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                     this.Slice();
                 })
             },
             /** function that slices array of elements in 3 or 5 depending on screensize*/
-            Slice: function(){
-               let clientWidth = document.documentElement.clientWidth;
-               if(clientWidth > 1100) {
-                   this.slicedElections = this.elections.slice(0,5);
-                   this.slicedReferenda = this.referenda.slice(0,5);
-                   this.stopLoading();
-               } else {
-                   this.slicedElections = this.elections.slice(0,3);
-                   this.slicedReferenda = this.referenda.slice(0,3);
-                   this.stopLoading();
-               }
+            Slice: function () {
+                let clientWidth = document.documentElement.clientWidth;
+                if (clientWidth > 1100) {
+                    this.slicedElections = this.elections.slice(0, 5);
+                    this.slicedReferenda = this.referenda.slice(0, 5);
+                    this.stopLoading();
+                } else {
+                    this.slicedElections = this.elections.slice(0, 3);
+                    this.slicedReferenda = this.referenda.slice(0, 3);
+                    this.stopLoading();
+                }
             },
             /** function that sets the variable loading to false after 3 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 3000);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 3000);
             }
         },
 
         mounted() {
             this.loadData();
-            this.$nextTick(function() {
+            this.$nextTick(function () {
                 window.addEventListener('resize', this.Slice);
             });
         },

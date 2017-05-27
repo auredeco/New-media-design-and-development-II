@@ -1,10 +1,10 @@
 <template>
     <div id="election-vote" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="candidate" v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
             <div class="candidate-wrapper">
                 <figure class="user-image">
-                    <img v-bind:src="candidate.user.pictureUri" />
+                    <img v-bind:src="candidate.user.pictureUri"/>
                 </figure>
                 <div class="candidate-info">
                     <h1>{{ candidate.user.firstname }} {{ candidate.user.lastname }}</h1>
@@ -35,9 +35,9 @@
                     this.user = response.data;
                     this.axios.get('/api/elections/' + id).then((response) => {
                         this.election = response.data;
-                        if(this.election.candidates.length == 0){
-                            this.$router.push({ name: 'elections'});
-                        }else {
+                        if (this.election.candidates.length == 0) {
+                            this.$router.push({name: 'elections'});
+                        } else {
                             this.checkVoted();
                         }
                     });
@@ -58,7 +58,7 @@
                     let candidateElection_id = e.srcElement.id;
                     let _self = this;
 
-                    this.axios.post('api/votes/',{
+                    this.axios.post('api/votes/', {
                         checksum: password,
                         voteType: 0,
                         user_id: this.user.id,
@@ -78,11 +78,11 @@
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
-                for(let i = 0; i < history.length;  i++){
+                for (let i = 0; i < history.length; i++) {
                     let electionId = self.user.history[i];
-                    if(electionId.election_id == self.election.id){
+                    if (electionId.election_id == self.election.id) {
                         self.voted = true;
-                        this.$router.push({ name: 'elections'});
+                        this.$router.push({name: 'elections'});
                         break;
                     }
                 }
@@ -91,7 +91,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

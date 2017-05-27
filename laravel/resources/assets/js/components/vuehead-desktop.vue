@@ -3,7 +3,7 @@
         <div class="container-item">
             <figure class="header-logo">
                 <a href="/">
-                <img src="/images/logo.svg" alt="">
+                    <img src="/images/logo.svg" alt="">
                 </a>
             </figure>
             <ul class="desktop-nav">

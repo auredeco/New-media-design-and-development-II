@@ -5,7 +5,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/parties">Parties</a></li>
-        <li class="active" ><a href="/backoffice/parties/{{$party->id}}">{{$party->name}}</a></li>
+        <li class="active"><a href="/backoffice/parties/{{$party->id}}">{{$party->name}}</a></li>
     </ol>
 @endsection
 @section('content')
@@ -21,7 +21,9 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <a class="btn btn-default" href="/backoffice/parties/{{$party->id}}/edit">Edit</a>
-            <button onclick="return confirm('Are you sure you want to delete this party')" class="btn btn-danger">Delete</button>
+            <button onclick="return confirm('Are you sure you want to delete this party')" class="btn btn-danger">
+                Delete
+            </button>
         </form>
     </div>
     <div class="col col-xs-12">

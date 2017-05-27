@@ -7,7 +7,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="/backoffice/parties">Parties</a></li>
-        <li class="active" >New</li>
+        <li class="active">New</li>
     </ol>
 @endsection
 @section('content')

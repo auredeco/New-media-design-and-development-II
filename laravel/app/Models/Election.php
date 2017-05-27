@@ -80,7 +80,7 @@ class Election extends Model
         foreach ($open->get() as $election) {
             $original = $election->isClosed;
 //            change status if original is closed
-            if($original){
+            if ($original) {
                 $election->isClosed = false;
                 $election->save();
             }
@@ -111,9 +111,9 @@ class Election extends Model
             $candidates = $election->candidates;
 
 //            loop all candidates
-            foreach ($candidates as $candidate){
+            foreach ($candidates as $candidate) {
 //                count their votes
-                $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+                $score = Vote::where('CandidateElection_id', '=', $candidate->pivot->id)->count();
 
 //                replace the old score
                 $canEl = Candidate_election::find($candidate->pivot->id);
@@ -132,7 +132,8 @@ class Election extends Model
      *
      * Function that returns $query with all elections that haven't begon + change their status
      */
-    public function scopeComing($query){
+    public function scopeComing($query)
+    {
         $coming = $query->with('candidates')->where('startDate', '>', Carbon::now());
 //        change status
         foreach ($coming->get() as $election) {
@@ -142,6 +143,7 @@ class Election extends Model
         }
         return $coming;
     }
+
     /**
      * @param $query
      * @return mixed
@@ -160,16 +162,16 @@ class Election extends Model
             $original = $election->isClosed;
 
 //            change status if original is open
-            if(!$original){
+            if (!$original) {
                 $election->isClosed = true;
                 $election->save();
                 $candidates = $election->candidates;
 
 //                loop candidates
-                foreach ($candidates as $candidate){
+                foreach ($candidates as $candidate) {
 
 //                    count their score
-                    $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+                    $score = Vote::where('CandidateElection_id', '=', $candidate->pivot->id)->count();
 
                     //replace the old score
                     $canEl = Candidate_election::find($candidate->pivot->id);

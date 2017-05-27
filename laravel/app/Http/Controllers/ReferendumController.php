@@ -22,41 +22,44 @@ class ReferendumController extends Controller
 
         if ($keyword != '') {
 
-            switch (strtolower($keyword)){
-                case 'open':{
+            switch (strtolower($keyword)) {
+                case 'open': {
                     $referenda = Referendum::WhereOpen()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=open');
 
-                }break;
-                case 'all':{
-                    $referenda = Referendum::orderBy('id','asc')->latest()->paginate(10);
+                }
+                    break;
+                case 'all': {
+                    $referenda = Referendum::orderBy('id', 'asc')->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=all');
 
-                }break;
-                case 'closed':{
+                }
+                    break;
+                case 'closed': {
                     $referenda = Referendum::WhereClosed()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=closed');
 
-                }break;
-                case 'published':{
+                }
+                    break;
+                case 'published': {
                     $referenda = Referendum::WherePublished()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=published');
 
 
-                }break;
-                case 'unpublished':{
+                }
+                    break;
+                case 'unpublished': {
                     $referenda = Referendum::WhereUnpublished()->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=unpublished');
 
-                }break;
+                }
+                    break;
                 default : {
                     $referenda = Referendum::SearchByKeyword($keyword)->latest()->paginate(10);
                     $referenda->withPath('referenda?keyword=' . strtolower($keyword));
                 }
             }
-        }
-        else
-        {
+        } else {
             $referenda = Referendum::latest()->paginate(10);
             $referenda->withPath('referenda?keyword=all');
 
@@ -80,7 +83,7 @@ class ReferendumController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -90,17 +93,17 @@ class ReferendumController extends Controller
         $time = strtotime(Carbon::now());
 
         $this->validate(request(), [
-        'title' => 'required',
-        'description' => 'required',
+            'title' => 'required',
+            'description' => 'required',
 //        'startDate' => 'required|date' ,
-        'startDate' => 'required|date|after_or_equal:yesterday' ,
-        'startTime' => 'required',
-        'endDate' => 'required|date|after_or_equal:startDate',
-        'endTime' => 'required',
-        'group' => 'required',
-    ]);
-        $startTime = strtotime(request('startDate'). " " .request('startTime'));
-        if( $startTime <= $time){
+            'startDate' => 'required|date|after_or_equal:yesterday',
+            'startTime' => 'required',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'endTime' => 'required',
+            'group' => 'required',
+        ]);
+        $startTime = strtotime(request('startDate') . " " . request('startTime'));
+        if ($startTime <= $time) {
             $closed = false;
         }
 
@@ -108,7 +111,7 @@ class ReferendumController extends Controller
         Referendum::create([
             'title' => request('title'),
             'description' => request('description'),
-            'startDate' => request('startDate') . " " .request('startTime'),
+            'startDate' => request('startDate') . " " . request('startTime'),
             'endDate' => request('endDate') . " " . request('endTime'),
             'group_id' => request('group'),
             'isClosed' => $closed,
@@ -122,16 +125,16 @@ class ReferendumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $referendum = Referendum::with('votes')->find($id);
-        $agree = count(Referendum::with(['votes' => function($query) {
+        $agree = count(Referendum::with(['votes' => function ($query) {
             $query->where('agreed', true);
         }])->find($id)->votes);
-        $disagree = count(Referendum::with(['votes' => function($query) {
+        $disagree = count(Referendum::with(['votes' => function ($query) {
             $query->where('agreed', false);
         }])->find($id)->votes);
         $total = $agree + $disagree;
@@ -146,7 +149,7 @@ class ReferendumController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -154,14 +157,14 @@ class ReferendumController extends Controller
         $referendum = Referendum::with('votes')->find($id);
         $group = Group::find($referendum->group_id);
         $groups = Group::all();
-        return view('crud.editReferendum', compact('referendum',  'group', 'groups'));
+        return view('crud.editReferendum', compact('referendum', 'group', 'groups'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -179,14 +182,13 @@ class ReferendumController extends Controller
             'endTime' => 'required',
             'group' => 'required',
         ]);
-        $startTime = strtotime(request('startDate'). " " .request('startTime'));
-        if( $startTime <= $time){
+        $startTime = strtotime(request('startDate') . " " . request('startTime'));
+        if ($startTime <= $time) {
             $closed = false;
         }
-        if(request('published')){
+        if (request('published')) {
             $published = Carbon::now();
-        }
-        else{
+        } else {
             $published = null;
         }
 
@@ -194,7 +196,7 @@ class ReferendumController extends Controller
         Referendum::find($id)->update([
             'title' => request('title'),
             'description' => request('description'),
-            'startDate' => request('startDate') . " " .request('startTime'),
+            'startDate' => request('startDate') . " " . request('startTime'),
             'endDate' => request('endDate') . " " . request('endTime'),
             'group_id' => request('group'),
             'isClosed' => $closed,
@@ -208,7 +210,7 @@ class ReferendumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

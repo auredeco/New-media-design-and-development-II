@@ -36,15 +36,15 @@
 <script>
     export default{
         data(){
-            return{
+            return {
                 mobileNav: '',
             }
         },
         methods: {
             /** function that hides nav (pure js)*/
             hideNav(){
-                document.getElementById('mobile-nav').className= "is-closed";
+                document.getElementById('mobile-nav').className = "is-closed";
             }
-    }
+        }
     }
 </script>

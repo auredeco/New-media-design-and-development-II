@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'lastLogin' => $faker->dateTimeThisMonth,
         'firstname' => $faker->firstName,
         'lastname' => $faker->lastName,
-        'gender' => $faker->randomElement($array = array ('male','female', 'not applicable')) ,
+        'gender' => $faker->randomElement($array = array('male', 'female', 'not applicable')),
         'birthdate' => $faker->dateTimeThisCentury,
         'pictureUri' => $faker->imageUrl(640, 840, 'people'),
         'remember_token' => str_random(10),
@@ -113,7 +113,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
     $startDate = $faker->dateTimeThisYear;
     $endDate = $faker->dateTimeBetween($startDate, "+1 month");
     $currentState = false;
-    if($endDate > date('Y-m-d H:i:s') && $startDate < date('Y-m-d H:i:s')){
+    if ($endDate > date('Y-m-d H:i:s') && $startDate < date('Y-m-d H:i:s')) {
         $currentState = true;
     }
 
@@ -143,7 +143,7 @@ $factory->define(App\Models\Election::class, function (Faker\Generator $faker) {
  */
 $factory->define(App\Models\Candidate_election::class, function (Faker\Generator $faker) {
     return [
-        'score' =>  mt_rand(200.00, 5000.00),
+        'score' => mt_rand(200.00, 5000.00),
         'approved' => true,
 
         //todo proper foreign keys
@@ -165,12 +165,11 @@ $factory->define(App\Models\Candidate_election::class, function (Faker\Generator
 $factory->define(App\Models\Referendum::class, function (Faker\Generator $faker) {
     $startDate = $faker->dateTimeThisYear;
     $endDate = $faker->dateTimeBetween($startDate, "+1 month");
-        if (rand(0,100) <= 50) {
-            $publsihed = $faker->dateTimeThisYear;
-        }
-        else{
-            $publsihed = null;
-        }
+    if (rand(0, 100) <= 50) {
+        $publsihed = $faker->dateTimeThisYear;
+    } else {
+        $publsihed = null;
+    }
     return [
         'title' => $faker->sentence($nbWords = 4, $variableNbWords = true),
         'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
@@ -213,7 +212,7 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
     $votetype = $faker->boolean(50);
 
-    if($votetype){
+    if ($votetype) {
         return [
             'uuid' => str_random(36),
             'checksum' => hash('sha512', 'password'),
@@ -223,7 +222,7 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
 
             //todo proper foreign keys
 
-            'CandidateElection_id' =>  null,
+            'CandidateElection_id' => null,
             'Referendum_id' => random_int(
                 \DB::table('referendums')
                     ->min('id'),
@@ -231,8 +230,7 @@ $factory->define(App\Models\Vote::class, function (Faker\Generator $faker) {
                     ->max('id')),
         ];
 
-    }
-    else{
+    } else {
         return [
             'uuid' => str_random(36),
             'checksum' => hash('sha512', $faker->password()),
@@ -264,15 +262,14 @@ $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
  */
 $factory->define(App\Models\History::class, function (Faker\Generator $faker) {
 
-    if (rand(0,100) <= 50) {
+    if (rand(0, 100) <= 50) {
         $referendum = random_int(
             \DB::table('referendums')
                 ->min('id'),
             \DB::table('referendums')
                 ->max('id'));
         $election = null;
-    }
-    else{
+    } else {
         $election = random_int(
             \DB::table('elections')
                 ->min('id'),

@@ -1,6 +1,6 @@
 <template>
     <div id="elections" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div id="cards">
             <paginate
                     name="elections"
@@ -19,7 +19,7 @@
                         <input type="radio" id="3" value="3" checked v-model="radioValue"> Alle
                         <input type="radio" id="0" value="0" v-model="radioValue"> Lopende
                         <input type="radio" id="1" value="1" v-model="radioValue"> Gesloten
-                        <input type="radio" id="2" value="2"  v-model="radioValue"> Geplande
+                        <input type="radio" id="2" value="2" v-model="radioValue"> Geplande
                     </div>
                 </div>
                 <div class="card-field">
@@ -40,7 +40,7 @@
                                     </ul>
                                     <ul v-else-if="!election.isComing && !election.isClosed">
                                         <li class="open"> Lopend</li>
-                                        <li  > Eindigt op: {{ election.endDate }}</li>
+                                        <li> Eindigt op: {{ election.endDate }}</li>
                                     </ul>
                                     <ul v-else>
                                         <li class="closed"> Gesloten</li>
@@ -75,54 +75,58 @@
 
             }
         },
-        components : {
-
-        },
+        components: {},
 
         methods: {
             /** function that loads all elections and sorts by endDate*/
             loadData() {
                 this.axios.get('/api/elections').then((response) => {
-                    this.elections = response.data.all.sort(function(a,b) {
+                    this.elections = response.data.all.sort(function (a, b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                this.stopLoading();
+                    this.stopLoading();
 
-            });
+                });
             },
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
 
         computed: {
             filterByName() {
                 let value = this.radioValue;
-                return this.elections.filter( election => {
-                    if(value == 3){
-                            return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
+                return this.elections.filter(election => {
+                    if (value == 3) {
+                        return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
 //                        }
-                    }else{
+                    } else {
                         switch (parseInt(value)) {
                             case 0: {
-                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == 0 ;
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == 0;
 
-                            }break;
+                            }
+                                break;
                             case 1: {
                                 return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isClosed == 1 && election.isComing == 0;
 
-                            }break;
+                            }
+                                break;
                             case 2: {
 
-                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isComing == 1 ;
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 && election.isComing == 1;
 
-                            }break;
+                            }
+                                break;
                             case 3: {
-                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1 ;
+                                return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
 
-                            }break;
+                            }
+                                break;
                         }
                     }
                 })

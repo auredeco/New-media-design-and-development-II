@@ -1,6 +1,6 @@
 <template>
     <div id="group-detail" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure>
@@ -15,26 +15,26 @@
                 </div>
             </div>
         </div>
-            <h2>Gebruikers</h2>
-            <paginate
-                    name="users"
-                    :list="userItems"
-                    :per="12"
-            >
-                <div class="card-field">
-                    <div class="standard-card" v-for="user in paginated('users')">
-                        <router-link :to="{ name: 'user', params: { id: user.id }}">
-                            <div class="card-wrapper">
-                                <div class="card">
-                                    <!--<img :src="user.pictureUri">-->
-                                    <p>{{user.firstname}} {{user.lastname}}</p>
-                                </div>
+        <h2>Gebruikers</h2>
+        <paginate
+                name="users"
+                :list="userItems"
+                :per="12"
+        >
+            <div class="card-field">
+                <div class="standard-card" v-for="user in paginated('users')">
+                    <router-link :to="{ name: 'user', params: { id: user.id }}">
+                        <div class="card-wrapper">
+                            <div class="card">
+                                <!--<img :src="user.pictureUri">-->
+                                <p>{{user.firstname}} {{user.lastname}}</p>
                             </div>
-                        </router-link>
-                    </div>
+                        </div>
+                    </router-link>
                 </div>
-            </paginate>
-            <paginate-links for="users" :limit="5"></paginate-links>
+            </div>
+        </paginate>
+        <paginate-links for="users" :limit="5"></paginate-links>
     </div>
 </template>
 
@@ -42,9 +42,9 @@
     export default {
         data() {
             return {
-                userItems:[],
+                userItems: [],
                 paginate: ['users'],
-                user : [],
+                user: [],
                 group: [],
                 listed: false,
                 loading: true,
@@ -69,21 +69,21 @@
                 });
             },
             /** function to join group*/
-            join: function() {
+            join: function () {
                 self = this;
-                self.axios.post('/api/groups/join',{
+                self.axios.post('/api/groups/join', {
                     group_id: self.group.id,
                     user_id: self.user.id,
                 }).then((response) => {
 
-            });
+                });
                 window.location.reload()
 
             },
             /** function to check if current user is listed*/
             checkListed() {
-                let filtered = _.filter(this.userItems, { 'id': this.user.id});
-                (filtered.length === 0)?this.listed = false : this.listed = true;
+                let filtered = _.filter(this.userItems, {'id': this.user.id});
+                (filtered.length === 0) ? this.listed = false : this.listed = true;
                 this.stopLoading();
 
 
@@ -91,7 +91,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

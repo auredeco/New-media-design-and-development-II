@@ -23,7 +23,7 @@ class PartyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -34,13 +34,13 @@ class PartyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $party = Party::
-            with('candidates')
+        with('candidates')
             ->with('candidates.user')
             ->find($id);
 
@@ -54,8 +54,8 @@ class PartyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -63,17 +63,17 @@ class PartyController extends Controller
         $party = Party::find($id);
 
         //check input from request and change in the table if needed
-        if($request->input('name') == null || $party->name == $request->input('name') ||
-            $request->input('name') == '')
-        {
+        if ($request->input('name') == null || $party->name == $request->input('name') ||
+            $request->input('name') == ''
+        ) {
             $party->name = $party->name;
         } else {
             $party->name = $request->input('name');
         }
 
-        if($request->input('description') == null || $party->description == $request->input('description') ||
-            $request->input('description') == '')
-        {
+        if ($request->input('description') == null || $party->description == $request->input('description') ||
+            $request->input('description') == ''
+        ) {
             $party->description = $party->description;
         } else {
             $party->description = $request->input('description');
@@ -87,7 +87,7 @@ class PartyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

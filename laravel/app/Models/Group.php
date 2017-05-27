@@ -28,16 +28,6 @@ class Group extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     *
-     * Relates a Group with Users
-     */
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'group_users');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      *
      * Relates a Group with Posts
@@ -56,16 +46,28 @@ class Group extends Model
      */
     public function scopeSearchByKeyword($query, $keyword)
     {
-        if ($keyword!='') {
+        if ($keyword != '') {
             $query->where(function ($query) use ($keyword) {
-                $query->where("name", "LIKE","%$keyword%")
+                $query->where("name", "LIKE", "%$keyword%")
                     ->orWhere("description", "LIKE", "%$keyword%");
             });
         }
         return $query;
     }
-    public function getPaginatedUsers(){
+
+    public function getPaginatedUsers()
+    {
         return $this->users()->paginate(10);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     *
+     * Relates a Group with Users
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'group_users');
     }
 
 }

@@ -1,6 +1,6 @@
 <template>
     <div id="referendum-detail" class="container">
-        <div v-if="loading"  class="loader"></div>
+        <div v-if="loading" class="loader"></div>
         <div class="info">
             <h1>{{referendum.title}}</h1>
             <p>Status:
@@ -19,7 +19,7 @@
             </div>
             <div v-else>
                 <h2>Mening</h2>
-                <input type="radio" id="agreed" value="1" v-model="opinion" >
+                <input type="radio" id="agreed" value="1" v-model="opinion">
                 <label for="agreed">Akkoord</label>
                 <br>
                 <input type="radio" id="disagreed" value="0" v-model="opinion">
@@ -45,7 +45,7 @@
                 agree: 0,
                 disagree: 0,
                 referenda: [],
-                next:[],
+                next: [],
                 opinion: 0,
                 user: [],
                 voted: false,
@@ -59,7 +59,7 @@
             loadData: function (id, userId) {
 
                 this.axios.get('/api/referenda').then((response) => {
-                    this.referenda = response.data.all.sort(function(a,b) {
+                    this.referenda = response.data.all.sort(function (a, b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
                     this.axios.get('/api/referenda/' + id).then((response) => {
@@ -80,12 +80,11 @@
             },
             /** function that draws graph if referendum is closed*/
             drawGraph(){
-                if(this.referendum.isClosed)
-                {
+                if (this.referendum.isClosed) {
                     let votes = this.referendum.votes;
 
-                    for(let i =0; i < votes.length; i++){
-                        if(votes[i].agreed){
+                    for (let i = 0; i < votes.length; i++) {
+                        if (votes[i].agreed) {
                             this.agree++;
                         } else {
                             this.disagree++
@@ -102,25 +101,26 @@
                 }
             },
             /** function that goes to next referenda (sorted by endDate in load function */
-            nextReferenda: function ()  {
+            nextReferenda: function () {
                 var referendum = this.referendum;
-                var index = _.findIndex(this.referenda, function(o) { return o.id == referendum.id; });
+                var index = _.findIndex(this.referenda, function (o) {
+                    return o.id == referendum.id;
+                });
                 this.next = this.referenda[index + 1];
-                this.$router.push({ name: 'referendum', params: { id: this.next.id }});
+                this.$router.push({name: 'referendum', params: {id: this.next.id}});
                 window.location.reload()
             },
             /** function to vote on a referendum user gets a response with the uuid*/
             vote: function () {
                 var opinion = parseInt(this.opinion);
                 var question = "Bent u zeker dat u ";
-                opinion? question += "akkoord stemt?": question += "niet akkoord stemt?"
+                opinion ? question += "akkoord stemt?" : question += "niet akkoord stemt?"
                 var password = prompt('Geef een wachtwoord op om later je stem te valideren');
 
-                if(
+                if (
                     confirm(question)
-                )
-                {
-                    this.axios.post('api/votes/',{
+                ) {
+                    this.axios.post('api/votes/', {
                         voteType: 1,
                         agreed: opinion,
                         referendum_id: this.referendum.id,
@@ -137,12 +137,12 @@
                 }
             },
             /** function to check if user has voted*/
-            checkVoted: function(){
+            checkVoted: function () {
                 let self = this;
                 let history = self.user.history;
-                for(let i = 0; i < history.length;  i++){
+                for (let i = 0; i < history.length; i++) {
                     let referendumId = self.user.history[i];
-                    if(referendumId.referendum_id == self.referendum.id){
+                    if (referendumId.referendum_id == self.referendum.id) {
                         self.voted = true;
                         break;
                     }
@@ -153,7 +153,9 @@
             /** function that sets the variable loading to false after 1,5 seconds to make sure the page has loaded completely*/
             stopLoading: function () {
                 let self = this;
-                setTimeout(function(){ self.loading = false; }, 1500);
+                setTimeout(function () {
+                    self.loading = false;
+                }, 1500);
             }
         },
         mounted() {

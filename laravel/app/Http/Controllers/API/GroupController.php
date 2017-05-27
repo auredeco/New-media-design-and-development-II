@@ -24,7 +24,7 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -35,24 +35,24 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $group = Group::
-            with('referendums')
+        with('referendums')
             ->with('users')
             ->find($id);
         $users = $group->users()->get();
 
-        $object = (object) [
+        $object = (object)[
             'group' => $group,
             'users' => $users,
         ];
 
 
-        return response()->json($object)?: response()
+        return response()->json($object) ?: response()
             ->json([
                 'error' => "Group `${id}` not found",
             ])
@@ -62,8 +62,8 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -71,17 +71,17 @@ class GroupController extends Controller
         $group = Group::find($id);
 
         //check input from request and change in the table if needed
-        if($request->input('name') == null || $group->name == $request->input('name') ||
-            $request->input('name') == '')
-        {
+        if ($request->input('name') == null || $group->name == $request->input('name') ||
+            $request->input('name') == ''
+        ) {
             $group->name = $group->name;
         } else {
             $group->name = $request->input('name');
         }
 
-        if($request->input('description') == null || $group->description == $request->input('description') ||
-            $request->input('description') == '')
-        {
+        if ($request->input('description') == null || $group->description == $request->input('description') ||
+            $request->input('description') == ''
+        ) {
             $group->description = $group->description;
         } else {
             $group->description = $request->input('description');
@@ -95,7 +95,7 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -122,7 +122,9 @@ class GroupController extends Controller
             ])
             ->setStatusCode(Response::HTTP_NOT_FOUND);
     }
-    public function join(Request $request) {
+
+    public function join(Request $request)
+    {
 
         $group_user = new Group_user();
         $group_user->user_id = $request->input('user_id');
