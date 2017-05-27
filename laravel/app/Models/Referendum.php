@@ -87,8 +87,10 @@ class Referendum extends Model
             ->where('endDate', '>', Carbon::now());
 
         foreach ($open->get() as $referendum) {
-            $referendum->isClosed = false;
-            $referendum->save();
+            if($referendum->isClosed){
+                $referendum->isClosed = false;
+                $referendum->save();
+            }
         }
         return $open;
     }
@@ -123,8 +125,10 @@ class Referendum extends Model
             ->where('endDate', '<', Carbon::now());
 
         foreach ($closed->get() as $referendum) {
-            $referendum->isClosed = true;
-            $referendum->save();
+            if(!$referendum->isClosed){
+                $referendum->isClosed = true;
+                $referendum->save();
+            }
         }
         return $closed;
     }

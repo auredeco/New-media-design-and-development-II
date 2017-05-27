@@ -147,17 +147,19 @@ class Election extends Model
 
         foreach ($closed->get() as $election) {
             $original = $election->isClosed;
-            $election->isClosed = true;
-            $election->save();
-            $candidates = $election->candidates;
+            if(!$original){
+                $election->isClosed = true;
+                $election->save();
+                $candidates = $election->candidates;
 
-            foreach ($candidates as $candidate){
-                $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+                foreach ($candidates as $candidate){
+                    $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
 
-                //replace the old score
-                $canEl = Candidate_election::find($candidate->pivot->id);
-                $canEl->score = $score;
-                $canEl->save();
+                    //replace the old score
+                    $canEl = Candidate_election::find($candidate->pivot->id);
+                    $canEl->score = $score;
+                    $canEl->save();
+                }
             }
         }
         return $closed;

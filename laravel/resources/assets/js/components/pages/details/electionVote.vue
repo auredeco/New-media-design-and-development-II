@@ -69,6 +69,7 @@
                         CandidateElection_id: candidateElection_id
                     }).then(function (response) {
                         var vote = response.data;
+                        vote.uuid.Copied.execCommand("Copy");
                         alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
                         window.location.reload();
 //
