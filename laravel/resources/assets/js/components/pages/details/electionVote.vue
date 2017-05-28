@@ -1,5 +1,6 @@
 <template>
     <div id="election-vote" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="candidate" v-for="candidate in election.candidates" v-if="candidate.pivot.approved">
             <div class="candidate-wrapper">
                 <figure class="user-image">
@@ -14,7 +15,6 @@
                 </div>
             </div>
         </div>
-        <button @redirect>test</button>
     </div>
 </template>
 
@@ -24,35 +24,39 @@
             return {
                 election: [],
                 user: [],
+                loading: true,
             }
         },
 
         methods: {
+            /**load current user and election if there are no candidates return to overview*/
             loadData: function (id, userId) {
 
                 this.axios.get('/api/users/' + userId).then((response) => {
                     this.user = response.data;
                     this.axios.get('/api/elections/' + id).then((response) => {
                         this.election = response.data;
-                        this.checkVoted();
+                        if(this.election.candidates.length == 0){
+                            this.$router.push({ name: 'elections'});
+                        }else {
+                            this.checkVoted();
+                        }
                     });
                 });
             },
+            /**load authenticated user data*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(electionId, response.data.id);
                 });
             },
+            /**vote for a candidate the user gets a uuid for verification*/
             vote(e) {
-//                console.log(this.election.id);
-//                console.log(this.user.id);
                 if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                     var password = prompt('Geef een wachtwoord op om later je stem te valideren');
-                    console.log(e);
                     // get the event and take the id from the element that is clicked
                     // Store it in the candidateElection_id variable
                     let candidateElection_id = e.srcElement.id;
-                    console.log(candidateElection_id);
                     let _self = this;
 
                     this.axios.post('api/votes/',{
@@ -64,21 +68,8 @@
                         referendum_id: null,
                         CandidateElection_id: candidateElection_id
                     }).then(function (response) {
-                        console.log(response.data);
                         var vote = response.data;
-
-//                        console.log('hallo');
-                        alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid)
-//                            this.$route.go('/elections/'+ this.election.id);
-//
-//                            console.log('hallo2');
-//                            //redirect to the home page
-////                        this.redirect();
-////                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
-//                            window.location.reload();
-//                        }
-//                        this.$router.push({ name: 'elections'});
-                        console.log('redirect');
+                        alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
                         window.location.reload();
 //
 
@@ -86,28 +77,24 @@
                     });
                 }
             },
+            /**check if the user has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    console.log(electionId.election_id);
                     if(electionId.election_id == self.election.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
-                        this.$router.push({ name: 'election', params: { id: self.election.id }});
+                        this.$router.push({ name: 'elections'});
                         break;
                     }
                 }
-
+                this.stopLoading();
             },
-            redirect() {
-                console.log('redirecting fuck');
-
-//                window.location.reload();
-//                this.$router.push({ name: 'election', params: { id: this.election.id }});
-
+            /**stop the loading animation*/
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {

@@ -56,6 +56,14 @@ class Referendum extends Model
     {
         return $this->hasMany(Vote::class);
     }
+
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     * return query from keyword search in db
+
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
@@ -67,17 +75,32 @@ class Referendum extends Model
         return $query;
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * return all open referenda and set their status to open if they were closed
+     */
     public function scopeWhereOpen($query){
         $open = $query
             ->where('startDate', '<', Carbon::now())
             ->where('endDate', '>', Carbon::now());
 
         foreach ($open->get() as $referendum) {
-            $referendum->isClosed = false;
-            $referendum->save();
+            if($referendum->isClosed){
+                $referendum->isClosed = false;
+                $referendum->save();
+            }
         }
         return $open;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * return all open referenda and set their status to open
+     */
     public function scopeWhereOpenInit($query){
         $open = $query
             ->where('startDate', '<', Carbon::now())
@@ -90,16 +113,32 @@ class Referendum extends Model
         }
         return $open;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * return all closed referenda and set their status to closed if it was open
+     */
     public function scopeWhereClosed($query){
         $closed = $query
             ->where('endDate', '<', Carbon::now());
 
         foreach ($closed->get() as $referendum) {
-            $referendum->isClosed = true;
-            $referendum->save();
+            if(!$referendum->isClosed){
+                $referendum->isClosed = true;
+                $referendum->save();
+            }
         }
         return $closed;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * return all closed referenda and set their status to closed
+     */
     public function scopeWhereClosedInit($query){
         $closed = $query
             ->where('endDate', '<', Carbon::now());
@@ -110,9 +149,21 @@ class Referendum extends Model
         }
         return $closed;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     * return all published referenda
+     */
     public function scopeWherePublished($query){
         return $query->whereNotNull('published');
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     * return all unpublished referenda
+     */
     public function scopeWhereUnpublished($query){
         return $query->whereNull('published');
     }

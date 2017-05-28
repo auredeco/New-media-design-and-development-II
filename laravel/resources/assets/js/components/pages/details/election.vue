@@ -1,8 +1,6 @@
 <template>
     <div id="election-detail" class="container">
-    <router-link   :to="{ name: 'elections'}">
-        <button class="btn">back</button>
-    </router-link>
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure class="election-image">
@@ -20,7 +18,6 @@
                 <p v-if="status == 'closed'" class="is-closed">Gesloten</p>
 
                 <hr />
-                <router-link v-if="!listed && reg"  :to="{ name: 'applyElection', params: { id: election.id }}">registreer</router-link>
             </div>
         </div>
 
@@ -38,7 +35,7 @@
             </tbody>
         </table>
 
-        <div class="button-field" v-if="status == 'open' && !voted">
+        <div class="button-field" v-if="status == 'open' && !voted && !empty">
             <router-link :to="{ name: 'electionVote', params: { id: election.id }}" class="full-width">
                 <button class="btn blue">Stemmen</button>
             </router-link>
@@ -71,32 +68,36 @@
                 reg: false,
                 status: 'closed',
                 voted: false,
+                loading: true,
+                empty: false,
             }
         },
 
         methods: {
+            /** get current election and userdata*/
             loadData: function (id, userId) {
                 this.axios.get('/api/elections/' + id).then((response) => {
                     this.election = response.data;
+                    if(this.election.candidates.length == 0){
+                        this.empty = true;
+                    }
                     this.axios.get('/api/users/' + userId).then((response) => {
-                        console.log(response.data);
                         this.user = response.data;
-                        this.checkVoted();
-                        this.drawGraph();
-                        this.checkListed();
                         this.checkReg();
                         this.checkStatus();
+
                     });
                 });
 
             },
+            /** get authenticated user data*/
             loadUserData: function (electionId) {
                 this.axios.get('api/user').then((response) => {
 //                    this.user = response.data;
-                    console.log(response.data);
                     this.loadData(electionId, response.data.id);
                 });
             },
+            /**check if user is listed as candidate*/
             checkListed() {
                 let candidates = this.election.candidates;
                 for (let i = 0; i < candidates.length; i++) {
@@ -104,8 +105,10 @@
                         this.listed = true
                     }
                 }
+                this.stopLoading();
 
             },
+            /**check if registration is allowed*/
             checkReg(){
                 if(new Date() < new Date(this.election.startDate)){
                     this.reg = true;
@@ -113,36 +116,39 @@
                     this.reg = false;
                 }
             },
+            /**check elecions status*/
             checkStatus(){
-
                 if(new Date() < new Date(this.election.startDate)){
                     this.status = 'coming';
+                    this.checkListed();
                 }
                 else if ((new Date() > new Date(this.election.startDate))&& (new Date() < new Date(this.election.endDate))){
                     this.status = 'open';
+                    this.checkVoted();
                 }else{
                     this.status = 'closed';
+                    this.drawGraph();
                 }
 
             },
+            /** check if user has voted already*/
             checkVoted(){
                 let self = this;
                 let history = self.user.history;
                 for(let i = 0; i < history.length;  i++){
                     let electionId = self.user.history[i];
-                    console.log(electionId.election_id);
                     if(electionId.election_id == self.election.id){
                         self.voted = true;
-                        console.log('true mdfkr');
-                        console.log(self.voted);
                         break;
                     }
                 }
-
+                this.stopLoading();
             },
-            back() {
-                this.$router.go(-2)
+            /**stop the loading animation*/
+            stopLoading: function () {
+                setTimeout(function(){ this.loading = false; }, 1500);
             },
+            /**draw result graph*/
             drawGraph() {
                 if(this.election.isClosed) {
                     for(let i = 0; i < this.election.candidates.length; i++){
@@ -160,14 +166,12 @@
                         labels: this.candidates,
                         series: [this.scores]
                     }, options);
+                    this.stopLoading();
                 }
             },
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Election mounted.');
-
-            console.log(this.$route.params.id);
         }
     }
 </script>

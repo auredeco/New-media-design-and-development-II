@@ -1,5 +1,6 @@
 <template>
     <div id="group-detail" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <div class="group-item">
                 <figure>
@@ -46,26 +47,28 @@
                 user : [],
                 group: [],
                 listed: false,
+                loading: true,
+
 
             }
         },
         methods: {
+            /** get groups*/
             loadData: function (id) {
                 this.axios.get('/api/groups/' + id).then((response) => {
-                    console.log(response.data);
                     this.userItems = response.data.users;
                     this.group = response.data.group;
-                    console.log(this.user);
-                    console.log(this.group);
                     this.checkListed();
                 });
             },
+            /**get authenticated user*/
             loadUserData: function (groupId) {
                 this.axios.get('/api/user').then((response) => {
                     this.user = response.data;
                     this.loadData(groupId);
                 });
             },
+            /** join new group*/
             join: function() {
                 self = this;
                 self.axios.post('/api/groups/join',{
@@ -82,14 +85,17 @@
             checkListed() {
                 let filtered = _.filter(this.userItems, { 'id': this.user.id});
                 (filtered.length === 0)?this.listed = false : this.listed = true;
-                console.log(this.listed);
+                this.stopLoading();
 
 
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
         mounted() {
             this.loadUserData(this.$route.params.id);
-            console.log('Group mounted.')
         }
     }
 </script>

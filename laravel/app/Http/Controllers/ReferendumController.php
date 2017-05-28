@@ -72,7 +72,8 @@ class ReferendumController extends Controller
     {
         $groups = Group::all();
         $datetime = Carbon::now();
-        return view('crud.createReferendum', compact('groups', 'datetime'));
+        $end = Carbon::now()->addMonth();
+        return view('crud.createReferendum', compact('groups', 'datetime', 'end'));
 //        return $datetime;
     }
 

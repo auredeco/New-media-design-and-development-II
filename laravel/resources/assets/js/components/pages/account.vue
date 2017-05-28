@@ -1,5 +1,6 @@
 <template>
     <div id="account" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <figure>
                 <img :src="user.picture">
@@ -52,11 +53,13 @@
             return {
                 groups: [],
                 user : [],
+                loading: true,
+
             }
         },
         methods: {
+            /**load current user and groups*/
             loadData: function (id) {
-
                 this.axios.get('/api/users/' + id).then((response) => {
                     let user = response.data;
                     this.groups = user.groups;
@@ -68,15 +71,21 @@
                         email: user.email,
                         picture: user.pictureUri,
                     };
-                    console.log(this.groups);
-                    console.log(this.user);
-                    console.log(response.data);
-                });
+
+                this.stopLoading();
+
+            });
             },
+            /**load authenticated user*/
             loadUserData: function () {
                 this.axios.get('api/user').then((response) => {
                     this.loadData(response.data.id);
                 });
+            },
+            /** stop the loadin animation*/
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
 
         },

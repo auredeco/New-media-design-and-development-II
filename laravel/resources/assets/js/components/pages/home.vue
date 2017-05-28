@@ -1,5 +1,8 @@
 <template>
     <div id="home" class="container">
+        <div v-if="loading"  class="loader">
+            <!--<img src="images/logo-square.gif">-->
+        </div>
         <figure id="logo">
             <img src="images/logo-square.svg">
         </figure>
@@ -24,8 +27,10 @@
                     <div v-for="referendum in slicedReferenda" :key="referendum.id" class="home-referendums">
                         <router-link :to="{ name: 'referendum', params: { id: referendum.id }}">
                             <div class="card-element">
-                                <h1 class="referendum-title">{{referendum.title}}</h1>
-                                <p>{{referendum.description}}</p>
+                                <figure>
+                                    <img src="images/logo-square.svg">
+                                </figure>
+                                <h1 class="election-title">{{referendum.title}}</h1>
                             </div>
                         </router-link>
                         <!--<item v-for="referendum in referenda" :key="referenda.id" propImage="/images/logo-square.svg" propLink="/referenda/#"  :propName="referendum.title"></item>-->
@@ -58,7 +63,9 @@
                 <slot></slot>
             </div>`,
         data() {
-            return { tabs: [] };
+            return {
+                tabs: [],
+            };
         },
 
         created() {
@@ -85,7 +92,8 @@
 
         data() {
             return {
-                isActive: false
+                isActive: false,
+
             };
         },
 
@@ -120,10 +128,13 @@
                 elections: [],
                 referenda: [],
                 slicedReferenda: [],
-                slicedElections: []
+                slicedElections: [],
+                loading: true,
+
             };
         },
         methods: {
+            /**load all elections and referenda then slice them*/
             loadData: function () {
                 Vue.axios.get('/api/elections').then((response) => {
                     this.elections = response.data.all.sort(function(a,b) {
@@ -138,15 +149,22 @@
                     this.Slice();
                 })
             },
+            /**slice depending on client width*/
             Slice: function(){
                let clientWidth = document.documentElement.clientWidth;
                if(clientWidth > 1100) {
                    this.slicedElections = this.elections.slice(0,5);
                    this.slicedReferenda = this.referenda.slice(0,5);
+                   this.stopLoading();
                } else {
                    this.slicedElections = this.elections.slice(0,3);
                    this.slicedReferenda = this.referenda.slice(0,3);
+                   this.stopLoading();
                }
+            },
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 3000);
             }
         },
 

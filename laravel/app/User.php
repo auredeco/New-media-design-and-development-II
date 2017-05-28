@@ -88,6 +88,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class, 'group_users');
     }
 
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     * return query from keyword search in db
+
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword!='') {
@@ -103,6 +110,12 @@ class User extends Authenticatable
         return $query;
     }
 
+    /**
+     * @param $birthDate
+     * @return int
+     *
+     * return age from brithdate
+     */
     public static function getAge($birthDate) {
         $birthDate = explode("-", $birthDate);
         $currentDate = explode("-", date('Y-m-d'));
@@ -126,6 +139,10 @@ class User extends Authenticatable
         return $age;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * get user registrations data
+     */
     public static function getRegisteredMonth(){
         return User::select(\DB::raw('count(id) as `total`'),
                             \DB::raw('YEAR(created_at) year, MONTH(created_at) month'))

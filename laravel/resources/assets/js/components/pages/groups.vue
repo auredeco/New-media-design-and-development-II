@@ -1,5 +1,6 @@
 <template>
     <div id="groups" class="container">
+        <div v-if="loading"  class="loader"></div>
         <h1>Groepen</h1>
         <paginate-links for="items"></paginate-links>
         <paginate
@@ -34,17 +35,26 @@
         data() {
             return {
                 items: [],
-                paginate: ['groups']
+                paginate: ['groups'],
+                loading: true,
+
             }
         },
 
         methods: {
+            /**get all groups*/
             loadData: function () {
                 this.axios.get('/api/groups').then((response) => {
                     this.items = response.data;
-                    console.log(this.items)
-                });
+                this.stopLoading();
+
+            });
             },
+            /**stop the loading animation*/
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
+            }
         },
 
         mounted() {

@@ -23,6 +23,13 @@ class Election extends Model
         return $this->belongsToMany(Candidate::class, 'candidate_elections')->withPivot('score', 'id', 'approved');
     }
 
+    /**
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     *
+     * return query from keyword search in db
+     */
     public function scopeSearchByKeyword($query, $keyword)
     {
         if ($keyword != '') {
@@ -34,6 +41,11 @@ class Election extends Model
         return $query;
     }
 
+    /**
+     * @param $query
+     *
+     * retrun all open elections with candidates and set satus as open
+     */
     public function scopeWhereOpenInit($query)
     {
         $open = $query
@@ -47,6 +59,13 @@ class Election extends Model
 
         }
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * get all open elections and set open if status was closed
+     */
     public function scopeWhereOpen($query)
     {
         $open = $query
@@ -66,6 +85,12 @@ class Election extends Model
     }
 
 
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * get all closed elections, set status to closed and calculate candidate scores
+     */
     public function scopeWhereClosedInit($query)
     {
         $closed = $query
@@ -90,6 +115,13 @@ class Election extends Model
         return $closed;
 
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * get all candidates where start date is in future and set statuses
+     */
     public function scopeComing($query){
         $coming = $query->with('candidates')->where('startDate', '>', Carbon::now());
         foreach ($coming->get() as $election) {
@@ -99,6 +131,13 @@ class Election extends Model
         }
         return $coming;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     *
+     * return all closed elections set and calculate scores if status wasn't closed already
+     */
     public function scopeWhereClosed($query)
     {
         $closed = $query
@@ -108,17 +147,19 @@ class Election extends Model
 
         foreach ($closed->get() as $election) {
             $original = $election->isClosed;
-            $election->isClosed = true;
-            $election->save();
-            $candidates = $election->candidates;
+            if(!$original){
+                $election->isClosed = true;
+                $election->save();
+                $candidates = $election->candidates;
 
-            foreach ($candidates as $candidate){
-                $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
+                foreach ($candidates as $candidate){
+                    $score = Vote::where('CandidateElection_id','=',$candidate->pivot->id)->count();
 
-                //replace the old score
-                $canEl = Candidate_election::find($candidate->pivot->id);
-                $canEl->score = $score;
-                $canEl->save();
+                    //replace the old score
+                    $canEl = Candidate_election::find($candidate->pivot->id);
+                    $canEl->score = $score;
+                    $canEl->save();
+                }
             }
         }
         return $closed;

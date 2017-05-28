@@ -10623,6 +10623,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_23_vue
 
 window.axios = __webpack_require__(2);
 
+/**set default header of axios with authorization api token*/
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
@@ -11649,16 +11650,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             groups: [],
-            user: []
+            user: [],
+            loading: true
+
         };
     },
 
     methods: {
+        /**load current user and groups*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -11673,17 +11678,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     email: user.email,
                     picture: user.pictureUri
                 };
-                console.log(_this.groups);
-                console.log(_this.user);
-                console.log(response.data);
+
+                _this.stopLoading();
             });
         },
+        /**load authenticated user*/
         loadUserData: function loadUserData() {
             var _this2 = this;
 
             this.axios.get('api/user').then(function (response) {
                 _this2.loadData(response.data.id);
             });
+        },
+        /** stop the loadin animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
 
     },
@@ -11718,7 +11730,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11726,22 +11737,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             election: [],
             party: null,
             parties: [],
-            user: []
+            user: [],
+            loading: true
         };
     },
 
     methods: {
+        /** get elections and parties*/
         loadData: function loadData(id) {
             var _this = this;
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
                 _this.checkReg();
+                _this.stopLoading();
             });
             this.axios.get('/api/parties/').then(function (response) {
                 _this.parties = response.data;
             });
         },
+        /** get current userdata*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
@@ -11750,22 +11765,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(electionId);
             });
         },
+        /** register a new candidate*/
         register: function register() {
             var _this3 = this;
 
-            console.log(this.election.id);
-            console.log(this.party);
-            console.log(this.user.id);
             this.axios.post('api/candidates/', {
                 election_id: this.election.id,
                 user_id: this.user.id,
                 party_id: this.party
 
             }).then(function (response) {
-                console.log(response.data);
                 _this3.$router.push({ name: 'election', params: { id: _this3.$route.params.id } });
             });
         },
+        /**check if user is registerd already*/
         checkReg: function checkReg() {
             var candidates = this.election.candidates;
 
@@ -11773,10 +11786,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             for (var i = 0; i < candidates.length; i++) {
 
                 if (self.user.id === candidates[i].user_id || new Date() > new Date(self.election.startDate)) {
-                    console.log("nope");
                     self.$router.push({ name: 'election', params: { id: self.$route.params.id } });
                 }
             }
+        },
+
+        /** stop the loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
@@ -11848,9 +11868,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -11862,37 +11879,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             listed: false,
             reg: false,
             status: 'closed',
-            voted: false
+            voted: false,
+            loading: true,
+            empty: false
         };
     },
 
 
     methods: {
+        /** get current election and userdata*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
             this.axios.get('/api/elections/' + id).then(function (response) {
                 _this.election = response.data;
+                if (_this.election.candidates.length == 0) {
+                    _this.empty = true;
+                }
                 _this.axios.get('/api/users/' + userId).then(function (response) {
-                    console.log(response.data);
                     _this.user = response.data;
-                    _this.checkVoted();
-                    _this.drawGraph();
-                    _this.checkListed();
                     _this.checkReg();
                     _this.checkStatus();
                 });
             });
         },
+        /** get authenticated user data*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
             this.axios.get('api/user').then(function (response) {
                 //                    this.user = response.data;
-                console.log(response.data);
                 _this2.loadData(electionId, response.data.id);
             });
         },
+        /**check if user is listed as candidate*/
         checkListed: function checkListed() {
             var candidates = this.election.candidates;
             for (var i = 0; i < candidates.length; i++) {
@@ -11900,7 +11920,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.listed = true;
                 }
             }
+            this.stopLoading();
         },
+
+        /**check if registration is allowed*/
         checkReg: function checkReg() {
             if (new Date() < new Date(this.election.startDate)) {
                 this.reg = true;
@@ -11908,33 +11931,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.reg = false;
             }
         },
-        checkStatus: function checkStatus() {
 
+        /**check elecions status*/
+        checkStatus: function checkStatus() {
             if (new Date() < new Date(this.election.startDate)) {
                 this.status = 'coming';
+                this.checkListed();
             } else if (new Date() > new Date(this.election.startDate) && new Date() < new Date(this.election.endDate)) {
                 this.status = 'open';
+                this.checkVoted();
             } else {
                 this.status = 'closed';
+                this.drawGraph();
             }
         },
+
+        /** check if user has voted already*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var electionId = self.user.history[i];
-                console.log(electionId.election_id);
                 if (electionId.election_id == self.election.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
                     break;
                 }
             }
+            this.stopLoading();
         },
-        back: function back() {
-            this.$router.go(-2);
+
+        /**stop the loading animation*/
+        stopLoading: function stopLoading() {
+            setTimeout(function () {
+                this.loading = false;
+            }, 1500);
         },
+        /**draw result graph*/
         drawGraph: function drawGraph() {
             if (this.election.isClosed) {
                 for (var i = 0; i < this.election.candidates.length; i++) {
@@ -11952,14 +11984,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     labels: this.candidates,
                     series: [this.scores]
                 }, options);
+                this.stopLoading();
             }
         }
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log('Election mounted.');
-
-        console.log(this.$route.params.id);
     }
 });
 
@@ -11994,12 +12024,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             election: [],
-            user: []
+            user: [],
+            loading: true
         };
     },
 
 
     methods: {
+        /**load current user and election if there are no candidates return to overview*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
@@ -12007,10 +12039,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.user = response.data;
                 _this.axios.get('/api/elections/' + id).then(function (response) {
                     _this.election = response.data;
-                    _this.checkVoted();
+                    if (_this.election.candidates.length == 0) {
+                        _this.$router.push({ name: 'elections' });
+                    } else {
+                        _this.checkVoted();
+                    }
                 });
             });
         },
+        /**load authenticated user data*/
         loadUserData: function loadUserData(electionId) {
             var _this2 = this;
 
@@ -12018,16 +12055,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(electionId, response.data.id);
             });
         },
+        /**vote for a candidate the user gets a uuid for verification*/
         vote: function vote(e) {
-            //                console.log(this.election.id);
-            //                console.log(this.user.id);
             if (confirm("Weet je zeker dat je op deze candidaat wilt stemmen?")) {
                 var password = prompt('Geef een wachtwoord op om later je stem te valideren');
-                console.log(e);
                 // get the event and take the id from the element that is clicked
                 // Store it in the candidateElection_id variable
                 var candidateElection_id = e.srcElement.id;
-                console.log(candidateElection_id);
                 var _self = this;
 
                 this.axios.post('api/votes/', {
@@ -12039,46 +12073,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     referendum_id: null,
                     CandidateElection_id: candidateElection_id
                 }).then(function (response) {
-                    console.log(response.data);
                     var vote = response.data;
-
-                    //                        console.log('hallo');
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
-                    //                            this.$route.go('/elections/'+ this.election.id);
-                    //
-                    //                            console.log('hallo2');
-                    //                            //redirect to the home page
-                    ////                        this.redirect();
-                    ////                        _self.$router.push({ name: 'election', params: { id: self.election.id }});
-                    //                            window.location.reload();
-                    //                        }
-                    //                        this.$router.push({ name: 'elections'});
-                    console.log('redirect');
                     window.location.reload();
                     //
                 }).catch(function (error) {});
             }
         },
+
+        /**check if the user has voted already*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var electionId = self.user.history[i];
-                console.log(electionId.election_id);
                 if (electionId.election_id == self.election.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
-                    this.$router.push({ name: 'election', params: { id: self.election.id } });
+                    this.$router.push({ name: 'elections' });
                     break;
                 }
             }
+            this.stopLoading();
         },
-        redirect: function redirect() {
-            console.log('redirecting fuck');
 
-            //                window.location.reload();
-            //                this.$router.push({ name: 'election', params: { id: this.election.id }});
+        /**stop the loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
@@ -12131,6 +12154,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12139,24 +12163,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             paginate: ['users'],
             user: [],
             group: [],
-            listed: false
+            listed: false,
+            loading: true
 
         };
     },
 
     methods: {
+        /** get groups*/
         loadData: function loadData(id) {
             var _this = this;
 
             this.axios.get('/api/groups/' + id).then(function (response) {
-                console.log(response.data);
                 _this.userItems = response.data.users;
                 _this.group = response.data.group;
-                console.log(_this.user);
-                console.log(_this.group);
                 _this.checkListed();
             });
         },
+        /**get authenticated user*/
         loadUserData: function loadUserData(groupId) {
             var _this2 = this;
 
@@ -12165,6 +12189,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(groupId);
             });
         },
+        /** join new group*/
         join: function join() {
             self = this;
             self.axios.post('/api/groups/join', {
@@ -12177,12 +12202,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         checkListed: function checkListed() {
             var filtered = _.filter(this.userItems, { 'id': this.user.id });
             filtered.length === 0 ? this.listed = false : this.listed = true;
-            console.log(this.listed);
+            this.stopLoading();
+        },
+
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log('Group mounted.');
     }
 });
 
@@ -12192,6 +12223,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -12253,11 +12285,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             description: '',
             user: [],
             messages: [],
-            status: false
+            status: false,
+            loading: true
+
         };
     },
 
     methods: {
+        /** get groups + current user*/
         loadData: function loadData() {
             var _this = this;
 
@@ -12266,9 +12301,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.axios.get('/api/user/').then(function (response) {
                 _this.user = response.data;
-                console.log(_this.user.id);
+                _this.stopLoading();
             });
         },
+        /**suggest a new referendum*/
         placeNew: function placeNew() {
             var _this2 = this;
 
@@ -12280,7 +12316,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 group_id: this.group,
                 user_id: this.user.id
             }).then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     _this2.status = true;
                     if (confirm("uw referendum werd doorgestuurd")) {
@@ -12290,8 +12325,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.status = false;
                 }
                 _this2.messages = response.data[0];
-                console.log(_this2.messages);
             });
+        },
+        /**stop loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
@@ -12337,17 +12378,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             userItems: [],
             paginate: ['users'],
-            party: []
+            party: [],
+            loading: true
+
         };
     },
 
     methods: {
+        /**get parties*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -12355,7 +12400,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
                 _this.party = response.data;
                 _this.userItems = _this.party.candidates;
+                _this.stopLoading();
             });
+        },
+        /**stop loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
@@ -12405,6 +12458,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12416,17 +12473,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             next: [],
             opinion: 0,
             user: [],
-            voted: false
+            voted: false,
+            loading: true
+
         };
     },
 
 
     methods: {
+        /**get referenda, current referendum and userdata*/
         loadData: function loadData(id, userId) {
             var _this = this;
 
             this.axios.get('/api/referenda').then(function (response) {
-                console.log(_this.referenda);
                 _this.referenda = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
@@ -12440,6 +12499,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
+        /**get authenticated user*/
         loadUserData: function loadUserData(referendumId) {
             var _this2 = this;
 
@@ -12447,6 +12507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.loadData(referendumId, response.data.id);
             });
         },
+        /**draw graph on closed referendum*/
         drawGraph: function drawGraph() {
             if (this.referendum.isClosed) {
                 var votes = this.referendum.votes;
@@ -12458,8 +12519,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         this.disagree++;
                     }
                 }
-                console.log(this.agree);
-                console.log(this.disagree);
 
                 var Chartdata = {
                     labels: ['Akkoord', 'Niet Akkoord'],
@@ -12467,20 +12526,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 };
 
                 new Chartist.Pie('.ct-chart', Chartdata);
+                this.stopLoading();
             }
         },
 
+        /**navigate to the next referendum sorted by enddate*/
         nextReferenda: function nextReferenda() {
             var referendum = this.referendum;
             var index = _.findIndex(this.referenda, function (o) {
                 return o.id == referendum.id;
             });
             this.next = this.referenda[index + 1];
-            console.log(this.next.id);
             this.$router.push({ name: 'referendum', params: { id: this.next.id } });
             //pagina laad niet vanzelf
             window.location.reload();
         },
+        /**vote on the referendum*/
         vote: function vote() {
             var opinion = parseInt(this.opinion);
             var question = "Bent u zeker dat u ";
@@ -12498,29 +12559,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (response) {
                     var vote = response.data;
                     alert('Houd deze code bij om in de toekomst uw stem te controleren: \n' + vote.uuid);
-                    console.log(response.data);
                     location.reload();
                 }).catch(function (error) {});
             }
         },
+        /**check if user has voted before/*/
         checkVoted: function checkVoted() {
             var self = this;
             var history = self.user.history;
             for (var i = 0; i < history.length; i++) {
                 var referendumId = self.user.history[i];
-                console.log(referendumId.referendum_id);
                 if (referendumId.referendum_id == self.referendum.id) {
                     self.voted = true;
-                    console.log('true mdfkr');
-                    console.log(self.voted);
                     break;
                 }
             }
+            this.stopLoading();
+        },
+        /**stop the loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
         this.loadUserData(this.$route.params.id);
-        console.log(this.$route.params.id);
     }
 });
 
@@ -12579,16 +12644,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             groups: [],
-            user: []
+            user: [],
+            loading: true
+
         };
     },
 
     methods: {
+        /**load current user*/
         loadData: function loadData(id) {
             var _this = this;
 
@@ -12603,10 +12672,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     email: user.email,
                     picture: user.pictureUri
                 };
-                console.log(_this.groups);
-                console.log(_this.user);
-                console.log(response.data);
+                _this.stopLoading();
             });
+        },
+        /**stop loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     mounted: function mounted() {
@@ -12682,6 +12756,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -12691,13 +12766,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             filterQuery: '',
             radioValue: 3,
             checkboxComing: false,
-            dateNow: new Date()
+            dateNow: new Date(),
+            loading: true
+
         };
     },
 
     components: {},
 
     methods: {
+        /**load all elections sorted by enddate*/
         loadData: function loadData() {
             var _this = this;
 
@@ -12705,11 +12783,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.elections = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
+                _this.stopLoading();
             });
+        },
+
+        /**stop teh loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
 
     computed: {
+        /**filter paginated list by keyword or status*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -12717,7 +12805,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.elections.filter(function (election) {
                 if (value == 3) {
                     return election.name.toLowerCase().indexOf(_this2.filterQuery.toLowerCase()) > -1;
-                    //                        }
                 } else {
                     switch (parseInt(value)) {
                         case 0:
@@ -12745,7 +12832,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.loadData();
-        console.log('Elections mounted.');
     }
 });
 
@@ -12785,24 +12871,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             items: [],
-            paginate: ['groups']
+            paginate: ['groups'],
+            loading: true
+
         };
     },
 
 
     methods: {
+        /**get all groups*/
         loadData: function loadData() {
             var _this = this;
 
             this.axios.get('/api/groups').then(function (response) {
                 _this.items = response.data;
-                console.log(_this.items);
+                _this.stopLoading();
             });
+        },
+        /**stop the loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
 
@@ -12867,6 +12964,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -12876,7 +12978,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('tabs', {
     template: '\n            <div class="card-with-header">\n                <header>\n                    <div class="tab" v-for="tab in tabs" :class="{\'active\' : tab.isActive}">\n                        <a @click="selectTab(tab)">{{tab.name}}</a>\n                    </div>\n                </header>\n                <slot></slot>\n            </div>',
     data: function data() {
-        return { tabs: [] };
+        return {
+            tabs: []
+        };
     },
     created: function created() {
         this.tabs = this.$children;
@@ -12902,6 +13006,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('tab', {
     data: function data() {
         return {
             isActive: false
+
         };
     },
 
@@ -12928,11 +13033,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
             elections: [],
             referenda: [],
             slicedReferenda: [],
-            slicedElections: []
+            slicedElections: [],
+            loading: true
+
         };
     },
 
     methods: {
+        /**load all elections and referenda then slice them*/
         loadData: function loadData() {
             var _this = this;
 
@@ -12949,15 +13057,24 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('item', {
                 _this.Slice();
             });
         },
+        /**slice depending on client width*/
         Slice: function Slice() {
             var clientWidth = document.documentElement.clientWidth;
             if (clientWidth > 1100) {
                 this.slicedElections = this.elections.slice(0, 5);
                 this.slicedReferenda = this.referenda.slice(0, 5);
+                this.stopLoading();
             } else {
                 this.slicedElections = this.elections.slice(0, 3);
                 this.slicedReferenda = this.referenda.slice(0, 3);
+                this.stopLoading();
             }
+        },
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 3000);
         }
     },
 
@@ -12994,28 +13111,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             parties: [],
             filterQuery: '',
-            checkboxValues: []
+            checkboxValues: [],
+            loading: true
+
         };
     },
 
 
     methods: {
+        /**load all parties*/
         loadData: function loadData() {
             var _this = this;
 
             this.axios.get('/api/parties').then(function (response) {
                 _this.parties = response.data;
+                _this.stopLoading();
             });
+        },
+
+        /**stop loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
 
     computed: {
+        /**filter parites by keyword*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -13079,6 +13210,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -13086,12 +13218,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             referenda: [],
             paginate: ['referenda'],
             filterQuery: '',
-            checkboxValues: []
+            checkboxValues: [],
+            loading: true
+
         };
     },
 
 
     methods: {
+        /**load all referenda sort by enddate*/
         loadData: function loadData() {
             var _this = this;
 
@@ -13099,10 +13234,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.referenda = response.data.all.sort(function (a, b) {
                     return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
                 });
+                _this.stopLoading();
             });
+        },
+        /**stop loading animation*/
+        stopLoading: function stopLoading() {
+            var self = this;
+            setTimeout(function () {
+                self.loading = false;
+            }, 1500);
         }
     },
     computed: {
+        /**filter referenda by keyword or status*/
         filterByName: function filterByName() {
             var _this2 = this;
 
@@ -13118,7 +13262,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.loadData();
-        console.log('Referenda mounted.');
     }
 });
 
@@ -13200,14 +13343,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
     filters: {
         capitalize: function capitalize(value) {
             if (!value) return '';
             value = value.toString();
             return value.charAt(0).toUpperCase() + value.slice(1);
         }
-    }
+    },
+    methods: {
+        /**genereate dutch name for each routename*/
+        dutchify: function dutchify(value) {
+            switch (value) {
+                case 'home':
+                    {
+                        return 'Home';
+                    }break;
+                case 'elections':
+                    {
+                        return 'Verkiezingen';
+                    }break;
+                case 'election':
+                    {
+                        return 'Verkiezing';
+                    }break;
+                case 'electionVote':
+                    {
+                        return 'Verkiezings stem';
+                    }break;
+                case 'applyElection':
+                    {
+                        return 'Registreer';
+                    }break;
+                case 'referenda':
+                    {
+                        return 'Referenda';
+                    }break;
+                case 'Referendum':
+                    {
+                        return 'Referendum';
+                    }break;
+                case 'newReferenda':
+                    {
+                        return 'Nieuw Referendum';
+                    }break;
+                case 'groups':
+                    {
+                        return 'Groupen';
+                    }break;
+                case 'group':
+                    {
+                        return 'Group';
+                    }break;
+                case 'parties':
+                    {
+                        return 'Partijen';
+                    }break;
+                case 'party':
+                    {
+                        return 'Partij';
+                    }break;
+                case 'account':
+                    {
+                        return 'Account';
+                    }break;
+                case 'user':
+                    {
+                        return 'Gebruiker';
+                    }break;
+            }
+        }
+    },
+    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -34519,7 +34725,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("elections")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Verkiezing")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-comments",
     attrs: {
       "aria-hidden": "true"
@@ -34553,7 +34759,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Groepen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
@@ -34570,7 +34776,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Partijen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
@@ -34587,7 +34793,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("account")])], 1)])])
+  }, [_vm._v("Account")])], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('header', [_c('img', {
     attrs: {
@@ -34619,7 +34825,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "home"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     attrs: {
       "id": "cards"
     }
@@ -34670,9 +34878,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "card-element"
-    }, [_c('h1', {
-      staticClass: "referendum-title"
-    }, [_vm._v(_vm._s(referendum.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(referendum.description))])])])], 1)
+    }, [_c('figure', [_c('img', {
+      attrs: {
+        "src": "images/logo-square.svg"
+      }
+    })]), _vm._v(" "), _c('h1', {
+      staticClass: "election-title"
+    }, [_vm._v(_vm._s(referendum.title))])])])], 1)
   })) : _vm._e()], 1)], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
@@ -34703,13 +34915,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "referendum-detail"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "info"
   }, [_c('h1', [_vm._v(_vm._s(_vm.referendum.title))]), _vm._v(" "), _c('p', [_vm._v("Status:\n            "), (_vm.referendum.isClosed) ? _c('span', {
     staticClass: "closed"
   }, [_vm._v("Closed")]) : _c('span', {
     staticClass: "open"
-  }, [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
+  }, [_vm._v("Open")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('p', [_vm._v("\n            eindigd op : " + _vm._s(_vm.referendum.endDate) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Beschrijving:")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.referendum.description))]), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', [_c('h2', [_vm._v("Resultaat")]), _vm._v(" "), _c('p', {
     model: {
       value: (_vm.agree),
       callback: function($$v) {
@@ -34773,9 +34987,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "disagreed"
     }
-  }, [_vm._v("Niet akkoord")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Niet akkoord")])]), _vm._v(" "), (!_vm.referendum.isClosed) ? _c('div', {
     staticClass: "button-field"
-  }, [(!_vm.referendum.isClosed) ? _c('button', {
+  }, [(!_vm.voted) ? _c('button', {
     staticClass: "btn green",
     on: {
       "click": _vm.vote
@@ -34785,7 +34999,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.nextReferenda
     }
-  }, [_vm._v("Volgend referendum")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Volgend referendum")])]) : _vm._e(), _vm._v(" "), (_vm.referendum.isClosed) ? _c('div', {
+    staticClass: "button-field"
+  }, [_c('button', {
+    staticClass: "btn blue",
+    on: {
+      "click": _vm.nextReferenda
+    }
+  }, [_vm._v("Volgend referendum")])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "ct-chart ct-perfect-fourth"
   })])])
 },staticRenderFns: []}
@@ -34804,7 +35025,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('header', {
     staticClass: "main-header"
-  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm._f("capitalize")(this.$route.name)))])])
+  }, [_vm._m(0), _vm._v(" "), _c('h1', [_vm._v(_vm._s(_vm.dutchify(this.$route.name)))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', [_c('p', {
     attrs: {
@@ -34835,7 +35056,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-vote"
     }
-  }, [_vm._l((_vm.election.candidates), function(candidate) {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _vm._l((_vm.election.candidates), function(candidate) {
     return (candidate.pivot.approved) ? _c('div', {
       staticClass: "candidate"
     }, [_c('div', {
@@ -34859,11 +35082,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "click": _vm.vote
       }
     }, [_vm._v("Stemmen")])])])])]) : _vm._e()
-  }), _vm._v(" "), _c('button', {
-    on: {
-      "redirect": function($event) {}
-    }
-  }, [_vm._v("test")])], 2)
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -34883,7 +35102,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "group-detail"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('div', {
     staticClass: "group-item"
@@ -34950,7 +35171,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "groups"
     }
-  }, [_c('h1', [_vm._v("Groepen")]), _vm._v(" "), _c('paginate-links', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('h1', [_vm._v("Groepen")]), _vm._v(" "), _c('paginate-links', {
     attrs: {
       "for": "items"
     }
@@ -35008,7 +35231,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "referenda-overview"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('h1', [_vm._v("Referenda")]), _vm._v(" "), _c('div', {
     staticClass: "button-field"
@@ -35129,7 +35354,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "referendum"
     }, [_c('h1', [_vm._v(_vm._s(referendum.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(referendum.description))]), _vm._v(" "), _c('p', [_vm._v("Status:\n                    "), (referendum.isClosed) ? _c('span', {
       staticClass: "closed"
-    }, [_vm._v("Closed")]) : _c('span', {
+    }, [_vm._v("Gesloten")]) : _c('span', {
       staticClass: "open"
     }, [_vm._v("Open")])]), _vm._v(" "), _c('p', {
       staticClass: "read-more"
@@ -35168,7 +35393,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "elections"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     attrs: {
       "id": "cards"
     }
@@ -35355,7 +35582,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "party"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "info"
   }, [_c('figure', [_c('img', {
     attrs: {
@@ -35397,7 +35626,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "account"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('figure', [_c('img', {
     attrs: {
@@ -35449,7 +35680,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "parties"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "card-field"
   }, _vm._l((_vm.parties), function(party) {
     return _c('div', {
@@ -35489,7 +35722,11 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container"
-  }, [_c('h2', [_vm._v("Kandidatuur")]), _vm._v(" "), _c('form', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "form-field"
+  }, [_c('form', {
     on: {
       "submit": function($event) {
         $event.preventDefault();
@@ -35497,12 +35734,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+    staticClass: "form-item"
+  }, [_c('h1', [_vm._v("Kandidatuur")]), _vm._v(" "), _c('label', {
     attrs: {
       "for": "party"
     }
-  }, [_vm._v("party:")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("partij:")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35531,13 +35768,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": party.id
       }
     }, [_vm._v(_vm._s(party.name))])
-  }))]), _vm._v(" "), _c('input', {
+  })), _vm._v(" "), _vm._m(0)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "button-field"
+  }, [_c('input', {
+    staticClass: "btn green",
     attrs: {
       "type": "submit",
-      "value": "submit"
+      "value": "Registreer"
     }
-  })]), _vm._v(" "), _c('div')])
-},staticRenderFns: []}
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -35556,7 +35798,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "createReferendum"
     }
-  }, [_c('h1', [_vm._v("Nieuw referendum")]), _vm._v(" "), _c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('h1', [_vm._v("Nieuw referendum")]), _vm._v(" "), _c('div', {
     staticClass: "form-field"
   }, [_c('form', {
     on: {
@@ -35571,7 +35815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "title"
     }
-  }, [_vm._v("Title")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Titel")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35599,7 +35843,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "group"
     }
-  }, [_vm._v("Group")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Groep")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35634,7 +35878,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "startTime"
     }
-  }, [_vm._v("Start time")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Start tijd")]), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('input', {
     directives: [{
@@ -35686,7 +35930,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "endTime"
     }
-  }, [_vm._v("End time")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("End tijd")]), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('input', {
     directives: [{
@@ -35738,7 +35982,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "description"
     }
-  }, [_vm._v("Description")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Beschrijving")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -35801,15 +36045,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "election-detail"
     }
-  }, [_c('router-link', {
-    attrs: {
-      "to": {
-        name: 'elections'
-      }
-    }
-  }, [_c('button', {
-    staticClass: "btn"
-  }, [_vm._v("back")])]), _vm._v(" "), _c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('div', {
     staticClass: "group-item"
@@ -35827,20 +36065,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "is-open"
   }, [_vm._v(" open")]) : _vm._e(), _vm._v(" "), (_vm.status == 'open') ? _c('p', [_vm._v(" Eindigt op: " + _vm._s(_vm.election.endDate))]) : _vm._e(), _vm._v(" "), (_vm.status == 'closed') ? _c('p', {
     staticClass: "is-closed"
-  }, [_vm._v("Gesloten")]) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.listed && _vm.reg) ? _c('router-link', {
-    attrs: {
-      "to": {
-        name: 'applyElection',
-        params: {
-          id: _vm.election.id
-        }
-      }
-    }
-  }, [_vm._v("registreer")]) : _vm._e()], 1)]), _vm._v(" "), _c('h1', {
+  }, [_vm._v("Gesloten")]) : _vm._e(), _vm._v(" "), _c('hr')])]), _vm._v(" "), _c('h1', {
     staticClass: "candidates-title"
   }, [_vm._v("Kandidaten")]), _vm._v(" "), _c('table', [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.election.candidates), function(candidate) {
     return (candidate.pivot.approved) ? _c('tr', [_c('td', [_vm._v(_vm._s(candidate.user.firstname) + " " + _vm._s(candidate.user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(candidate.party.name))])]) : _vm._e()
-  }))]), _vm._v(" "), (_vm.status == 'open' && !_vm.voted) ? _c('div', {
+  }))]), _vm._v(" "), (_vm.status == 'open' && !_vm.voted && !_vm.empty) ? _c('div', {
     staticClass: "button-field"
   }, [_c('router-link', {
     staticClass: "full-width",
@@ -35873,7 +36102,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "results"
   }, [_c('h1', [_vm._v("Uitslag")]), _vm._v(" "), _c('div', {
     staticClass: "ct-chart"
-  })]) : _vm._e()], 1)
+  })]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("Kandidaat")]), _vm._v(" "), _c('th', [_vm._v("Partij")])])
 }]}
@@ -35929,7 +36158,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("elections")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Verkiezingen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-comments",
     attrs: {
       "aria-hidden": "true"
@@ -35963,7 +36192,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("groups")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Groepen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-sitemap",
     attrs: {
       "aria-hidden": "true"
@@ -35980,7 +36209,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("parties")])], 1), _vm._v(" "), _c('li', [_c('i', {
+  }, [_vm._v("Partijen")])], 1), _vm._v(" "), _c('li', [_c('i', {
     staticClass: "fa fa-user",
     attrs: {
       "aria-hidden": "true"
@@ -35997,7 +36226,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.hideNav($event)
       }
     }
-  }, [_vm._v("account")])], 1)])])])
+  }, [_vm._v("Account")])], 1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('figure', {
     staticClass: "header-logo"
@@ -36030,7 +36259,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "account"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "loader"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "group"
   }, [_c('figure', [_c('img', {
     attrs: {

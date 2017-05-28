@@ -1,5 +1,6 @@
 <template>
     <div id="referenda-overview" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div class="group">
             <h1>Referenda</h1>
             <div class="button-field">
@@ -27,7 +28,7 @@
                     <h1>{{referendum.title}}</h1>
                     <p>{{referendum.description}}</p>
                     <p>Status:
-                        <span class="closed"v-if="referendum.isClosed">Closed</span>
+                        <span class="closed"v-if="referendum.isClosed">Gesloten</span>
                         <span class="open"v-else >Open</span>
                     </p>
                     <p class="read-more">
@@ -48,20 +49,31 @@
                 referenda: [],
                 paginate: ['referenda'],
                 filterQuery: '',
-                checkboxValues: []
+                checkboxValues: [],
+                loading: true,
+
             }
         },
 
         methods: {
+            /**load all referenda sort by enddate*/
             loadData: function () {
                 this.axios.get('/api/referenda').then((response) => {
                     this.referenda = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                });
+                this.stopLoading();
+
+            });
             },
+            /**stop loading animation*/
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
+            }
         },
         computed: {
+            /**filter referenda by keyword or status*/
             filterByName() {
                 return this.referenda.filter( referendum => {
                     if(this.checkboxValues.length == null || this.checkboxValues.length == 0 || this.checkboxValues.length == 2){
@@ -75,7 +87,6 @@
         },
         mounted() {
             this.loadData();
-            console.log('Referenda mounted.');
         }
     }
 </script>

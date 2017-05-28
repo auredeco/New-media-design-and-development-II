@@ -14,7 +14,7 @@
                 </li>
                 <li>
                     <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" replace :to="{ name: 'elections'}">elections</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'elections'}">Verkiezingen</router-link>
                 </li>
                 <li>
                     <i class="fa fa-comments" aria-hidden="true"></i>
@@ -22,15 +22,15 @@
                 </li>
                 <li>
                     <i class="fa fa-users" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" replace :to="{ name: 'groups'}">groups</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'groups'}">Groepen</router-link>
                 </li>
                 <li>
                     <i class="fa fa-sitemap" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" replace :to="{ name: 'parties'}">parties</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'parties'}">Partijen</router-link>
                 </li>
                 <li>
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <router-link @click.native="hideNav" replace :to="{ name: 'account'}">account</router-link>
+                    <router-link @click.native="hideNav" replace :to="{ name: 'account'}">Account</router-link>
                 </li>
             </ul>
         </div>

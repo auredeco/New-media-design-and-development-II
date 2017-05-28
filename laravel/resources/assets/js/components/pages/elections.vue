@@ -1,5 +1,6 @@
 <template>
     <div id="elections" class="container">
+        <div v-if="loading"  class="loader"></div>
         <div id="cards">
             <paginate
                     name="elections"
@@ -70,6 +71,8 @@
                 radioValue: 3,
                 checkboxComing: false,
                 dateNow: new Date(),
+                loading: true,
+
             }
         },
         components : {
@@ -77,22 +80,30 @@
         },
 
         methods: {
+            /**load all elections sorted by enddate*/
             loadData() {
                 this.axios.get('/api/elections').then((response) => {
                     this.elections = response.data.all.sort(function(a,b) {
                         return new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
                     });
-                });
+                this.stopLoading();
+
+            });
+            },
+            /**stop teh loading animation*/
+            stopLoading: function () {
+                let self = this;
+                setTimeout(function(){ self.loading = false; }, 1500);
             }
         },
 
         computed: {
+            /**filter paginated list by keyword or status*/
             filterByName() {
                 let value = this.radioValue;
                 return this.elections.filter( election => {
                     if(value == 3){
                             return election.name.toLowerCase().indexOf(this.filterQuery.toLowerCase()) > -1;
-//                        }
                     }else{
                         switch (parseInt(value)) {
                             case 0: {
@@ -115,12 +126,11 @@
                         }
                     }
                 })
-            },
+            }
         },
 
         mounted() {
             this.loadData();
-            console.log('Elections mounted.');
         }
     }
 </script>
