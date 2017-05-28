@@ -146,7 +146,8 @@
             },
             /**stop the loading animation*/
             stopLoading: function () {
-                setTimeout(function(){ this.loading = false; }, 1500);
+                let _self = this;
+                setTimeout(function(){ _self.loading = false; }, 1500);
             },
             /**draw result graph*/
             drawGraph() {
